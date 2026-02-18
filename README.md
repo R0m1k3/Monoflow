@@ -126,7 +126,18 @@ For PocketBase, development mode, and advanced setups, see [DOCKER.md](DOCKER.md
 - [Node.js](https://nodejs.org/) (Version 20+ or 22+ recommended)
 - [Bun](https://bun.sh/) or [npm](https://www.npmjs.com/)
 
-#### Local Development
+## 🐳 Unraid Deployment
+
+Monochrome includes a production-ready stack for Unraid, featuring:
+
+- **Monochrome Web**
+- **PocketBase** (Backend)
+- **MinIO** (S3 Storage)
+- **Redis** (Cache)
+
+👉 [**View Unraid Setup Instructions**](./deploy/unraid/README.txt) (or check the `deploy/unraid` folder).
+
+## 🚀 Development
 
 1. **Clone the repository:**
 
