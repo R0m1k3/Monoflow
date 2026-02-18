@@ -25,6 +25,10 @@ export default defineConfig(({ mode }) => {
             outDir: 'dist',
             emptyOutDir: true,
         },
+        // Allow any host when running in Docker (reverse proxy, custom domains)
+        preview: {
+            allowedHosts: true,
+        },
         plugins: [
             IS_NEUTRALINO && neutralino(),
             authGatePlugin(),
