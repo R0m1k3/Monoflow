@@ -104,21 +104,21 @@ State which mode you will use and why. Then proceed.
 
 - **If `{outputFile}` does not exist** (first save), create it with YAML frontmatter:
 
-  ```yaml
-  ---
-  stepsCompleted: ['step-01-detect-mode']
-  lastStep: 'step-01-detect-mode'
-  lastSaved: '{date}'
-  ---
-  ```
+    ```yaml
+    ---
+    stepsCompleted: ['step-01-detect-mode']
+    lastStep: 'step-01-detect-mode'
+    lastSaved: '{date}'
+    ---
+    ```
 
-  Then write this step's output below the frontmatter.
+    Then write this step's output below the frontmatter.
 
 - **If `{outputFile}` already exists**, update:
-  - Add `'step-01-detect-mode'` to `stepsCompleted` array (only if not already present)
-  - Set `lastStep: 'step-01-detect-mode'`
-  - Set `lastSaved: '{date}'`
-  - Append this step's output to the appropriate section of the document.
+    - Add `'step-01-detect-mode'` to `stepsCompleted` array (only if not already present)
+    - Set `lastStep: 'step-01-detect-mode'`
+    - Set `lastSaved: '{date}'`
+    - Append this step's output to the appropriate section of the document.
 
 Load next step: `{nextStepFile}`
 

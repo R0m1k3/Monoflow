@@ -283,8 +283,8 @@ lastSaved: ''
 ### Risks to Plan
 
 - **Risk**: {risk_to_plan}
-  - **Impact**: {impact}
-  - **Contingency**: {contingency}
+    - **Impact**: {impact}
+    - **Contingency**: {contingency}
 
 ---
 

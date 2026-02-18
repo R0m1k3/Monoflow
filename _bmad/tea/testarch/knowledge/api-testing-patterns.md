@@ -50,58 +50,58 @@ import { test, expect } from '@playwright/test';
 
 // No page, no browser - just API
 test.describe('Users API', () => {
-  test('should create user', async ({ request }) => {
-    const response = await request.post('/api/users', {
-      data: {
-        name: 'John Doe',
-        email: 'john@example.com',
-        role: 'user',
-      },
+    test('should create user', async ({ request }) => {
+        const response = await request.post('/api/users', {
+            data: {
+                name: 'John Doe',
+                email: 'john@example.com',
+                role: 'user',
+            },
+        });
+
+        expect(response.status()).toBe(201);
+
+        const user = await response.json();
+        expect(user.id).toBeDefined();
+        expect(user.name).toBe('John Doe');
+        expect(user.email).toBe('john@example.com');
     });
 
-    expect(response.status()).toBe(201);
+    test('should get user by ID', async ({ request }) => {
+        // Create user first
+        const createResponse = await request.post('/api/users', {
+            data: { name: 'Jane Doe', email: 'jane@example.com' },
+        });
+        const { id } = await createResponse.json();
 
-    const user = await response.json();
-    expect(user.id).toBeDefined();
-    expect(user.name).toBe('John Doe');
-    expect(user.email).toBe('john@example.com');
-  });
+        // Get user
+        const getResponse = await request.get(`/api/users/${id}`);
+        expect(getResponse.status()).toBe(200);
 
-  test('should get user by ID', async ({ request }) => {
-    // Create user first
-    const createResponse = await request.post('/api/users', {
-      data: { name: 'Jane Doe', email: 'jane@example.com' },
-    });
-    const { id } = await createResponse.json();
-
-    // Get user
-    const getResponse = await request.get(`/api/users/${id}`);
-    expect(getResponse.status()).toBe(200);
-
-    const user = await getResponse.json();
-    expect(user.id).toBe(id);
-    expect(user.name).toBe('Jane Doe');
-  });
-
-  test('should return 404 for non-existent user', async ({ request }) => {
-    const response = await request.get('/api/users/non-existent-id');
-    expect(response.status()).toBe(404);
-
-    const error = await response.json();
-    expect(error.code).toBe('USER_NOT_FOUND');
-  });
-
-  test('should validate required fields', async ({ request }) => {
-    const response = await request.post('/api/users', {
-      data: { name: 'Missing Email' }, // email is required
+        const user = await getResponse.json();
+        expect(user.id).toBe(id);
+        expect(user.name).toBe('Jane Doe');
     });
 
-    expect(response.status()).toBe(400);
+    test('should return 404 for non-existent user', async ({ request }) => {
+        const response = await request.get('/api/users/non-existent-id');
+        expect(response.status()).toBe(404);
 
-    const error = await response.json();
-    expect(error.code).toBe('VALIDATION_ERROR');
-    expect(error.details).toContainEqual(expect.objectContaining({ field: 'email', message: expect.any(String) }));
-  });
+        const error = await response.json();
+        expect(error.code).toBe('USER_NOT_FOUND');
+    });
+
+    test('should validate required fields', async ({ request }) => {
+        const response = await request.post('/api/users', {
+            data: { name: 'Missing Email' }, // email is required
+        });
+
+        expect(response.status()).toBe(400);
+
+        const error = await response.json();
+        expect(error.code).toBe('VALIDATION_ERROR');
+        expect(error.details).toContainEqual(expect.objectContaining({ field: 'email', message: expect.any(String) }));
+    });
 });
 ```
 
@@ -125,69 +125,69 @@ import { z } from 'zod';
 
 // Define schema for type safety and validation
 const OrderSchema = z.object({
-  id: z.string().uuid(),
-  userId: z.string(),
-  items: z.array(
-    z.object({
-      productId: z.string(),
-      quantity: z.number().positive(),
-      price: z.number().positive(),
-    }),
-  ),
-  total: z.number().positive(),
-  status: z.enum(['pending', 'processing', 'shipped', 'delivered']),
-  createdAt: z.string().datetime(),
+    id: z.string().uuid(),
+    userId: z.string(),
+    items: z.array(
+        z.object({
+            productId: z.string(),
+            quantity: z.number().positive(),
+            price: z.number().positive(),
+        })
+    ),
+    total: z.number().positive(),
+    status: z.enum(['pending', 'processing', 'shipped', 'delivered']),
+    createdAt: z.string().datetime(),
 });
 
 type Order = z.infer<typeof OrderSchema>;
 
 test.describe('Orders API', () => {
-  test('should create order with schema validation', async ({ apiRequest }) => {
-    const { status, body } = await apiRequest<Order>({
-      method: 'POST',
-      path: '/api/orders',
-      body: {
-        userId: 'user-123',
-        items: [
-          { productId: 'prod-1', quantity: 2, price: 29.99 },
-          { productId: 'prod-2', quantity: 1, price: 49.99 },
-        ],
-      },
-      validateSchema: OrderSchema, // Validates response matches schema
+    test('should create order with schema validation', async ({ apiRequest }) => {
+        const { status, body } = await apiRequest<Order>({
+            method: 'POST',
+            path: '/api/orders',
+            body: {
+                userId: 'user-123',
+                items: [
+                    { productId: 'prod-1', quantity: 2, price: 29.99 },
+                    { productId: 'prod-2', quantity: 1, price: 49.99 },
+                ],
+            },
+            validateSchema: OrderSchema, // Validates response matches schema
+        });
+
+        expect(status).toBe(201);
+        expect(body.id).toBeDefined();
+        expect(body.status).toBe('pending');
+        expect(body.total).toBe(109.97); // 2*29.99 + 49.99
     });
 
-    expect(status).toBe(201);
-    expect(body.id).toBeDefined();
-    expect(body.status).toBe('pending');
-    expect(body.total).toBe(109.97); // 2*29.99 + 49.99
-  });
+    test('should handle server errors with retry', async ({ apiRequest }) => {
+        // apiRequest retries 5xx errors by default
+        const { status, body } = await apiRequest({
+            method: 'GET',
+            path: '/api/orders/order-123',
+            retryConfig: {
+                maxRetries: 3,
+                retryDelay: 1000,
+            },
+        });
 
-  test('should handle server errors with retry', async ({ apiRequest }) => {
-    // apiRequest retries 5xx errors by default
-    const { status, body } = await apiRequest({
-      method: 'GET',
-      path: '/api/orders/order-123',
-      retryConfig: {
-        maxRetries: 3,
-        retryDelay: 1000,
-      },
+        expect(status).toBe(200);
     });
 
-    expect(status).toBe(200);
-  });
+    test('should list orders with pagination', async ({ apiRequest }) => {
+        const { status, body } = await apiRequest<{ orders: Order[]; total: number; page: number }>({
+            method: 'GET',
+            path: '/api/orders',
+            params: { page: 1, limit: 10, status: 'pending' },
+        });
 
-  test('should list orders with pagination', async ({ apiRequest }) => {
-    const { status, body } = await apiRequest<{ orders: Order[]; total: number; page: number }>({
-      method: 'GET',
-      path: '/api/orders',
-      params: { page: 1, limit: 10, status: 'pending' },
+        expect(status).toBe(200);
+        expect(body.orders).toHaveLength(10);
+        expect(body.total).toBeGreaterThan(10);
+        expect(body.page).toBe(1);
     });
-
-    expect(status).toBe(200);
-    expect(body.orders).toHaveLength(10);
-    expect(body.total).toBeGreaterThan(10);
-    expect(body.page).toBe(1);
-  });
 });
 ```
 
@@ -210,82 +210,82 @@ test.describe('Orders API', () => {
 import { test, expect } from '@seontechnologies/playwright-utils/fixtures';
 
 test.describe('Service Integration', () => {
-  const USER_SERVICE_URL = process.env.USER_SERVICE_URL || 'http://localhost:3001';
-  const ORDER_SERVICE_URL = process.env.ORDER_SERVICE_URL || 'http://localhost:3002';
-  const INVENTORY_SERVICE_URL = process.env.INVENTORY_SERVICE_URL || 'http://localhost:3003';
+    const USER_SERVICE_URL = process.env.USER_SERVICE_URL || 'http://localhost:3001';
+    const ORDER_SERVICE_URL = process.env.ORDER_SERVICE_URL || 'http://localhost:3002';
+    const INVENTORY_SERVICE_URL = process.env.INVENTORY_SERVICE_URL || 'http://localhost:3003';
 
-  test('order service should validate user exists', async ({ apiRequest }) => {
-    // Create user in user-service
-    const { body: user } = await apiRequest({
-      method: 'POST',
-      path: '/api/users',
-      baseUrl: USER_SERVICE_URL,
-      body: { name: 'Test User', email: 'test@example.com' },
+    test('order service should validate user exists', async ({ apiRequest }) => {
+        // Create user in user-service
+        const { body: user } = await apiRequest({
+            method: 'POST',
+            path: '/api/users',
+            baseUrl: USER_SERVICE_URL,
+            body: { name: 'Test User', email: 'test@example.com' },
+        });
+
+        // Create order in order-service (should validate user via user-service)
+        const { status, body: order } = await apiRequest({
+            method: 'POST',
+            path: '/api/orders',
+            baseUrl: ORDER_SERVICE_URL,
+            body: {
+                userId: user.id,
+                items: [{ productId: 'prod-1', quantity: 1 }],
+            },
+        });
+
+        expect(status).toBe(201);
+        expect(order.userId).toBe(user.id);
     });
 
-    // Create order in order-service (should validate user via user-service)
-    const { status, body: order } = await apiRequest({
-      method: 'POST',
-      path: '/api/orders',
-      baseUrl: ORDER_SERVICE_URL,
-      body: {
-        userId: user.id,
-        items: [{ productId: 'prod-1', quantity: 1 }],
-      },
+    test('order service should reject invalid user', async ({ apiRequest }) => {
+        const { status, body } = await apiRequest({
+            method: 'POST',
+            path: '/api/orders',
+            baseUrl: ORDER_SERVICE_URL,
+            body: {
+                userId: 'non-existent-user',
+                items: [{ productId: 'prod-1', quantity: 1 }],
+            },
+        });
+
+        expect(status).toBe(400);
+        expect(body.code).toBe('INVALID_USER');
     });
 
-    expect(status).toBe(201);
-    expect(order.userId).toBe(user.id);
-  });
+    test('order should decrease inventory', async ({ apiRequest, recurse }) => {
+        // Get initial inventory
+        const { body: initialInventory } = await apiRequest({
+            method: 'GET',
+            path: '/api/inventory/prod-1',
+            baseUrl: INVENTORY_SERVICE_URL,
+        });
 
-  test('order service should reject invalid user', async ({ apiRequest }) => {
-    const { status, body } = await apiRequest({
-      method: 'POST',
-      path: '/api/orders',
-      baseUrl: ORDER_SERVICE_URL,
-      body: {
-        userId: 'non-existent-user',
-        items: [{ productId: 'prod-1', quantity: 1 }],
-      },
+        // Create order
+        await apiRequest({
+            method: 'POST',
+            path: '/api/orders',
+            baseUrl: ORDER_SERVICE_URL,
+            body: {
+                userId: 'user-123',
+                items: [{ productId: 'prod-1', quantity: 2 }],
+            },
+        });
+
+        // Poll for inventory update (eventual consistency)
+        const { body: updatedInventory } = await recurse(
+            () =>
+                apiRequest({
+                    method: 'GET',
+                    path: '/api/inventory/prod-1',
+                    baseUrl: INVENTORY_SERVICE_URL,
+                }),
+            (response) => response.body.quantity === initialInventory.quantity - 2,
+            { timeout: 10000, interval: 500 }
+        );
+
+        expect(updatedInventory.quantity).toBe(initialInventory.quantity - 2);
     });
-
-    expect(status).toBe(400);
-    expect(body.code).toBe('INVALID_USER');
-  });
-
-  test('order should decrease inventory', async ({ apiRequest, recurse }) => {
-    // Get initial inventory
-    const { body: initialInventory } = await apiRequest({
-      method: 'GET',
-      path: '/api/inventory/prod-1',
-      baseUrl: INVENTORY_SERVICE_URL,
-    });
-
-    // Create order
-    await apiRequest({
-      method: 'POST',
-      path: '/api/orders',
-      baseUrl: ORDER_SERVICE_URL,
-      body: {
-        userId: 'user-123',
-        items: [{ productId: 'prod-1', quantity: 2 }],
-      },
-    });
-
-    // Poll for inventory update (eventual consistency)
-    const { body: updatedInventory } = await recurse(
-      () =>
-        apiRequest({
-          method: 'GET',
-          path: '/api/inventory/prod-1',
-          baseUrl: INVENTORY_SERVICE_URL,
-        }),
-      (response) => response.body.quantity === initialInventory.quantity - 2,
-      { timeout: 10000, interval: 500 },
-    );
-
-    expect(updatedInventory.quantity).toBe(initialInventory.quantity - 2);
-  });
 });
 ```
 
@@ -309,8 +309,8 @@ import { test, expect } from '@seontechnologies/playwright-utils/api-request/fix
 const GRAPHQL_ENDPOINT = '/graphql';
 
 test.describe('GraphQL API', () => {
-  test('should query users', async ({ apiRequest }) => {
-    const query = `
+    test('should query users', async ({ apiRequest }) => {
+        const query = `
       query GetUsers($limit: Int) {
         users(limit: $limit) {
           id
@@ -321,24 +321,24 @@ test.describe('GraphQL API', () => {
       }
     `;
 
-    const { status, body } = await apiRequest({
-      method: 'POST',
-      path: GRAPHQL_ENDPOINT,
-      body: {
-        query,
-        variables: { limit: 10 },
-      },
+        const { status, body } = await apiRequest({
+            method: 'POST',
+            path: GRAPHQL_ENDPOINT,
+            body: {
+                query,
+                variables: { limit: 10 },
+            },
+        });
+
+        expect(status).toBe(200);
+        expect(body.errors).toBeUndefined();
+        expect(body.data.users).toHaveLength(10);
+        expect(body.data.users[0]).toHaveProperty('id');
+        expect(body.data.users[0]).toHaveProperty('name');
     });
 
-    expect(status).toBe(200);
-    expect(body.errors).toBeUndefined();
-    expect(body.data.users).toHaveLength(10);
-    expect(body.data.users[0]).toHaveProperty('id');
-    expect(body.data.users[0]).toHaveProperty('name');
-  });
-
-  test('should create user via mutation', async ({ apiRequest }) => {
-    const mutation = `
+    test('should create user via mutation', async ({ apiRequest }) => {
+        const mutation = `
       mutation CreateUser($input: CreateUserInput!) {
         createUser(input: $input) {
           id
@@ -348,28 +348,28 @@ test.describe('GraphQL API', () => {
       }
     `;
 
-    const { status, body } = await apiRequest({
-      method: 'POST',
-      path: GRAPHQL_ENDPOINT,
-      body: {
-        query: mutation,
-        variables: {
-          input: {
-            name: 'GraphQL User',
-            email: 'graphql@example.com',
-          },
-        },
-      },
+        const { status, body } = await apiRequest({
+            method: 'POST',
+            path: GRAPHQL_ENDPOINT,
+            body: {
+                query: mutation,
+                variables: {
+                    input: {
+                        name: 'GraphQL User',
+                        email: 'graphql@example.com',
+                    },
+                },
+            },
+        });
+
+        expect(status).toBe(200);
+        expect(body.errors).toBeUndefined();
+        expect(body.data.createUser.id).toBeDefined();
+        expect(body.data.createUser.name).toBe('GraphQL User');
     });
 
-    expect(status).toBe(200);
-    expect(body.errors).toBeUndefined();
-    expect(body.data.createUser.id).toBeDefined();
-    expect(body.data.createUser.name).toBe('GraphQL User');
-  });
-
-  test('should handle GraphQL errors', async ({ apiRequest }) => {
-    const query = `
+    test('should handle GraphQL errors', async ({ apiRequest }) => {
+        const query = `
       query GetUser($id: ID!) {
         user(id: $id) {
           id
@@ -378,23 +378,23 @@ test.describe('GraphQL API', () => {
       }
     `;
 
-    const { status, body } = await apiRequest({
-      method: 'POST',
-      path: GRAPHQL_ENDPOINT,
-      body: {
-        query,
-        variables: { id: 'non-existent' },
-      },
+        const { status, body } = await apiRequest({
+            method: 'POST',
+            path: GRAPHQL_ENDPOINT,
+            body: {
+                query,
+                variables: { id: 'non-existent' },
+            },
+        });
+
+        expect(status).toBe(200); // GraphQL returns 200 even for errors
+        expect(body.errors).toBeDefined();
+        expect(body.errors[0].message).toContain('not found');
+        expect(body.data.user).toBeNull();
     });
 
-    expect(status).toBe(200); // GraphQL returns 200 even for errors
-    expect(body.errors).toBeDefined();
-    expect(body.errors[0].message).toContain('not found');
-    expect(body.data.user).toBeNull();
-  });
-
-  test('should handle validation errors', async ({ apiRequest }) => {
-    const mutation = `
+    test('should handle validation errors', async ({ apiRequest }) => {
+        const mutation = `
       mutation CreateUser($input: CreateUserInput!) {
         createUser(input: $input) {
           id
@@ -402,24 +402,24 @@ test.describe('GraphQL API', () => {
       }
     `;
 
-    const { status, body } = await apiRequest({
-      method: 'POST',
-      path: GRAPHQL_ENDPOINT,
-      body: {
-        query: mutation,
-        variables: {
-          input: {
-            name: '', // Invalid: empty name
-            email: 'invalid-email', // Invalid: bad format
-          },
-        },
-      },
-    });
+        const { status, body } = await apiRequest({
+            method: 'POST',
+            path: GRAPHQL_ENDPOINT,
+            body: {
+                query: mutation,
+                variables: {
+                    input: {
+                        name: '', // Invalid: empty name
+                        email: 'invalid-email', // Invalid: bad format
+                    },
+                },
+            },
+        });
 
-    expect(status).toBe(200);
-    expect(body.errors).toBeDefined();
-    expect(body.errors[0].extensions.code).toBe('BAD_USER_INPUT');
-  });
+        expect(status).toBe(200);
+        expect(body.errors).toBeDefined();
+        expect(body.errors[0].extensions.code).toBe('BAD_USER_INPUT');
+    });
 });
 ```
 
@@ -441,84 +441,84 @@ test.describe('GraphQL API', () => {
 import { test, expect } from '@seontechnologies/playwright-utils/fixtures';
 
 test.describe('Orders with Data Setup', () => {
-  let testUser: { id: string; email: string };
-  let testProducts: Array<{ id: string; name: string; price: number }>;
+    let testUser: { id: string; email: string };
+    let testProducts: Array<{ id: string; name: string; price: number }>;
 
-  test.beforeAll(async ({ request }) => {
-    // Seed user via API
-    const userResponse = await request.post('/api/users', {
-      data: {
-        name: 'Test User',
-        email: `test-${Date.now()}@example.com`,
-      },
-    });
-    testUser = await userResponse.json();
+    test.beforeAll(async ({ request }) => {
+        // Seed user via API
+        const userResponse = await request.post('/api/users', {
+            data: {
+                name: 'Test User',
+                email: `test-${Date.now()}@example.com`,
+            },
+        });
+        testUser = await userResponse.json();
 
-    // Seed products via API
-    testProducts = [];
-    for (const product of [
-      { name: 'Widget A', price: 29.99 },
-      { name: 'Widget B', price: 49.99 },
-      { name: 'Widget C', price: 99.99 },
-    ]) {
-      const productResponse = await request.post('/api/products', {
-        data: product,
-      });
-      testProducts.push(await productResponse.json());
-    }
-  });
-
-  test.afterAll(async ({ request }) => {
-    // Cleanup via API
-    if (testUser?.id) {
-      await request.delete(`/api/users/${testUser.id}`);
-    }
-    for (const product of testProducts) {
-      await request.delete(`/api/products/${product.id}`);
-    }
-  });
-
-  test('should create order with seeded data', async ({ apiRequest }) => {
-    const { status, body } = await apiRequest({
-      method: 'POST',
-      path: '/api/orders',
-      body: {
-        userId: testUser.id,
-        items: [
-          { productId: testProducts[0].id, quantity: 2 },
-          { productId: testProducts[1].id, quantity: 1 },
-        ],
-      },
+        // Seed products via API
+        testProducts = [];
+        for (const product of [
+            { name: 'Widget A', price: 29.99 },
+            { name: 'Widget B', price: 49.99 },
+            { name: 'Widget C', price: 99.99 },
+        ]) {
+            const productResponse = await request.post('/api/products', {
+                data: product,
+            });
+            testProducts.push(await productResponse.json());
+        }
     });
 
-    expect(status).toBe(201);
-    expect(body.userId).toBe(testUser.id);
-    expect(body.items).toHaveLength(2);
-    expect(body.total).toBe(2 * 29.99 + 49.99);
-  });
-
-  test('should list user orders', async ({ apiRequest }) => {
-    // Create an order first
-    await apiRequest({
-      method: 'POST',
-      path: '/api/orders',
-      body: {
-        userId: testUser.id,
-        items: [{ productId: testProducts[2].id, quantity: 1 }],
-      },
+    test.afterAll(async ({ request }) => {
+        // Cleanup via API
+        if (testUser?.id) {
+            await request.delete(`/api/users/${testUser.id}`);
+        }
+        for (const product of testProducts) {
+            await request.delete(`/api/products/${product.id}`);
+        }
     });
 
-    // List orders for user
-    const { status, body } = await apiRequest({
-      method: 'GET',
-      path: '/api/orders',
-      params: { userId: testUser.id },
+    test('should create order with seeded data', async ({ apiRequest }) => {
+        const { status, body } = await apiRequest({
+            method: 'POST',
+            path: '/api/orders',
+            body: {
+                userId: testUser.id,
+                items: [
+                    { productId: testProducts[0].id, quantity: 2 },
+                    { productId: testProducts[1].id, quantity: 1 },
+                ],
+            },
+        });
+
+        expect(status).toBe(201);
+        expect(body.userId).toBe(testUser.id);
+        expect(body.items).toHaveLength(2);
+        expect(body.total).toBe(2 * 29.99 + 49.99);
     });
 
-    expect(status).toBe(200);
-    expect(body.orders.length).toBeGreaterThanOrEqual(1);
-    expect(body.orders.every((o: any) => o.userId === testUser.id)).toBe(true);
-  });
+    test('should list user orders', async ({ apiRequest }) => {
+        // Create an order first
+        await apiRequest({
+            method: 'POST',
+            path: '/api/orders',
+            body: {
+                userId: testUser.id,
+                items: [{ productId: testProducts[2].id, quantity: 1 }],
+            },
+        });
+
+        // List orders for user
+        const { status, body } = await apiRequest({
+            method: 'GET',
+            path: '/api/orders',
+            params: { userId: testUser.id },
+        });
+
+        expect(status).toBe(200);
+        expect(body.orders.length).toBeGreaterThanOrEqual(1);
+        expect(body.orders.every((o: any) => o.userId === testUser.id)).toBe(true);
+    });
 });
 ```
 
@@ -540,83 +540,83 @@ test.describe('Orders with Data Setup', () => {
 import { test, expect } from '@seontechnologies/playwright-utils/fixtures';
 
 test.describe('Background Jobs', () => {
-  test('should process export job', async ({ apiRequest, recurse }) => {
-    // Trigger export job
-    const { body: job } = await apiRequest({
-      method: 'POST',
-      path: '/api/exports',
-      body: {
-        type: 'users',
-        format: 'csv',
-        filters: { createdAfter: '2024-01-01' },
-      },
+    test('should process export job', async ({ apiRequest, recurse }) => {
+        // Trigger export job
+        const { body: job } = await apiRequest({
+            method: 'POST',
+            path: '/api/exports',
+            body: {
+                type: 'users',
+                format: 'csv',
+                filters: { createdAfter: '2024-01-01' },
+            },
+        });
+
+        expect(job.id).toBeDefined();
+        expect(job.status).toBe('pending');
+
+        // Poll until job completes
+        const { body: completedJob } = await recurse(
+            () => apiRequest({ method: 'GET', path: `/api/exports/${job.id}` }),
+            (response) => response.body.status === 'completed',
+            {
+                timeout: 60000,
+                interval: 2000,
+                log: `Waiting for export job ${job.id} to complete`,
+            }
+        );
+
+        expect(completedJob.status).toBe('completed');
+        expect(completedJob.downloadUrl).toBeDefined();
+        expect(completedJob.recordCount).toBeGreaterThan(0);
     });
 
-    expect(job.id).toBeDefined();
-    expect(job.status).toBe('pending');
+    test('should handle job failure gracefully', async ({ apiRequest, recurse }) => {
+        // Trigger job that will fail
+        const { body: job } = await apiRequest({
+            method: 'POST',
+            path: '/api/exports',
+            body: {
+                type: 'invalid-type', // This will cause failure
+                format: 'csv',
+            },
+        });
 
-    // Poll until job completes
-    const { body: completedJob } = await recurse(
-      () => apiRequest({ method: 'GET', path: `/api/exports/${job.id}` }),
-      (response) => response.body.status === 'completed',
-      {
-        timeout: 60000,
-        interval: 2000,
-        log: `Waiting for export job ${job.id} to complete`,
-      },
-    );
+        // Poll until job fails
+        const { body: failedJob } = await recurse(
+            () => apiRequest({ method: 'GET', path: `/api/exports/${job.id}` }),
+            (response) => ['completed', 'failed'].includes(response.body.status),
+            { timeout: 30000 }
+        );
 
-    expect(completedJob.status).toBe('completed');
-    expect(completedJob.downloadUrl).toBeDefined();
-    expect(completedJob.recordCount).toBeGreaterThan(0);
-  });
-
-  test('should handle job failure gracefully', async ({ apiRequest, recurse }) => {
-    // Trigger job that will fail
-    const { body: job } = await apiRequest({
-      method: 'POST',
-      path: '/api/exports',
-      body: {
-        type: 'invalid-type', // This will cause failure
-        format: 'csv',
-      },
+        expect(failedJob.status).toBe('failed');
+        expect(failedJob.error).toBeDefined();
+        expect(failedJob.error.code).toBe('INVALID_EXPORT_TYPE');
     });
 
-    // Poll until job fails
-    const { body: failedJob } = await recurse(
-      () => apiRequest({ method: 'GET', path: `/api/exports/${job.id}` }),
-      (response) => ['completed', 'failed'].includes(response.body.status),
-      { timeout: 30000 },
-    );
+    test('should process webhook delivery', async ({ apiRequest, recurse }) => {
+        // Trigger action that sends webhook
+        const { body: order } = await apiRequest({
+            method: 'POST',
+            path: '/api/orders',
+            body: {
+                userId: 'user-123',
+                items: [{ productId: 'prod-1', quantity: 1 }],
+                webhookUrl: 'https://webhook.site/test-endpoint',
+            },
+        });
 
-    expect(failedJob.status).toBe('failed');
-    expect(failedJob.error).toBeDefined();
-    expect(failedJob.error.code).toBe('INVALID_EXPORT_TYPE');
-  });
+        // Poll for webhook delivery status
+        const { body: webhookStatus } = await recurse(
+            () => apiRequest({ method: 'GET', path: `/api/webhooks/order/${order.id}` }),
+            (response) => response.body.delivered === true,
+            { timeout: 30000, interval: 1000 }
+        );
 
-  test('should process webhook delivery', async ({ apiRequest, recurse }) => {
-    // Trigger action that sends webhook
-    const { body: order } = await apiRequest({
-      method: 'POST',
-      path: '/api/orders',
-      body: {
-        userId: 'user-123',
-        items: [{ productId: 'prod-1', quantity: 1 }],
-        webhookUrl: 'https://webhook.site/test-endpoint',
-      },
+        expect(webhookStatus.delivered).toBe(true);
+        expect(webhookStatus.deliveredAt).toBeDefined();
+        expect(webhookStatus.responseStatus).toBe(200);
     });
-
-    // Poll for webhook delivery status
-    const { body: webhookStatus } = await recurse(
-      () => apiRequest({ method: 'GET', path: `/api/webhooks/order/${order.id}` }),
-      (response) => response.body.delivered === true,
-      { timeout: 30000, interval: 1000 },
-    );
-
-    expect(webhookStatus.delivered).toBe(true);
-    expect(webhookStatus.deliveredAt).toBeDefined();
-    expect(webhookStatus.responseStatus).toBe(200);
-  });
 });
 ```
 
@@ -638,72 +638,72 @@ test.describe('Background Jobs', () => {
 import { test, expect } from '@seontechnologies/playwright-utils/fixtures';
 
 test.describe('Authenticated API Tests', () => {
-  let authToken: string;
+    let authToken: string;
 
-  test.beforeAll(async ({ request }) => {
-    // Get token via API (no browser!)
-    const response = await request.post('/api/auth/login', {
-      data: {
-        email: process.env.TEST_USER_EMAIL,
-        password: process.env.TEST_USER_PASSWORD,
-      },
+    test.beforeAll(async ({ request }) => {
+        // Get token via API (no browser!)
+        const response = await request.post('/api/auth/login', {
+            data: {
+                email: process.env.TEST_USER_EMAIL,
+                password: process.env.TEST_USER_PASSWORD,
+            },
+        });
+
+        const { token } = await response.json();
+        authToken = token;
     });
 
-    const { token } = await response.json();
-    authToken = token;
-  });
+    test('should access protected endpoint with token', async ({ apiRequest }) => {
+        const { status, body } = await apiRequest({
+            method: 'GET',
+            path: '/api/me',
+            headers: {
+                Authorization: `Bearer ${authToken}`,
+            },
+        });
 
-  test('should access protected endpoint with token', async ({ apiRequest }) => {
-    const { status, body } = await apiRequest({
-      method: 'GET',
-      path: '/api/me',
-      headers: {
-        Authorization: `Bearer ${authToken}`,
-      },
+        expect(status).toBe(200);
+        expect(body.email).toBe(process.env.TEST_USER_EMAIL);
     });
 
-    expect(status).toBe(200);
-    expect(body.email).toBe(process.env.TEST_USER_EMAIL);
-  });
+    test('should reject request without token', async ({ apiRequest }) => {
+        const { status, body } = await apiRequest({
+            method: 'GET',
+            path: '/api/me',
+            // No Authorization header
+        });
 
-  test('should reject request without token', async ({ apiRequest }) => {
-    const { status, body } = await apiRequest({
-      method: 'GET',
-      path: '/api/me',
-      // No Authorization header
+        expect(status).toBe(401);
+        expect(body.code).toBe('UNAUTHORIZED');
     });
 
-    expect(status).toBe(401);
-    expect(body.code).toBe('UNAUTHORIZED');
-  });
+    test('should reject expired token', async ({ apiRequest }) => {
+        const expiredToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...'; // Expired token
 
-  test('should reject expired token', async ({ apiRequest }) => {
-    const expiredToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...'; // Expired token
+        const { status, body } = await apiRequest({
+            method: 'GET',
+            path: '/api/me',
+            headers: {
+                Authorization: `Bearer ${expiredToken}`,
+            },
+        });
 
-    const { status, body } = await apiRequest({
-      method: 'GET',
-      path: '/api/me',
-      headers: {
-        Authorization: `Bearer ${expiredToken}`,
-      },
+        expect(status).toBe(401);
+        expect(body.code).toBe('TOKEN_EXPIRED');
     });
 
-    expect(status).toBe(401);
-    expect(body.code).toBe('TOKEN_EXPIRED');
-  });
+    test('should handle role-based access', async ({ apiRequest }) => {
+        // User token (non-admin)
+        const { status } = await apiRequest({
+            method: 'GET',
+            path: '/api/admin/users',
+            headers: {
+                Authorization: `Bearer ${authToken}`,
+            },
+        });
 
-  test('should handle role-based access', async ({ apiRequest }) => {
-    // User token (non-admin)
-    const { status } = await apiRequest({
-      method: 'GET',
-      path: '/api/admin/users',
-      headers: {
-        Authorization: `Bearer ${authToken}`,
-      },
+        expect(status).toBe(403); // Forbidden for non-admin
     });
-
-    expect(status).toBe(403); // Forbidden for non-admin
-  });
 });
 ```
 
@@ -725,47 +725,47 @@ test.describe('Authenticated API Tests', () => {
 import { test, expect } from '@seontechnologies/playwright-utils/api-request/fixtures';
 
 test.describe('API Tests with Generated Operations', () => {
-  test('should create entity with full type safety', async ({ apiRequest }) => {
-    // Operation object from code generator — contains path, method, and type info
-    const { status, body } = await apiRequest({
-      operation: createEntityOp({ workspaceId }),
-      headers: getHeaders(workspaceId),
-      body: entityInput, // Compile-time typed from operation.request
+    test('should create entity with full type safety', async ({ apiRequest }) => {
+        // Operation object from code generator — contains path, method, and type info
+        const { status, body } = await apiRequest({
+            operation: createEntityOp({ workspaceId }),
+            headers: getHeaders(workspaceId),
+            body: entityInput, // Compile-time typed from operation.request
+        });
+
+        expect(status).toBe(201);
+        expect(body.id).toBeDefined(); // body typed from operation.response
     });
 
-    expect(status).toBe(201);
-    expect(body.id).toBeDefined(); // body typed from operation.response
-  });
+    test('should list with typed query parameters', async ({ apiRequest }) => {
+        // query field replaces manual string concatenation
+        const { body } = await apiRequest({
+            operation: listEntitiesOp({ workspaceId }),
+            headers: getHeaders(workspaceId),
+            query: { page: 0, page_size: 10, status: 'active' },
+        });
 
-  test('should list with typed query parameters', async ({ apiRequest }) => {
-    // query field replaces manual string concatenation
-    const { body } = await apiRequest({
-      operation: listEntitiesOp({ workspaceId }),
-      headers: getHeaders(workspaceId),
-      query: { page: 0, page_size: 10, status: 'active' },
+        expect(body.items).toHaveLength(10);
+        expect(body.total).toBeGreaterThan(10);
     });
 
-    expect(body.items).toHaveLength(10);
-    expect(body.total).toBeGreaterThan(10);
-  });
+    test('should poll async operation until complete', async ({ apiRequest, recurse }) => {
+        const { body: job } = await apiRequest({
+            operation: startJobOp({ workspaceId }),
+            headers: getHeaders(workspaceId),
+            body: { type: 'export' },
+        });
 
-  test('should poll async operation until complete', async ({ apiRequest, recurse }) => {
-    const { body: job } = await apiRequest({
-      operation: startJobOp({ workspaceId }),
-      headers: getHeaders(workspaceId),
-      body: { type: 'export' },
+        await recurse(
+            async () =>
+                apiRequest({
+                    operation: getJobOp({ workspaceId, jobId: job.id }),
+                    headers: getHeaders(workspaceId),
+                }),
+            (res) => res.body.status === 'completed',
+            { timeout: 60000, interval: 2000 }
+        );
     });
-
-    await recurse(
-      async () =>
-        apiRequest({
-          operation: getJobOp({ workspaceId, jobId: job.id }),
-          headers: getHeaders(workspaceId),
-        }),
-      (res) => res.body.status === 'completed',
-      { timeout: 60000, interval: 2000 },
-    );
-  });
 });
 ```
 
@@ -786,26 +786,26 @@ test.describe('API Tests with Generated Operations', () => {
 import { defineConfig } from '@playwright/test';
 
 export default defineConfig({
-  testDir: './tests/api',
+    testDir: './tests/api',
 
-  // No browser needed for API tests
-  use: {
-    baseURL: process.env.API_URL || 'http://localhost:3000',
-    extraHTTPHeaders: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
+    // No browser needed for API tests
+    use: {
+        baseURL: process.env.API_URL || 'http://localhost:3000',
+        extraHTTPHeaders: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+        },
     },
-  },
 
-  // Faster without browser overhead
-  timeout: 30000,
+    // Faster without browser overhead
+    timeout: 30000,
 
-  // Run API tests in parallel
-  workers: 4,
-  fullyParallel: true,
+    // Run API tests in parallel
+    workers: 4,
+    fullyParallel: true,
 
-  // No screenshots/traces needed for API tests
-  reporter: [['html'], ['json', { outputFile: 'api-test-results.json' }]],
+    // No screenshots/traces needed for API tests
+    reporter: [['html'], ['json', { outputFile: 'api-test-results.json' }]],
 });
 ```
 
@@ -814,23 +814,23 @@ export default defineConfig({
 ```typescript
 // playwright.config.ts
 export default defineConfig({
-  projects: [
-    {
-      name: 'api',
-      testDir: './tests/api',
-      use: {
-        baseURL: process.env.API_URL,
-      },
-    },
-    {
-      name: 'e2e',
-      testDir: './tests/e2e',
-      use: {
-        baseURL: process.env.APP_URL,
-        ...devices['Desktop Chrome'],
-      },
-    },
-  ],
+    projects: [
+        {
+            name: 'api',
+            testDir: './tests/api',
+            use: {
+                baseURL: process.env.API_URL,
+            },
+        },
+        {
+            name: 'e2e',
+            testDir: './tests/e2e',
+            use: {
+                baseURL: process.env.APP_URL,
+                ...devices['Desktop Chrome'],
+            },
+        },
+    ],
 });
 ```
 
@@ -862,10 +862,10 @@ export default defineConfig({
 ```typescript
 // Bad: Testing API through UI
 test('validate user creation', async ({ page }) => {
-  await page.goto('/admin/users');
-  await page.fill('#name', 'John');
-  await page.click('#submit');
-  await expect(page.getByText('User created')).toBeVisible();
+    await page.goto('/admin/users');
+    await page.fill('#name', 'John');
+    await page.click('#submit');
+    await expect(page.getByText('User created')).toBeVisible();
 });
 ```
 
@@ -874,13 +874,13 @@ test('validate user creation', async ({ page }) => {
 ```typescript
 // Good: Direct API test
 test('validate user creation', async ({ apiRequest }) => {
-  const { status, body } = await apiRequest({
-    method: 'POST',
-    path: '/api/users',
-    body: { name: 'John' },
-  });
-  expect(status).toBe(201);
-  expect(body.id).toBeDefined();
+    const { status, body } = await apiRequest({
+        method: 'POST',
+        path: '/api/users',
+        body: { name: 'John' },
+    });
+    expect(status).toBe(201);
+    expect(body.id).toBeDefined();
 });
 ```
 
@@ -896,20 +896,20 @@ test('validate user creation', async ({ apiRequest }) => {
 ```typescript
 // Good: Explicit API test suite
 test.describe('Users API', () => {
-  test('creates user', async ({ apiRequest }) => {
-    /* ... */
-  });
-  test('handles duplicate email', async ({ apiRequest }) => {
-    /* ... */
-  });
-  test('validates required fields', async ({ apiRequest }) => {
-    /* ... */
-  });
-  test('handles malformed JSON', async ({ apiRequest }) => {
-    /* ... */
-  });
-  test('rate limits requests', async ({ apiRequest }) => {
-    /* ... */
-  });
+    test('creates user', async ({ apiRequest }) => {
+        /* ... */
+    });
+    test('handles duplicate email', async ({ apiRequest }) => {
+        /* ... */
+    });
+    test('validates required fields', async ({ apiRequest }) => {
+        /* ... */
+    });
+    test('handles malformed JSON', async ({ apiRequest }) => {
+        /* ... */
+    });
+    test('rate limits requests', async ({ apiRequest }) => {
+        /* ... */
+    });
 });
 ```

@@ -71,21 +71,21 @@ Ensure all tests are designed to **fail before implementation** (TDD red phase).
 
 - **If `{outputFile}` does not exist** (first save), create it with YAML frontmatter:
 
-  ```yaml
-  ---
-  stepsCompleted: ['step-03-test-strategy']
-  lastStep: 'step-03-test-strategy'
-  lastSaved: '{date}'
-  ---
-  ```
+    ```yaml
+    ---
+    stepsCompleted: ['step-03-test-strategy']
+    lastStep: 'step-03-test-strategy'
+    lastSaved: '{date}'
+    ---
+    ```
 
-  Then write this step's output below the frontmatter.
+    Then write this step's output below the frontmatter.
 
 - **If `{outputFile}` already exists**, update:
-  - Add `'step-03-test-strategy'` to `stepsCompleted` array (only if not already present)
-  - Set `lastStep: 'step-03-test-strategy'`
-  - Set `lastSaved: '{date}'`
-  - Append this step's output to the appropriate section.
+    - Add `'step-03-test-strategy'` to `stepsCompleted` array (only if not already present)
+    - Set `lastStep: 'step-03-test-strategy'`
+    - Set `lastSaved: '{date}'`
+    - Append this step's output to the appropriate section.
 
 Load next step: `{nextStepFile}`
 

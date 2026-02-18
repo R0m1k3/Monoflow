@@ -70,21 +70,21 @@ Configure:
 
 - **If `{outputFile}` does not exist** (first save), create it with YAML frontmatter:
 
-  ```yaml
-  ---
-  stepsCompleted: ['step-03-configure-quality-gates']
-  lastStep: 'step-03-configure-quality-gates'
-  lastSaved: '{date}'
-  ---
-  ```
+    ```yaml
+    ---
+    stepsCompleted: ['step-03-configure-quality-gates']
+    lastStep: 'step-03-configure-quality-gates'
+    lastSaved: '{date}'
+    ---
+    ```
 
-  Then write this step's output below the frontmatter.
+    Then write this step's output below the frontmatter.
 
 - **If `{outputFile}` already exists**, update:
-  - Add `'step-03-configure-quality-gates'` to `stepsCompleted` array (only if not already present)
-  - Set `lastStep: 'step-03-configure-quality-gates'`
-  - Set `lastSaved: '{date}'`
-  - Append this step's output to the appropriate section of the document.
+    - Add `'step-03-configure-quality-gates'` to `stepsCompleted` array (only if not already present)
+    - Set `lastStep: 'step-03-configure-quality-gates'`
+    - Set `lastSaved: '{date}'`
+    - Append this step's output to the appropriate section of the document.
 
 Load next step: `{nextStepFile}`
 

@@ -1,7 +1,7 @@
 # Retrospective - Epic Completion Review Instructions
 
-<critical>The workflow execution engine is governed by: {project-root}/_bmad/core/tasks/workflow.xml</critical>
-<critical>You MUST have already loaded and processed: {project-root}/_bmad/bmm/workflows/4-implementation/retrospective/workflow.yaml</critical>
+<critical>The workflow execution engine is governed by: {project-root}/\_bmad/core/tasks/workflow.xml</critical>
+<critical>You MUST have already loaded and processed: {project-root}/\_bmad/bmm/workflows/4-implementation/retrospective/workflow.yaml</critical>
 <critical>Communicate all responses in {communication_language} and language MUST be tailored to {user_skill_level}</critical>
 <critical>Generate all documents in {document_output_language}</critical>
 <critical>⚠️ ABSOLUTELY NO TIME ESTIMATES - NEVER mention hours, days, weeks, months, or ANY time-based predictions. AI has fundamentally changed development speed - what once took teams weeks/months can now be done by one person in hours. DO NOT give ANY time estimates whatsoever.</critical>
@@ -171,7 +171,7 @@ Bob (Scrum Master): "Before we start the team discussion, let me review all the 
 Charlie (Senior Dev): "Good idea - those dev notes always have gold in them."
 </output>
 
-<action>For each story in epic {{epic_number}}, read the complete story file from {implementation_artifacts}/{{epic_number}}-{{story_num}}-*.md</action>
+<action>For each story in epic {{epic_number}}, read the complete story file from {implementation_artifacts}/{{epic_number}}-{{story_num}}-\*.md</action>
 
 <action>Extract and analyze from each story:</action>
 
@@ -366,7 +366,7 @@ Alice (Product Owner): "Good thinking - helps us connect what we learned to what
 <action>Attempt to load next epic using selective loading strategy:</action>
 
 **Try sharded first (more specific):**
-<action>Check if file exists: {planning_artifacts}/epic*/epic-{{next_epic_num}}.md</action>
+<action>Check if file exists: {planning_artifacts}/epic\*/epic-{{next_epic_num}}.md</action>
 
 <check if="sharded epic file found">
   <action>Load {planning_artifacts}/*epic*/epic-{{next_epic_num}}.md</action>
@@ -375,7 +375,7 @@ Alice (Product Owner): "Good thinking - helps us connect what we learned to what
 
 **Fallback to whole document:**
 <check if="sharded epic not found">
-<action>Check if file exists: {planning_artifacts}/epic*.md</action>
+<action>Check if file exists: {planning_artifacts}/epic\*.md</action>
 
   <check if="whole epic file found">
     <action>Load entire epics document</action>
@@ -413,8 +413,8 @@ Alice (Product Owner): "Good thinking - helps us connect what we learned to what
 - Testing infrastructure requirements
 - Deployment or environment setup
 
-  <output>
-Bob (Scrum Master): "Alright, I've reviewed Epic {{next_epic_num}}: '{{next_epic_title}}'"
+    <output>
+  Bob (Scrum Master): "Alright, I've reviewed Epic {{next_epic_num}}: '{{next_epic_title}}'"
 
 Alice (Product Owner): "What are we looking at?"
 
@@ -1379,14 +1379,14 @@ Retrospective document was saved successfully, but {sprint_status_file} may need
 1. **Review retrospective summary**: {implementation_artifacts}/epic-{{epic_number}}-retro-{date}.md
 
 2. **Execute preparation sprint** (Est: {{prep_days}} days)
-   - Complete {{critical_count}} critical path items
-   - Execute {{prep_task_count}} preparation tasks
-   - Verify all action items are in progress
+    - Complete {{critical_count}} critical path items
+    - Execute {{prep_task_count}} preparation tasks
+    - Verify all action items are in progress
 
 3. **Review action items in next standup**
-   - Ensure ownership is clear
-   - Track progress on commitments
-   - Adjust timelines if needed
+    - Ensure ownership is clear
+    - Track progress on commitments
+    - Adjust timelines if needed
 
 {{#if epic_update_needed}} 4. **IMPORTANT: Schedule Epic {{next_epic_num}} planning review session**
 
@@ -1397,10 +1397,10 @@ Retrospective document was saved successfully, but {sprint_status_file} may need
   {{else}}
 
 4. **Begin Epic {{next_epic_num}} when ready**
-   - Start creating stories with SM agent's `create-story`
-   - Epic will be marked as `in-progress` automatically when first story is created
-   - Ensure all critical path items are done first
-     {{/if}}
+    - Start creating stories with SM agent's `create-story`
+    - Epic will be marked as `in-progress` automatically when first story is created
+    - Ensure all critical path items are done first
+      {{/if}}
 
 **Team Performance:**
 Epic {{epic_number}} delivered {{completed_stories}} stories with {{velocity_summary}}. The retrospective surfaced {{insight_count}} key insights and {{significant_discovery_count}} significant discoveries. The team is well-positioned for Epic {{next_epic_num}} success.

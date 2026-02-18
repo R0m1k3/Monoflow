@@ -63,21 +63,21 @@ Add at minimum:
 
 - **If `{progressFile}` does not exist** (first save), create it with YAML frontmatter:
 
-  ```yaml
-  ---
-  stepsCompleted: ['step-04-docs-and-scripts']
-  lastStep: 'step-04-docs-and-scripts'
-  lastSaved: '{date}'
-  ---
-  ```
+    ```yaml
+    ---
+    stepsCompleted: ['step-04-docs-and-scripts']
+    lastStep: 'step-04-docs-and-scripts'
+    lastSaved: '{date}'
+    ---
+    ```
 
-  Then write this step's output below the frontmatter.
+    Then write this step's output below the frontmatter.
 
 - **If `{progressFile}` already exists**, update:
-  - Add `'step-04-docs-and-scripts'` to `stepsCompleted` array (only if not already present)
-  - Set `lastStep: 'step-04-docs-and-scripts'`
-  - Set `lastSaved: '{date}'`
-  - Append this step's output to the appropriate section of the document.
+    - Add `'step-04-docs-and-scripts'` to `stepsCompleted` array (only if not already present)
+    - Set `lastStep: 'step-04-docs-and-scripts'`
+    - Set `lastSaved: '{date}'`
+    - Append this step's output to the appropriate section of the document.
 
 Load next step: `{nextStepFile}`
 

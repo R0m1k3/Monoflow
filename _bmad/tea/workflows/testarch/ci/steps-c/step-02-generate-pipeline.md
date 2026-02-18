@@ -77,21 +77,21 @@ Write the selected pipeline configuration to `{pipelineOutputFile}` (or adjust t
 
 - **If `{outputFile}` does not exist** (first save), create it with YAML frontmatter:
 
-  ```yaml
-  ---
-  stepsCompleted: ['step-02-generate-pipeline']
-  lastStep: 'step-02-generate-pipeline'
-  lastSaved: '{date}'
-  ---
-  ```
+    ```yaml
+    ---
+    stepsCompleted: ['step-02-generate-pipeline']
+    lastStep: 'step-02-generate-pipeline'
+    lastSaved: '{date}'
+    ---
+    ```
 
-  Then write this step's output below the frontmatter.
+    Then write this step's output below the frontmatter.
 
 - **If `{outputFile}` already exists**, update:
-  - Add `'step-02-generate-pipeline'` to `stepsCompleted` array (only if not already present)
-  - Set `lastStep: 'step-02-generate-pipeline'`
-  - Set `lastSaved: '{date}'`
-  - Append this step's output to the appropriate section of the document.
+    - Add `'step-02-generate-pipeline'` to `stepsCompleted` array (only if not already present)
+    - Set `lastStep: 'step-02-generate-pipeline'`
+    - Set `lastSaved: '{date}'`
+    - Append this step's output to the appropriate section of the document.
 
 Load next step: `{nextStepFile}`
 

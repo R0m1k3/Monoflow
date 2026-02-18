@@ -68,4 +68,5 @@ Load, read completely, then execute `{briefWorkflow}` (steps-b/step-01-welcome.m
 ## OUTPUT
 
 **Brief mode produces:**
+
 - `module-brief-{code}.md` — Complete module vision document

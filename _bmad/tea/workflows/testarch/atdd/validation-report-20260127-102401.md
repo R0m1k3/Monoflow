@@ -66,8 +66,8 @@ Standard BMAD config variables treated as valid exceptions: bmb_creations_output
 
 - Templates present: atdd-checklist-template.md
 - Steps with outputFile in frontmatter:
-  - steps-c/step-04-generate-tests.md
-  - steps-v/step-01-validate.md
+    - steps-c/step-04-generate-tests.md
+    - steps-v/step-01-validate.md
 - checklist.md present: YES
 
 ## Validation Design Check

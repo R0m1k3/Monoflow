@@ -68,38 +68,38 @@ const violations = [];
 
 // Check for Math.random()
 if (testFileContent.includes('Math.random()')) {
-  violations.push({
-    file: testFile,
-    line: findLineNumber('Math.random()'),
-    severity: 'HIGH',
-    category: 'random-generation',
-    description: 'Test uses Math.random() - non-deterministic',
-    suggestion: 'Use faker.seed(12345) for deterministic random data',
-  });
+    violations.push({
+        file: testFile,
+        line: findLineNumber('Math.random()'),
+        severity: 'HIGH',
+        category: 'random-generation',
+        description: 'Test uses Math.random() - non-deterministic',
+        suggestion: 'Use faker.seed(12345) for deterministic random data',
+    });
 }
 
 // Check for Date.now()
 if (testFileContent.includes('Date.now()') || testFileContent.includes('new Date()')) {
-  violations.push({
-    file: testFile,
-    line: findLineNumber('Date.now()'),
-    severity: 'HIGH',
-    category: 'time-dependency',
-    description: 'Test uses Date.now() or new Date() without mocking',
-    suggestion: 'Mock system time with test.useFakeTimers() or use fixed timestamps',
-  });
+    violations.push({
+        file: testFile,
+        line: findLineNumber('Date.now()'),
+        severity: 'HIGH',
+        category: 'time-dependency',
+        description: 'Test uses Date.now() or new Date() without mocking',
+        suggestion: 'Mock system time with test.useFakeTimers() or use fixed timestamps',
+    });
 }
 
 // Check for hard waits
 if (testFileContent.includes('waitForTimeout')) {
-  violations.push({
-    file: testFile,
-    line: findLineNumber('waitForTimeout'),
-    severity: 'MEDIUM',
-    category: 'hard-wait',
-    description: 'Test uses waitForTimeout - creates flakiness',
-    suggestion: 'Replace with expect(locator).toBeVisible() or waitForResponse',
-  });
+    violations.push({
+        file: testFile,
+        line: findLineNumber('waitForTimeout'),
+        severity: 'MEDIUM',
+        category: 'hard-wait',
+        description: 'Test uses waitForTimeout - creates flakiness',
+        suggestion: 'Replace with expect(locator).toBeVisible() or waitForResponse',
+    });
 }
 
 // ... check other patterns
@@ -130,44 +130,44 @@ Write JSON to temp file: `/tmp/tea-test-review-determinism-{{timestamp}}.json`
 
 ```json
 {
-  "dimension": "determinism",
-  "score": 85,
-  "max_score": 100,
-  "grade": "B",
-  "violations": [
-    {
-      "file": "tests/api/user.spec.ts",
-      "line": 42,
-      "severity": "HIGH",
-      "category": "random-generation",
-      "description": "Test uses Math.random() - non-deterministic",
-      "suggestion": "Use faker.seed(12345) for deterministic random data",
-      "code_snippet": "const userId = Math.random() * 1000;"
+    "dimension": "determinism",
+    "score": 85,
+    "max_score": 100,
+    "grade": "B",
+    "violations": [
+        {
+            "file": "tests/api/user.spec.ts",
+            "line": 42,
+            "severity": "HIGH",
+            "category": "random-generation",
+            "description": "Test uses Math.random() - non-deterministic",
+            "suggestion": "Use faker.seed(12345) for deterministic random data",
+            "code_snippet": "const userId = Math.random() * 1000;"
+        },
+        {
+            "file": "tests/e2e/checkout.spec.ts",
+            "line": 78,
+            "severity": "MEDIUM",
+            "category": "hard-wait",
+            "description": "Test uses waitForTimeout - creates flakiness",
+            "suggestion": "Replace with expect(locator).toBeVisible()",
+            "code_snippet": "await page.waitForTimeout(5000);"
+        }
+    ],
+    "passed_checks": 12,
+    "failed_checks": 3,
+    "total_checks": 15,
+    "violation_summary": {
+        "HIGH": 1,
+        "MEDIUM": 1,
+        "LOW": 1
     },
-    {
-      "file": "tests/e2e/checkout.spec.ts",
-      "line": 78,
-      "severity": "MEDIUM",
-      "category": "hard-wait",
-      "description": "Test uses waitForTimeout - creates flakiness",
-      "suggestion": "Replace with expect(locator).toBeVisible()",
-      "code_snippet": "await page.waitForTimeout(5000);"
-    }
-  ],
-  "passed_checks": 12,
-  "failed_checks": 3,
-  "total_checks": 15,
-  "violation_summary": {
-    "HIGH": 1,
-    "MEDIUM": 1,
-    "LOW": 1
-  },
-  "recommendations": [
-    "Use faker with fixed seed for all random data",
-    "Replace all waitForTimeout with conditional waits",
-    "Mock Date.now() in tests that use current time"
-  ],
-  "summary": "Tests are mostly deterministic with 3 violations (1 HIGH, 1 MEDIUM, 1 LOW)"
+    "recommendations": [
+        "Use faker with fixed seed for all random data",
+        "Replace all waitForTimeout with conditional waits",
+        "Mock Date.now() in tests that use current time"
+    ],
+    "summary": "Tests are mostly deterministic with 3 violations (1 HIGH, 1 MEDIUM, 1 LOW)"
 }
 ```
 
@@ -175,9 +175,9 @@ Write JSON to temp file: `/tmp/tea-test-review-determinism-{{timestamp}}.json`
 
 ```json
 {
-  "dimension": "determinism",
-  "success": false,
-  "error": "Error message describing what went wrong"
+    "dimension": "determinism",
+    "success": false,
+    "error": "Error message describing what went wrong"
 }
 ```
 

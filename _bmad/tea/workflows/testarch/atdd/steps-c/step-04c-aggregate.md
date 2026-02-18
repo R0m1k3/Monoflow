@@ -77,20 +77,20 @@ const e2eTestsOutput = JSON.parse(fs.readFileSync(e2eTestsPath, 'utf8'));
 
 ```javascript
 apiTestsOutput.tests.forEach((test) => {
-  // Verify test.skip() is present
-  if (!test.content.includes('test.skip(')) {
-    throw new Error(`ATDD ERROR: ${test.file} missing test.skip() - tests MUST be skipped in red phase!`);
-  }
+    // Verify test.skip() is present
+    if (!test.content.includes('test.skip(')) {
+        throw new Error(`ATDD ERROR: ${test.file} missing test.skip() - tests MUST be skipped in red phase!`);
+    }
 
-  // Verify not placeholder assertions
-  if (test.content.includes('expect(true).toBe(true)')) {
-    throw new Error(`ATDD ERROR: ${test.file} has placeholder assertions - must assert EXPECTED behavior!`);
-  }
+    // Verify not placeholder assertions
+    if (test.content.includes('expect(true).toBe(true)')) {
+        throw new Error(`ATDD ERROR: ${test.file} has placeholder assertions - must assert EXPECTED behavior!`);
+    }
 
-  // Verify expected_to_fail flag
-  if (!test.expected_to_fail) {
-    throw new Error(`ATDD ERROR: ${test.file} not marked as expected_to_fail!`);
-  }
+    // Verify expected_to_fail flag
+    if (!test.expected_to_fail) {
+        throw new Error(`ATDD ERROR: ${test.file} not marked as expected_to_fail!`);
+    }
 });
 ```
 
@@ -98,18 +98,18 @@ apiTestsOutput.tests.forEach((test) => {
 
 ```javascript
 e2eTestsOutput.tests.forEach((test) => {
-  // Same validation as API tests
-  if (!test.content.includes('test.skip(')) {
-    throw new Error(`ATDD ERROR: ${test.file} missing test.skip() - tests MUST be skipped in red phase!`);
-  }
+    // Same validation as API tests
+    if (!test.content.includes('test.skip(')) {
+        throw new Error(`ATDD ERROR: ${test.file} missing test.skip() - tests MUST be skipped in red phase!`);
+    }
 
-  if (test.content.includes('expect(true).toBe(true)')) {
-    throw new Error(`ATDD ERROR: ${test.file} has placeholder assertions!`);
-  }
+    if (test.content.includes('expect(true).toBe(true)')) {
+        throw new Error(`ATDD ERROR: ${test.file} has placeholder assertions!`);
+    }
 
-  if (!test.expected_to_fail) {
-    throw new Error(`ATDD ERROR: ${test.file} not marked as expected_to_fail!`);
-  }
+    if (!test.expected_to_fail) {
+        throw new Error(`ATDD ERROR: ${test.file} not marked as expected_to_fail!`);
+    }
 });
 ```
 
@@ -130,8 +130,8 @@ e2eTestsOutput.tests.forEach((test) => {
 
 ```javascript
 apiTestsOutput.tests.forEach((test) => {
-  fs.writeFileSync(test.file, test.content, 'utf8');
-  console.log(`✅ Created (RED): ${test.file}`);
+    fs.writeFileSync(test.file, test.content, 'utf8');
+    console.log(`✅ Created (RED): ${test.file}`);
 });
 ```
 
@@ -139,8 +139,8 @@ apiTestsOutput.tests.forEach((test) => {
 
 ```javascript
 e2eTestsOutput.tests.forEach((test) => {
-  fs.writeFileSync(test.file, test.content, 'utf8');
-  console.log(`✅ Created (RED): ${test.file}`);
+    fs.writeFileSync(test.file, test.content, 'utf8');
+    console.log(`✅ Created (RED): ${test.file}`);
 });
 ```
 
@@ -169,8 +169,8 @@ const uniqueFixtures = [...new Set(allFixtureNeeds)];
 ```typescript
 // tests/fixtures/test-data.ts
 export const testUserData = {
-  email: 'test@example.com',
-  password: 'SecurePass123!',
+    email: 'test@example.com',
+    password: 'SecurePass123!',
 };
 ```
 
@@ -204,8 +204,8 @@ After implementing the feature:
 2. Run tests: `npm test`
 3. Verify tests PASS (green phase)
 4. If any tests fail:
-   - Either fix implementation (feature bug)
-   - Or fix test (test bug)
+    - Either fix implementation (feature bug)
+    - Or fix test (test bug)
 5. Commit passing tests
 
 ## Implementation Guidance
@@ -231,20 +231,20 @@ fs.writeFileSync(`{test_artifacts}/atdd-checklist-{story-id}.md`, checklistConte
 
 ```javascript
 const summary = {
-  tdd_phase: 'RED',
-  total_tests: apiTestsOutput.test_count + e2eTestsOutput.test_count,
-  api_tests: apiTestsOutput.test_count,
-  e2e_tests: e2eTestsOutput.test_count,
-  all_tests_skipped: true,
-  expected_to_fail: true,
-  fixtures_created: uniqueFixtures.length,
-  acceptance_criteria_covered: [
-    ...apiTestsOutput.tests.flatMap((t) => t.acceptance_criteria_covered),
-    ...e2eTestsOutput.tests.flatMap((t) => t.acceptance_criteria_covered),
-  ],
-  knowledge_fragments_used: [...apiTestsOutput.knowledge_fragments_used, ...e2eTestsOutput.knowledge_fragments_used],
-  subprocess_execution: 'PARALLEL (API + E2E)',
-  performance_gain: '~50% faster than sequential',
+    tdd_phase: 'RED',
+    total_tests: apiTestsOutput.test_count + e2eTestsOutput.test_count,
+    api_tests: apiTestsOutput.test_count,
+    e2e_tests: e2eTestsOutput.test_count,
+    all_tests_skipped: true,
+    expected_to_fail: true,
+    fixtures_created: uniqueFixtures.length,
+    acceptance_criteria_covered: [
+        ...apiTestsOutput.tests.flatMap((t) => t.acceptance_criteria_covered),
+        ...e2eTestsOutput.tests.flatMap((t) => t.acceptance_criteria_covered),
+    ],
+    knowledge_fragments_used: [...apiTestsOutput.knowledge_fragments_used, ...e2eTestsOutput.knowledge_fragments_used],
+    subprocess_execution: 'PARALLEL (API + E2E)',
+    performance_gain: '~50% faster than sequential',
 };
 ```
 
@@ -313,21 +313,21 @@ Proceed to Step 5 when:
 
 - **If `{outputFile}` does not exist** (first save), create it with YAML frontmatter:
 
-  ```yaml
-  ---
-  stepsCompleted: ['step-04c-aggregate']
-  lastStep: 'step-04c-aggregate'
-  lastSaved: '{date}'
-  ---
-  ```
+    ```yaml
+    ---
+    stepsCompleted: ['step-04c-aggregate']
+    lastStep: 'step-04c-aggregate'
+    lastSaved: '{date}'
+    ---
+    ```
 
-  Then write this step's output below the frontmatter.
+    Then write this step's output below the frontmatter.
 
 - **If `{outputFile}` already exists**, update:
-  - Add `'step-04c-aggregate'` to `stepsCompleted` array (only if not already present)
-  - Set `lastStep: 'step-04c-aggregate'`
-  - Set `lastSaved: '{date}'`
-  - Append this step's output to the appropriate section.
+    - Add `'step-04c-aggregate'` to `stepsCompleted` array (only if not already present)
+    - Set `lastStep: 'step-04c-aggregate'`
+    - Set `lastSaved: '{date}'`
+    - Append this step's output to the appropriate section.
 
 Load next step: `{nextStepFile}`
 

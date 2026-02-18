@@ -118,68 +118,68 @@ started_date: { current_date }
 last_session_date: { current_date }
 
 sessions:
-  - id: session-01-quickstart
-    name: 'Quick Start'
-    duration: '30 min'
-    status: not-started
-    started_date: null
-    completed_date: null
-    score: null
-    notes_artifact: null
+    - id: session-01-quickstart
+      name: 'Quick Start'
+      duration: '30 min'
+      status: not-started
+      started_date: null
+      completed_date: null
+      score: null
+      notes_artifact: null
 
-  - id: session-02-concepts
-    name: 'Core Concepts'
-    duration: '45 min'
-    status: not-started
-    started_date: null
-    completed_date: null
-    score: null
-    notes_artifact: null
+    - id: session-02-concepts
+      name: 'Core Concepts'
+      duration: '45 min'
+      status: not-started
+      started_date: null
+      completed_date: null
+      score: null
+      notes_artifact: null
 
-  - id: session-03-architecture
-    name: 'Architecture & Patterns'
-    duration: '60 min'
-    status: not-started
-    started_date: null
-    completed_date: null
-    score: null
-    notes_artifact: null
+    - id: session-03-architecture
+      name: 'Architecture & Patterns'
+      duration: '60 min'
+      status: not-started
+      started_date: null
+      completed_date: null
+      score: null
+      notes_artifact: null
 
-  - id: session-04-test-design
-    name: 'Test Design'
-    duration: '60 min'
-    status: not-started
-    started_date: null
-    completed_date: null
-    score: null
-    notes_artifact: null
+    - id: session-04-test-design
+      name: 'Test Design'
+      duration: '60 min'
+      status: not-started
+      started_date: null
+      completed_date: null
+      score: null
+      notes_artifact: null
 
-  - id: session-05-atdd-automate
-    name: 'ATDD & Automate'
-    duration: '60 min'
-    status: not-started
-    started_date: null
-    completed_date: null
-    score: null
-    notes_artifact: null
+    - id: session-05-atdd-automate
+      name: 'ATDD & Automate'
+      duration: '60 min'
+      status: not-started
+      started_date: null
+      completed_date: null
+      score: null
+      notes_artifact: null
 
-  - id: session-06-quality-trace
-    name: 'Quality & Trace'
-    duration: '45 min'
-    status: not-started
-    started_date: null
-    completed_date: null
-    score: null
-    notes_artifact: null
+    - id: session-06-quality-trace
+      name: 'Quality & Trace'
+      duration: '45 min'
+      status: not-started
+      started_date: null
+      completed_date: null
+      score: null
+      notes_artifact: null
 
-  - id: session-07-advanced
-    name: 'Advanced Patterns'
-    duration: 'ongoing'
-    status: not-started
-    started_date: null
-    completed_date: null
-    score: null
-    notes_artifact: null
+    - id: session-07-advanced
+      name: 'Advanced Patterns'
+      duration: 'ongoing'
+      status: not-started
+      started_date: null
+      completed_date: null
+      score: null
+      notes_artifact: null
 
 sessions_completed: 0
 total_sessions: 7

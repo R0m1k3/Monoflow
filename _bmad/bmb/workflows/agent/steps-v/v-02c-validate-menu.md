@@ -49,44 +49,44 @@ Read `{agentMenuPatterns}`, `{validationReport}`, and `{agentFile}`.
 Perform these checks systematically - validate EVERY rule specified in agentMenuPatterns.md:
 
 1. **Menu Structure**
-   - [ ] Menu section exists and is properly formatted
-   - [ ] At least one menu item defined (unless intentionally tool-less)
-   - [ ] Menu items follow proper YAML structure
-   - [ ] Each item has required fields (trigger, description, action)
+    - [ ] Menu section exists and is properly formatted
+    - [ ] At least one menu item defined (unless intentionally tool-less)
+    - [ ] Menu items follow proper YAML structure
+    - [ ] Each item has required fields (trigger, description, action)
 
 2. **Menu Item Requirements**
    For each menu item:
-   - [ ] trigger: Present, follows `XX or fuzzy match on command` format
-   - [ ] description: Clear and concise, starts with `[XX]` code
-   - [ ] action: Prompt reference (#id) or inline instruction
+    - [ ] trigger: Present, follows `XX or fuzzy match on command` format
+    - [ ] description: Clear and concise, starts with `[XX]` code
+    - [ ] action: Prompt reference (#id) or inline instruction
 
 3. **Trigger Format Validation**
-   - [ ] Format: `XX or fuzzy match on command-name` (XX = 2-letter code)
-   - [ ] Codes are unique within agent
-   - [ ] No reserved codes used: MH, CH, PM, DA
+    - [ ] Format: `XX or fuzzy match on command-name` (XX = 2-letter code)
+    - [ ] Codes are unique within agent
+    - [ ] No reserved codes used: MH, CH, PM, DA
 
 4. **Description Format Validation**
-   - [ ] Descriptions start with `[XX]` code
-   - [ ] Code in description matches trigger code
-   - [ ] Descriptions are clear and descriptive
+    - [ ] Descriptions start with `[XX]` code
+    - [ ] Code in description matches trigger code
+    - [ ] Descriptions are clear and descriptive
 
 5. **Action Handler Validation**
-   - [ ] If `action: '#prompt-id'`, corresponding prompt exists
-   - [ ] If `action: 'inline text'`, instruction is complete and clear
+    - [ ] If `action: '#prompt-id'`, corresponding prompt exists
+    - [ ] If `action: 'inline text'`, instruction is complete and clear
 
 6. **Alignment Checks**
-   - [ ] Menu items align with agent's role/purpose
-   - [ ] Menu items are appropriate for target users
-   - [ ] Menu scope is appropriate (not too sparse/overloaded)
+    - [ ] Menu items align with agent's role/purpose
+    - [ ] Menu items are appropriate for target users
+    - [ ] Menu scope is appropriate (not too sparse/overloaded)
 
 7. **Configuration Specific Menu Handler Validation**
-   - [ ] Determine hasSidecar from metadata
-   - [ ] For hasSidecar: true:
-     - [ ] Menu handlers MAY reference sidecar files using correct path format
-     - [ ] Sidecar references use: `{project-root}/_bmad/_memory/{sidecar-folder}/...`
-   - [ ] For hasSidecar: false:
-     - [ ] Menu handlers MUST NOT have sidecar file links
-     - [ ] Menu handlers use only internal references (#) or inline prompts
+    - [ ] Determine hasSidecar from metadata
+    - [ ] For hasSidecar: true:
+        - [ ] Menu handlers MAY reference sidecar files using correct path format
+        - [ ] Sidecar references use: `{project-root}/_bmad/_memory/{sidecar-folder}/...`
+    - [ ] For hasSidecar: false:
+        - [ ] Menu handlers MUST NOT have sidecar file links
+        - [ ] Menu handlers use only internal references (#) or inline prompts
 
 ### 3. Append Findings to Report
 
@@ -100,6 +100,7 @@ Append to `{validationReport}`:
 **hasSidecar:** {true|false}
 
 **Checks:**
+
 - [ ] Triggers follow `XX or fuzzy match on command` format
 - [ ] Descriptions start with `[XX]` code
 - [ ] No reserved codes (MH, CH, PM, DA)
@@ -108,13 +109,13 @@ Append to `{validationReport}`:
 
 **Detailed Findings:**
 
-*PASSING:*
+_PASSING:_
 {List of passing checks}
 
-*WARNINGS:*
+_WARNINGS:_
 {List of non-blocking issues}
 
-*FAILURES:*
+_FAILURES:_
 {List of blocking issues that must be fixed}
 ```
 

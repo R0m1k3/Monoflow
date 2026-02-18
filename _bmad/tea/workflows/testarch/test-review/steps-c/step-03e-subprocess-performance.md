@@ -61,50 +61,50 @@ const score = Math.max(0, 100 - totalPenalty);
 
 ```json
 {
-  "dimension": "performance",
-  "score": 80,
-  "max_score": 100,
-  "grade": "B",
-  "violations": [
-    {
-      "file": "tests/e2e/search.spec.ts",
-      "line": 10,
-      "severity": "HIGH",
-      "category": "not-parallelizable",
-      "description": "Tests use test.describe.serial unnecessarily - reduces parallel execution",
-      "suggestion": "Remove .serial unless tests truly share state",
-      "code_snippet": "test.describe.serial('Search tests', () => { ... });"
+    "dimension": "performance",
+    "score": 80,
+    "max_score": 100,
+    "grade": "B",
+    "violations": [
+        {
+            "file": "tests/e2e/search.spec.ts",
+            "line": 10,
+            "severity": "HIGH",
+            "category": "not-parallelizable",
+            "description": "Tests use test.describe.serial unnecessarily - reduces parallel execution",
+            "suggestion": "Remove .serial unless tests truly share state",
+            "code_snippet": "test.describe.serial('Search tests', () => { ... });"
+        },
+        {
+            "file": "tests/api/bulk-operations.spec.ts",
+            "line": 35,
+            "severity": "MEDIUM",
+            "category": "slow-setup",
+            "description": "Test creates 1000 records in setup - very slow",
+            "suggestion": "Use smaller data sets or fixture factories",
+            "code_snippet": "beforeEach(async () => { for (let i=0; i<1000; i++) { ... } });"
+        }
+    ],
+    "passed_checks": 13,
+    "failed_checks": 2,
+    "violation_summary": {
+        "HIGH": 1,
+        "MEDIUM": 1,
+        "LOW": 0
     },
-    {
-      "file": "tests/api/bulk-operations.spec.ts",
-      "line": 35,
-      "severity": "MEDIUM",
-      "category": "slow-setup",
-      "description": "Test creates 1000 records in setup - very slow",
-      "suggestion": "Use smaller data sets or fixture factories",
-      "code_snippet": "beforeEach(async () => { for (let i=0; i<1000; i++) { ... } });"
-    }
-  ],
-  "passed_checks": 13,
-  "failed_checks": 2,
-  "violation_summary": {
-    "HIGH": 1,
-    "MEDIUM": 1,
-    "LOW": 0
-  },
-  "performance_metrics": {
-    "parallelizable_tests": 80,
-    "serial_tests": 20,
-    "avg_test_duration_estimate": "~2 seconds",
-    "slow_tests": ["bulk-operations.spec.ts (>30s)"]
-  },
-  "recommendations": [
-    "Enable parallel mode where possible",
-    "Reduce setup data to minimum needed",
-    "Use fixtures to share expensive setup across tests",
-    "Remove unnecessary .serial constraints"
-  ],
-  "summary": "Good performance with 2 violations - 80% tests can run in parallel"
+    "performance_metrics": {
+        "parallelizable_tests": 80,
+        "serial_tests": 20,
+        "avg_test_duration_estimate": "~2 seconds",
+        "slow_tests": ["bulk-operations.spec.ts (>30s)"]
+    },
+    "recommendations": [
+        "Enable parallel mode where possible",
+        "Reduce setup data to minimum needed",
+        "Use fixtures to share expensive setup across tests",
+        "Remove unnecessary .serial constraints"
+    ],
+    "summary": "Good performance with 2 violations - 80% tests can run in parallel"
 }
 ```
 

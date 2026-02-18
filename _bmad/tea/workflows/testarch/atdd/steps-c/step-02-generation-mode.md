@@ -57,9 +57,9 @@ If `auto`:
 > **Note:** `${timestamp}` is a placeholder the agent should replace with a unique value (e.g., epoch seconds) for session isolation.
 
 - **Simple recording** (snapshot selectors, capture structure): Use CLI
-  - `playwright-cli -s=tea-atdd-${timestamp} open <url>` → `playwright-cli -s=tea-atdd-${timestamp} snapshot` → extract refs
+    - `playwright-cli -s=tea-atdd-${timestamp} open <url>` → `playwright-cli -s=tea-atdd-${timestamp} snapshot` → extract refs
 - **Complex recording** (drag/drop, wizards, multi-step state): Use MCP
-  - Full browser automation with rich tool semantics
+    - Full browser automation with rich tool semantics
 - **Fallback:** If preferred tool unavailable, use the other; if neither, skip recording
 
 If `cli`:
@@ -90,21 +90,21 @@ State the chosen mode and why. Then proceed.
 
 - **If `{outputFile}` does not exist** (first save), create it with YAML frontmatter:
 
-  ```yaml
-  ---
-  stepsCompleted: ['step-02-generation-mode']
-  lastStep: 'step-02-generation-mode'
-  lastSaved: '{date}'
-  ---
-  ```
+    ```yaml
+    ---
+    stepsCompleted: ['step-02-generation-mode']
+    lastStep: 'step-02-generation-mode'
+    lastSaved: '{date}'
+    ---
+    ```
 
-  Then write this step's output below the frontmatter.
+    Then write this step's output below the frontmatter.
 
 - **If `{outputFile}` already exists**, update:
-  - Add `'step-02-generation-mode'` to `stepsCompleted` array (only if not already present)
-  - Set `lastStep: 'step-02-generation-mode'`
-  - Set `lastSaved: '{date}'`
-  - Append this step's output to the appropriate section.
+    - Add `'step-02-generation-mode'` to `stepsCompleted` array (only if not already present)
+    - Set `lastStep: 'step-02-generation-mode'`
+    - Set `lastSaved: '{date}'`
+    - Append this step's output to the appropriate section.
 
 Load next step: `{nextStepFile}`
 

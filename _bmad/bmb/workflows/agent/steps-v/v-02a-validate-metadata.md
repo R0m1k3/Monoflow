@@ -49,34 +49,34 @@ Read `{agentMetadata}`, `{validationReport}`, and `{agentFile}`.
 Perform these checks systematically - validate EVERY rule specified in agentMetadata.md:
 
 1. **Required Fields Existence**
-   - [ ] id: Present and non-empty
-   - [ ] name: Present and non-empty (display name)
-   - [ ] title: Present and non-empty
-   - [ ] icon: Present (emoji or symbol)
-   - [ ] module: Present and valid format
-   - [ ] hasSidecar: Present (boolean, if applicable)
+    - [ ] id: Present and non-empty
+    - [ ] name: Present and non-empty (display name)
+    - [ ] title: Present and non-empty
+    - [ ] icon: Present (emoji or symbol)
+    - [ ] module: Present and valid format
+    - [ ] hasSidecar: Present (boolean, if applicable)
 
 2. **Format Validation**
-   - [ ] id: Uses kebab-case, no spaces, unique identifier
-   - [ ] name: Clear display name for UI
-   - [ ] title: Concise functional description
-   - [ ] icon: Appropriate emoji or unicode symbol
-   - [ ] module: Either a 3-4 letter module code OR 'stand-alone'
-   - [ ] hasSidecar: Boolean value, matches actual agent structure
+    - [ ] id: Uses kebab-case, no spaces, unique identifier
+    - [ ] name: Clear display name for UI
+    - [ ] title: Concise functional description
+    - [ ] icon: Appropriate emoji or unicode symbol
+    - [ ] module: Either a 3-4 letter module code OR 'stand-alone'
+    - [ ] hasSidecar: Boolean value, matches actual agent structure
 
 3. **Content Quality**
-   - [ ] id: Unique and descriptive
-   - [ ] name: Clear and user-friendly
-   - [ ] title: Accurately describes agent's function
-   - [ ] icon: Visually representative of agent's purpose
-   - [ ] module: Correctly identifies module membership
-   - [ ] hasSidecar: Correctly indicates if agent uses sidecar files
+    - [ ] id: Unique and descriptive
+    - [ ] name: Clear and user-friendly
+    - [ ] title: Accurately describes agent's function
+    - [ ] icon: Visually representative of agent's purpose
+    - [ ] module: Correctly identifies module membership
+    - [ ] hasSidecar: Correctly indicates if agent uses sidecar files
 
 4. **Agent Type Consistency**
-   - [ ] If hasSidecar: true, sidecar folder path must be specified
-   - [ ] If module is a module code, agent is a module agent
-   - [ ] If module is 'stand-alone', agent is not part of a module
-   - [ ] No conflicting type indicators
+    - [ ] If hasSidecar: true, sidecar folder path must be specified
+    - [ ] If module is a module code, agent is a module agent
+    - [ ] If module is 'stand-alone', agent is not part of a module
+    - [ ] No conflicting type indicators
 
 ### 3. Append Findings to Report
 
@@ -88,6 +88,7 @@ Append to `{validationReport}`:
 **Status:** {✅ PASS / ⚠️ WARNING / ❌ FAIL}
 
 **Checks:**
+
 - [ ] id: kebab-case, no spaces, unique
 - [ ] name: clear display name
 - [ ] title: concise function description
@@ -97,13 +98,13 @@ Append to `{validationReport}`:
 
 **Detailed Findings:**
 
-*PASSING:*
+_PASSING:_
 {List of passing checks}
 
-*WARNINGS:*
+_WARNINGS:_
 {List of non-blocking issues}
 
-*FAILURES:*
+_FAILURES:_
 {List of blocking issues that must be fixed}
 ```
 

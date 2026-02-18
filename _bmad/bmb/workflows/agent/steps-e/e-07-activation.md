@@ -44,12 +44,14 @@ Review critical_actions and route to the agent edit step based on hasSidecar val
 ### 1. Load Reference Documents
 
 Read `{criticalActions}` and `{editPlan}` to understand:
+
 - Current critical_actions (if any)
 - Target hasSidecar value after edits
 
 ### 2. Review Critical Actions
 
 If user wants to add/modify critical_actions:
+
 - Reference patterns from criticalActions.md
 - Define action name, description, invocation
 - For hasSidecar: true — specify sidecar-folder and file paths
@@ -72,12 +74,12 @@ Append to `{editPlan}`:
 
 ```yaml
 activationEdits:
-  criticalActions:
-    additions: []
-    modifications: []
+    criticalActions:
+        additions: []
+        modifications: []
 routing:
-  destinationEdit: e-08-edit-agent.md
-  hasSidecar: {true|false}  # Derived from edit plan
+    destinationEdit: e-08-edit-agent.md
+    hasSidecar: { true|false } # Derived from edit plan
 ```
 
 ### 5. Present MENU OPTIONS

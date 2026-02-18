@@ -92,12 +92,12 @@ playwright-cli -s=tea-discover close
 import { test } from '@seontechnologies/playwright-utils/api-request/fixtures';
 
 test('GET /api/users returns user list', async ({ apiRequest }) => {
-  const { status, body } = await apiRequest<User[]>({
-    method: 'GET',
-    path: '/api/users',
-  });
-  expect(status).toBe(200);
-  expect(body.length).toBeGreaterThan(0);
+    const { status, body } = await apiRequest<User[]>({
+        method: 'GET',
+        path: '/api/users',
+    });
+    expect(status).toBe(200);
+    expect(body.length).toBeGreaterThan(0);
 });
 ```
 

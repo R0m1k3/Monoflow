@@ -118,13 +118,13 @@ const subprocessContext = {
 
 ```javascript
 const outputs = ['determinism', 'isolation', 'maintainability', 'coverage', 'performance'].map(
-  (dim) => `/tmp/tea-test-review-${dim}-${timestamp}.json`,
+    (dim) => `/tmp/tea-test-review-${dim}-${timestamp}.json`
 );
 
 outputs.forEach((output) => {
-  if (!fs.existsSync(output)) {
-    throw new Error(`Subprocess output missing: ${output}`);
-  }
+    if (!fs.existsSync(output)) {
+        throw new Error(`Subprocess output missing: ${output}`);
+    }
 });
 ```
 

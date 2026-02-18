@@ -47,6 +47,7 @@ Read `{agentMetadata}` and `{agentTypesDoc}` to understand validation rules and 
 ### 2. Review Current Metadata
 
 From `{editPlan}`, display current:
+
 - hasSidecar (true/false)
 - All metadata fields: id, name, title, icon, module
 
@@ -55,13 +56,15 @@ From `{editPlan}`, display current:
 If user wants metadata changes:
 
 **For sidecar conversion:**
+
 - "Converting from hasSidecar: {current} to {target}"
 - Explain implications:
-  - false → true: Need to create sidecar folder, add critical_actions with sidecar file loading
-  - true → false: Remove sidecar fields; if critical_actions only has sidecar references, remove section; otherwise keep non-sidecar critical_actions
+    - false → true: Need to create sidecar folder, add critical_actions with sidecar file loading
+    - true → false: Remove sidecar fields; if critical_actions only has sidecar references, remove section; otherwise keep non-sidecar critical_actions
 - Update editPlan with conversion
 
 **For metadata field changes:**
+
 - id: kebab-case requirements
 - name: display name conventions
 - title: function description format
@@ -74,14 +77,14 @@ Append to `{editPlan}`:
 
 ```yaml
 metadataEdits:
-  sidecarConversion:
-    from: {current-hasSidecar}
-    to: {target-hasSidecar}
-    rationale: {explanation}
-  fieldChanges:
-    - field: {field-name}
-      from: {current-value}
-      to: {target-value}
+    sidecarConversion:
+        from: { current-hasSidecar }
+        to: { target-hasSidecar }
+        rationale: { explanation }
+    fieldChanges:
+        - field: { field-name }
+          from: { current-value }
+          to: { target-value }
 ```
 
 ### 5. Present MENU OPTIONS

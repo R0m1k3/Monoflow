@@ -18,6 +18,7 @@ Check if the module is ready for installation.
 ## MANDATORY EXECUTION RULES:
 
 ### Universal Rules:
+
 - 📖 CRITICAL: Read the complete step file before taking any action
 - ✅ Speak in `{communication_language}`
 
@@ -33,11 +34,13 @@ Check if the module is ready for installation.
 ### 1. Check module.yaml Install Variables
 
 **IF custom variables exist:**
+
 - [ ] All variables have prompts
 - [ ] Defaults are reasonable
 - [ ] Result templates are valid
 
 **Path Variables:**
+
 - [ ] Paths use `{project-root}/` prefix
 - [ ] Output paths are user-configurable
 
@@ -46,6 +49,7 @@ Check if the module is ready for installation.
 **CRITICAL:** Every module must have `module-help.csv` at its root.
 
 **Check:**
+
 - [ ] `module-help.csv` exists at `{moduleHelpCsvFile}`
 - [ ] Has valid header: `module,phase,name,code,sequence,workflow-file,command,required,agent,options,description,output-location,outputs,`
 - [ ] `anytime` entries at TOP with EMPTY sequence
@@ -53,16 +57,19 @@ Check if the module is ready for installation.
 - [ ] Agent-only entries have EMPTY `workflow-file`
 
 **If missing:**
+
 - FAIL - Module is not ready for installation without help registry
 - Suggest running `{moduleHelpGenerateWorkflow}`
 
 ### 3. Module Type Installation
 
 **IF Extension:**
+
 - [ ] `code:` matches base (for proper merge)
 - [ ] Folder name is unique
 
 **IF Global:**
+
 - [ ] `global: true` or documented
 - [ ] Global impact is minimal/intentional
 

@@ -30,6 +30,7 @@ Conduct holistic discovery of what the user wants to create, documenting a compr
 ## Protocol 1: Check for Previous Context
 
 Before starting discovery:
+
 - Check if brainstormContext file exists
 - If yes, read and reference those results
 - Integrate brainstorming insights into conversation naturally
@@ -45,6 +46,7 @@ Guide the user through holistic discovery covering:
 5. **Users:** Who will use this agent? What's their skill level?
 
 Use conversational exploration:
+
 - Ask open-ended questions
 - Probe deeper on important aspects
 - Validate understanding
@@ -58,22 +60,27 @@ Document findings to agentPlan file using this structure:
 # Agent Plan: {agent_name}
 
 ## Purpose
+
 [Clear, concise statement of why this agent exists]
 
 ## Goals
+
 - [Primary goal 1]
 - [Primary goal 2]
 - [Secondary goals as needed]
 
 ## Capabilities
+
 - [Core capability 1]
 - [Core capability 2]
 - [Additional capabilities with tools/skills]
 
 ## Context
+
 [Deployment environment, use cases, constraints]
 
 ## Users
+
 - [Target audience description]
 - [Skill level assumptions]
 - [Usage patterns]
@@ -90,6 +97,7 @@ After documentation, present menu:
 # CONTEXT BOUNDARIES
 
 **DISCOVER:**
+
 - Agent purpose and problem domain
 - Success metrics and goals
 - Required capabilities and tools
@@ -97,6 +105,7 @@ After documentation, present menu:
 - Target users and skill levels
 
 **DO NOT DISCOVER:**
+
 - Technical implementation details (later steps)
 - Exact persona traits (next step)
 - Command structures (later step)
@@ -104,6 +113,7 @@ After documentation, present menu:
 - Validation criteria (later step)
 
 **KEEP IN SCOPE:**
+
 - Holistic understanding of what to build
 - Clear articulation of value proposition
 - Comprehensive capability mapping
@@ -113,39 +123,41 @@ After documentation, present menu:
 **CRITICAL:** Follow this sequence exactly. Do not skip, reorder, or improvise unless user explicitly requests a change.
 
 1. **Load Previous Context**
-   - Check for brainstormContext file
-   - Read if exists, note integration points
+    - Check for brainstormContext file
+    - Read if exists, note integration points
 
 2. **Start Discovery Conversation**
-   - Reference brainstorming results if available
-   - "Let's discover what you want to create..."
-   - Explore purpose, goals, capabilities, context, users
+    - Reference brainstorming results if available
+    - "Let's discover what you want to create..."
+    - Explore purpose, goals, capabilities, context, users
 
 3. **Document Plan**
-   - Create agentPlan file
-   - Structure with Purpose, Goals, Capabilities, Context, Users
-   - Ensure completeness and clarity
+    - Create agentPlan file
+    - Structure with Purpose, Goals, Capabilities, Context, Users
+    - Ensure completeness and clarity
 
 4. **Present Completion Menu**
-   - Show [A]dvanced Discovery option
-   - Show [P]arty Mode option
-   - Show [C]ontinue to next step
-   - Await user selection
+    - Show [A]dvanced Discovery option
+    - Show [P]arty Mode option
+    - Show [C]ontinue to next step
+    - Await user selection
 
 5. **Handle Menu Choice**
-   - If A: Invoke advanced-elicitation task, then re-document
-   - If P: Invoke party-mode workflow, then re-document
-   - If C: Proceed to step-03-type-metadata
+    - If A: Invoke advanced-elicitation task, then re-document
+    - If P: Invoke party-mode workflow, then re-document
+    - If C: Proceed to step-03-type-metadata
 
 # CRITICAL STEP COMPLETION NOTE
 
 **THIS STEP IS COMPLETE WHEN:**
+
 - agentPlan file exists with complete structure
 - All five sections (Purpose, Goals, Capabilities, Context, Users) populated
 - User confirms accuracy via menu selection
 - Either continuing to next step or invoking optional workflows
 
 **BEFORE PROCEEDING:**
+
 - Verify plan file is readable
 - Ensure content is sufficient for subsequent steps
 - Confirm user is satisfied with discoveries
@@ -153,18 +165,21 @@ After documentation, present menu:
 # SUCCESS METRICS
 
 **SUCCESS:**
+
 - agentPlan file created with all required sections
 - User has provided clear, actionable requirements
 - Plan contains sufficient detail for persona, commands, and name steps
 - User explicitly chooses to continue or invokes optional workflow
 
 **FAILURE:**
+
 - Unable to extract coherent purpose or goals
 - User cannot articulate basic requirements
 - Plan sections remain incomplete or vague
 - User requests restart
 
 **RECOVERY:**
+
 - If requirements unclear, use advanced-elicitation task
 - If user stuck, offer party-mode for creative exploration
 - If still unclear, suggest revisiting brainstorming step

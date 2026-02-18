@@ -53,8 +53,8 @@ completionDate: 2026-01-27 10:03:10
 
 - Templates present: test-design-architecture-template.md, test-design-qa-template.md, test-design-template.md
 - Steps with outputFile in frontmatter:
-  - steps-c/step-05-generate-output.md
-  - steps-v/step-01-validate.md
+    - steps-c/step-05-generate-output.md
+    - steps-v/step-01-validate.md
 
 ## Validation Design Check
 

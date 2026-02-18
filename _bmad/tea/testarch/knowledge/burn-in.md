@@ -95,32 +95,32 @@ export default config
 name: Burn-in Changed Tests
 
 on:
-  pull_request:
-    branches: [main]
+    pull_request:
+        branches: [main]
 
 jobs:
-  burn-in:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0 # Need git history
+    burn-in:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+              with:
+                  fetch-depth: 0 # Need git history
 
-      - name: Setup Node
-        uses: actions/setup-node@v4
+            - name: Setup Node
+              uses: actions/setup-node@v4
 
-      - name: Install dependencies
-        run: npm ci
+            - name: Install dependencies
+              run: npm ci
 
-      - name: Run burn-in on changed tests
-        run: npm run test:pw:burn-in-changed -- --base-branch=origin/main
+            - name: Run burn-in on changed tests
+              run: npm run test:pw:burn-in-changed -- --base-branch=origin/main
 
-      - name: Upload artifacts
-        if: failure()
-        uses: actions/upload-artifact@v4
-        with:
-          name: burn-in-failures
-          path: test-results/
+            - name: Upload artifacts
+              if: failure()
+              uses: actions/upload-artifact@v4
+              with:
+                  name: burn-in-failures
+                  path: test-results/
 ```
 
 **Key Points**:
@@ -168,15 +168,15 @@ Result: Run 14 targeted tests instead of 147 with --only-changed!
 import type { BurnInConfig } from '@seontechnologies/playwright-utils/burn-in';
 
 const config: BurnInConfig = {
-  skipBurnInPatterns: ['**/config/**', '**/*types*', '**/*.md'],
+    skipBurnInPatterns: ['**/config/**', '**/*types*', '**/*.md'],
 
-  // CI runs fewer iterations, local runs more
-  burnInTestPercentage: process.env.CI ? 0.2 : 0.3,
+    // CI runs fewer iterations, local runs more
+    burnInTestPercentage: process.env.CI ? 0.2 : 0.3,
 
-  burnIn: {
-    repeatEach: process.env.CI ? 2 : 3,
-    retries: process.env.CI ? 0 : 1, // No retries in CI
-  },
+    burnIn: {
+        repeatEach: process.env.CI ? 2 : 3,
+        retries: process.env.CI ? 0 : 1, // No retries in CI
+    },
 };
 
 export default config;
@@ -200,27 +200,27 @@ export default config;
 import { runBurnIn } from '@seontechnologies/playwright-utils/burn-in';
 
 async function main() {
-  const shardArg = process.argv.find((arg) => arg.startsWith('--shard='));
+    const shardArg = process.argv.find((arg) => arg.startsWith('--shard='));
 
-  if (shardArg) {
-    process.env.PW_SHARD = shardArg.split('=')[1];
-  }
+    if (shardArg) {
+        process.env.PW_SHARD = shardArg.split('=')[1];
+    }
 
-  await runBurnIn({
-    configPath: 'playwright/config/.burn-in.config.ts',
-  });
+    await runBurnIn({
+        configPath: 'playwright/config/.burn-in.config.ts',
+    });
 }
 ```
 
 ```yaml
 # GitHub Actions with sharding
 jobs:
-  burn-in:
-    strategy:
-      matrix:
-        shard: [1/3, 2/3, 3/3]
-    steps:
-      - run: npm run test:pw:burn-in-changed -- --shard=${{ matrix.shard }}
+    burn-in:
+        strategy:
+            matrix:
+                shard: [1/3, 2/3, 3/3]
+        steps:
+            - run: npm run test:pw:burn-in-changed -- --shard=${{ matrix.shard }}
 ```
 
 **Key Points**:
@@ -250,7 +250,7 @@ When setting up CI with `*ci` workflow, recommend burn-in for:
 
 ```typescript
 skipBurnInPatterns: [
-  '**/*', // Skips everything!
+    '**/*', // Skips everything!
 ];
 ```
 

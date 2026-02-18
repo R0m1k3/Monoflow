@@ -52,8 +52,8 @@ completionDate: 2026-01-27 10:03:10
 
 - Templates present: test-review-template.md
 - Steps with outputFile in frontmatter:
-  - steps-c/step-04-generate-report.md
-  - steps-v/step-01-validate.md
+    - steps-c/step-04-generate-report.md
+    - steps-v/step-01-validate.md
 
 ## Validation Design Check
 

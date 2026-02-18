@@ -36,11 +36,11 @@ NEVER document time estimates, durations, level of effort or completion times fo
 **Code Blocks:**
 
 - Use fenced blocks with language identifier:
-  ````markdown
-  ```javascript
-  const example = 'code';
-  ```
-  ````
+    ````markdown
+    ```javascript
+    const example = 'code';
+    ```
+    ````
 - NOT indented code blocks (ambiguous)
 
 **Lists:**

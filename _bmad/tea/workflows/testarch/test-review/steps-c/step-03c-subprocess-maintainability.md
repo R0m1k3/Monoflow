@@ -62,34 +62,34 @@ const score = Math.max(0, 100 - totalPenalty);
 
 ```json
 {
-  "dimension": "maintainability",
-  "score": 75,
-  "max_score": 100,
-  "grade": "C",
-  "violations": [
-    {
-      "file": "tests/e2e/complex-flow.spec.ts",
-      "line": 1,
-      "severity": "HIGH",
-      "category": "test-too-long",
-      "description": "Test file is 250 lines - too complex to maintain",
-      "suggestion": "Split into multiple smaller test files by feature area",
-      "code_snippet": "test.describe('Complex flow', () => { /* 250 lines */ });"
-    }
-  ],
-  "passed_checks": 10,
-  "failed_checks": 5,
-  "violation_summary": {
-    "HIGH": 2,
-    "MEDIUM": 2,
-    "LOW": 1
-  },
-  "recommendations": [
-    "Split large test files into smaller, focused files (<100 lines each)",
-    "Add test.describe grouping for related tests",
-    "Extract duplicate logic into helper functions"
-  ],
-  "summary": "Tests have maintainability issues - 5 violations (2 HIGH)"
+    "dimension": "maintainability",
+    "score": 75,
+    "max_score": 100,
+    "grade": "C",
+    "violations": [
+        {
+            "file": "tests/e2e/complex-flow.spec.ts",
+            "line": 1,
+            "severity": "HIGH",
+            "category": "test-too-long",
+            "description": "Test file is 250 lines - too complex to maintain",
+            "suggestion": "Split into multiple smaller test files by feature area",
+            "code_snippet": "test.describe('Complex flow', () => { /* 250 lines */ });"
+        }
+    ],
+    "passed_checks": 10,
+    "failed_checks": 5,
+    "violation_summary": {
+        "HIGH": 2,
+        "MEDIUM": 2,
+        "LOW": 1
+    },
+    "recommendations": [
+        "Split large test files into smaller, focused files (<100 lines each)",
+        "Add test.describe grouping for related tests",
+        "Extract duplicate logic into helper functions"
+    ],
+    "summary": "Tests have maintainability issues - 5 violations (2 HIGH)"
 }
 ```
 

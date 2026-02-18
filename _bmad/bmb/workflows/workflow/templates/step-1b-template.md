@@ -13,7 +13,7 @@ description: 'Handle workflow continuation from previous session'
 
 <!-- Path Definitions -->
 
-workflow\*path: '{project-root}/_bmad/[module-path]/workflows/[workflow-name]'
+workflow\*path: '{project-root}/\_bmad/[module-path]/workflows/[workflow-name]'
 
 # File References (all use {variable} format in file)
 
@@ -90,9 +90,9 @@ For each step number in `stepsCompleted` array (excluding step 1, which is init)
 
 1. **Construct step filename**: `step-[N]-[name].md`
 2. **Read the complete step file** to understand:
-   - What that step accomplished
-   - What the next step should be (from nextStep references)
-   - Any specific context or decisions made
+    - What that step accomplished
+    - What the next step should be (from nextStep references)
+    - Any specific context or decisions made
 
 Example: If `stepsCompleted: [1, 2, 3]`:
 
@@ -151,8 +151,8 @@ Display: "**Resuming workflow - Select an Option:** [C] Continue to [Next Step N
 #### Menu Handling Logic:
 
 - IF C:
-  1. Update frontmatter: add `lastContinued: [current date]`
-  2. Load, read entire file, then execute the appropriate next step file (determined in section 4)
+    1. Update frontmatter: add `lastContinued: [current date]`
+    2. Load, read entire file, then execute the appropriate next step file (determined in section 4)
 - IF Any other comments or queries: help user respond then [Redisplay Menu Options](#7-present-menu-options)
 
 ## CRITICAL STEP COMPLETION NOTE
