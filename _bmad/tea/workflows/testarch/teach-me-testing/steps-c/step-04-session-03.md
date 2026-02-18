@@ -91,18 +91,18 @@ Load {progressFile}, update session-03-architecture:
 ```typescript
 // Base fixtures
 const baseFixtures = {
-  page: async ({}, use) => {
-    /* ... */
-  },
+    page: async ({}, use) => {
+        /* ... */
+    },
 };
 
 // Composed fixtures
 const authFixtures = {
-  authenticatedPage: async ({ page }, use) => {
-    await page.goto('/login');
-    await login(page);
-    await use(page);
-  },
+    authenticatedPage: async ({ page }, use) => {
+        await page.goto('/login');
+        await login(page);
+        await use(page);
+    },
 };
 
 // Merge and use
@@ -134,7 +134,7 @@ test.use(mergeTests(baseFixtures, authFixtures));
 ```typescript
 // BEFORE the action, set up network interception
 await page.route('/api/users', (route) => {
-  route.fulfill({ json: mockUsers });
+    route.fulfill({ json: mockUsers });
 });
 
 // THEN trigger the action
@@ -167,12 +167,12 @@ await page.click('Load Users');
 
 ```typescript
 function createUser(overrides = {}) {
-  return {
-    id: faker.uuid(),
-    email: faker.email(),
-    role: 'user',
-    ...overrides,
-  };
+    return {
+        id: faker.uuid(),
+        email: faker.email(),
+        role: 'user',
+        ...overrides,
+    };
 }
 
 // Use in tests

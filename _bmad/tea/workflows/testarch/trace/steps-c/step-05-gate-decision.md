@@ -51,7 +51,7 @@ console.log('✅ Phase 1 coverage matrix loaded');
 
 ```javascript
 if (coverageMatrix.phase !== 'PHASE_1_COMPLETE') {
-  throw new Error('Phase 1 not complete - cannot proceed to gate decision');
+    throw new Error('Phase 1 not complete - cannot proceed to gate decision');
 }
 ```
 
@@ -72,30 +72,30 @@ let rationale;
 
 // Rule 1: P0 coverage must be 100%
 if (p0Coverage < 100) {
-  gateDecision = 'FAIL';
-  rationale = `P0 coverage is ${p0Coverage}% (required: 100%). ${criticalGaps} critical requirements uncovered.`;
+    gateDecision = 'FAIL';
+    rationale = `P0 coverage is ${p0Coverage}% (required: 100%). ${criticalGaps} critical requirements uncovered.`;
 }
 // Rule 2: Overall coverage >= 90% with P0 at 100% → PASS
 else if (overallCoverage >= 90) {
-  gateDecision = 'PASS';
-  rationale = `P0 coverage is 100% and overall coverage is ${overallCoverage}% (target: 90%).`;
+    gateDecision = 'PASS';
+    rationale = `P0 coverage is 100% and overall coverage is ${overallCoverage}% (target: 90%).`;
 }
 // Rule 3: Overall coverage >= 75% with P0 at 100% → CONCERNS
 else if (overallCoverage >= 75) {
-  gateDecision = 'CONCERNS';
-  rationale = `P0 coverage is 100% but overall coverage is ${overallCoverage}% (target: 90%). Consider expanding coverage.`;
+    gateDecision = 'CONCERNS';
+    rationale = `P0 coverage is 100% but overall coverage is ${overallCoverage}% (target: 90%). Consider expanding coverage.`;
 }
 // Rule 4: P0 at 100% but overall < 75% → FAIL
 else {
-  gateDecision = 'FAIL';
-  rationale = `Overall coverage is ${overallCoverage}% (minimum: 75%). Significant gaps exist.`;
+    gateDecision = 'FAIL';
+    rationale = `Overall coverage is ${overallCoverage}% (minimum: 75%). Significant gaps exist.`;
 }
 
 // Rule 5: Manual waiver option
 const manualWaiver = false; // Can be set via config or user input
 if (manualWaiver) {
-  gateDecision = 'WAIVED';
-  rationale += ' Manual waiver applied by stakeholder.';
+    gateDecision = 'WAIVED';
+    rationale += ' Manual waiver applied by stakeholder.';
 }
 ```
 
@@ -105,25 +105,25 @@ if (manualWaiver) {
 
 ```javascript
 const gateReport = {
-  decision: gateDecision,
-  rationale: rationale,
-  decision_date: new Date().toISOString(),
+    decision: gateDecision,
+    rationale: rationale,
+    decision_date: new Date().toISOString(),
 
-  coverage_matrix: coverageMatrix,
+    coverage_matrix: coverageMatrix,
 
-  gate_criteria: {
-    p0_coverage_required: '100%',
-    p0_coverage_actual: `${p0Coverage}%`,
-    p0_status: p0Coverage === 100 ? 'MET' : 'NOT MET',
+    gate_criteria: {
+        p0_coverage_required: '100%',
+        p0_coverage_actual: `${p0Coverage}%`,
+        p0_status: p0Coverage === 100 ? 'MET' : 'NOT MET',
 
-    overall_coverage_target: '90%',
-    overall_coverage_actual: `${overallCoverage}%`,
-    overall_status: overallCoverage >= 90 ? 'MET' : overallCoverage >= 75 ? 'PARTIAL' : 'NOT MET',
-  },
+        overall_coverage_target: '90%',
+        overall_coverage_actual: `${overallCoverage}%`,
+        overall_status: overallCoverage >= 90 ? 'MET' : overallCoverage >= 75 ? 'PARTIAL' : 'NOT MET',
+    },
 
-  uncovered_requirements: coverageMatrix.gap_analysis.critical_gaps.concat(coverageMatrix.gap_analysis.high_gaps),
+    uncovered_requirements: coverageMatrix.gap_analysis.critical_gaps.concat(coverageMatrix.gap_analysis.high_gaps),
 
-  recommendations: coverageMatrix.recommendations,
+    recommendations: coverageMatrix.recommendations,
 };
 ```
 

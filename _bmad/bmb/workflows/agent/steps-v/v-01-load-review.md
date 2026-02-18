@@ -43,6 +43,7 @@ Load the existing agent file and initialize a validation report to track all fin
 Read the complete YAML from the agent file path provided by the user.
 
 Check the metadata to determine agent configuration:
+
 - **module**: `stand-alone` or module code (bmm, cis, bmgd, etc.)
 - **hasSidecar**: `true` or `false`
 
@@ -71,12 +72,12 @@ Initialize the validation report:
 ```markdown
 ---
 agentName: '{agent-name}'
-hasSidecar: {true|false}
+hasSidecar: { true|false }
 module: '{module-value}'
 agentFile: '{agent-file-path}'
 validationDate: '{YYYY-MM-DD}'
 stepsCompleted:
-  - v-01-load-review.md
+    - v-01-load-review.md
 ---
 
 # Validation Report: {agent-name}
@@ -92,7 +93,7 @@ stepsCompleted:
 
 ## Validation Findings
 
-*This section will be populated by validation steps*
+_This section will be populated by validation steps_
 ```
 
 Write to `{validationReport}`.

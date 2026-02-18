@@ -18,39 +18,47 @@
 **When:** Step 1 (init) or Step 2 (discovery)
 
 **Frontmatter:**
+
 ```yaml
 ---
 # Input discovery variables
-inputDocuments: []           # Discovered docs
-requiredInputCount: 1         # Minimum required
-optionalInputCount: 0        # Additional optional docs
+inputDocuments: [] # Discovered docs
+requiredInputCount: 1 # Minimum required
+optionalInputCount: 0 # Additional optional docs
 moduleInputFolder: '{planning_artifacts}'
 inputFilePatterns:
-  - '*-prd.md'
-  - '*-ux.md'
+    - '*-prd.md'
+    - '*-ux.md'
 ---
 ```
 
 **Discovery Logic:**
+
 ```markdown
 ## 1. Check Known Prior Workflow Outputs
+
 Search order:
+
 1. {module_output_folder}/[known-prior-workflow-output].md
 2. {project_folder}/[standard-locations]/
 3. {planning_artifacts}/
 4. User-provided paths
 
 ## 2. Pattern-Based Search
+
 If no known prior workflow: match {inputFilePatterns} in {moduleInputFolder} and {project_folder}/docs/
 
 ## 3. Present Findings
+
 "Found these documents:
+
 - [1] prd-my-project.md (3 days ago)
 - [2] ux-research.md (1 week ago)
 
 Select multiple or provide additional paths."
 
 ## 4. Confirm and Load
+
 Add selections to {inputDocuments} array in output frontmatter
 ```
 
@@ -59,22 +67,26 @@ Add selections to {inputDocuments} array in output frontmatter
 ## Required vs Optional Inputs
 
 **Required:** Workflow cannot proceed without these.
+
 ```markdown
 ## INPUT REQUIREMENT:
+
 Requires PRD to proceed.
 
-Searching: {bmm_creations_output_folder}/prd-*.md, {planning_artifacts}/*-prd.md
+Searching: {bmm_creations_output_folder}/prd-_.md, {planning_artifacts}/_-prd.md
 
 [Found:] "Found PRD: prd-my-project.md. Use this?"
 [Missing:] "No PRD found. Run PRD workflow first or provide path."
 ```
 
 **Optional:** Workflow can proceed without these.
+
 ```markdown
 ## OPTIONAL INPUTS:
+
 Can incorporate research if available.
 
-Searching: {bmm_creations_output_folder}/research-*.md, {project_folder}/research/
+Searching: {bmm_creations_output_folder}/research-\*.md, {project_folder}/research/
 
 [Found:] "Found research documents. Include any? (None required)"
 ```
@@ -84,6 +96,7 @@ Searching: {bmm_creations_output_folder}/research-*.md, {project_folder}/researc
 ## Module Workflow Chaining
 
 **Frontmatter in workflow.md:**
+
 ```yaml
 ---
 ## INPUT FROM PRIOR WORKFLOWS
@@ -97,10 +110,12 @@ Searching: {bmm_creations_output_folder}/research-*.md, {project_folder}/researc
 ```
 
 **Step 1 discovery:**
+
 ```markdown
 ## 1. Discover Prior Workflow Outputs
 
 Check required: {module_output_folder}/prd-{project_name}.md
+
 - Missing → Error: "Run PRD workflow first"
 - Found → Confirm with user
 
@@ -115,6 +130,7 @@ Check optional: Search for patterns, present findings, add selections to {inputD
 ## INPUT VALIDATION:
 
 For each discovered document:
+
 1. Load frontmatter
 2. Check workflowType matches expected
 3. Check stepsCompleted == complete
@@ -138,13 +154,14 @@ Enter numbers (comma-separated): > 1, 3"
 ```
 
 **Track in frontmatter:**
+
 ```yaml
 ---
 inputDocuments:
-  - path: '{output_folder}/prd-my-project.md'
-    type: 'prd'
-    source: 'prior-workflow'
-    selected: true
+    - path: '{output_folder}/prd-my-project.md'
+      type: 'prd'
+      source: 'prior-workflow'
+      selected: true
 ---
 ```
 
@@ -174,7 +191,7 @@ inputDocuments: []
 requiredInputCount: 1
 moduleInputFolder: '{module_output_folder}'
 inputFilePatterns:
-  - '*-prd.md'
+    - '*-prd.md'
 ---
 ```
 

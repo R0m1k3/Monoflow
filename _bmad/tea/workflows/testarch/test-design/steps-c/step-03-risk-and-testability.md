@@ -80,21 +80,21 @@ Summarize the highest risks and their mitigation priorities.
 
 - **If `{outputFile}` does not exist** (first save), create it with YAML frontmatter:
 
-  ```yaml
-  ---
-  stepsCompleted: ['step-03-risk-and-testability']
-  lastStep: 'step-03-risk-and-testability'
-  lastSaved: '{date}'
-  ---
-  ```
+    ```yaml
+    ---
+    stepsCompleted: ['step-03-risk-and-testability']
+    lastStep: 'step-03-risk-and-testability'
+    lastSaved: '{date}'
+    ---
+    ```
 
-  Then write this step's output below the frontmatter.
+    Then write this step's output below the frontmatter.
 
 - **If `{outputFile}` already exists**, update:
-  - Add `'step-03-risk-and-testability'` to `stepsCompleted` array (only if not already present)
-  - Set `lastStep: 'step-03-risk-and-testability'`
-  - Set `lastSaved: '{date}'`
-  - Append this step's output to the appropriate section of the document.
+    - Add `'step-03-risk-and-testability'` to `stepsCompleted` array (only if not already present)
+    - Set `lastStep: 'step-03-risk-and-testability'`
+    - Set `lastSaved: '{date}'`
+    - Append this step's output to the appropriate section of the document.
 
 Load next step: `{nextStepFile}`
 

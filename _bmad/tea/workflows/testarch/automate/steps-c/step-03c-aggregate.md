@@ -74,8 +74,8 @@ const e2eTestsOutput = JSON.parse(fs.readFileSync(e2eTestsPath, 'utf8'));
 
 ```javascript
 apiTestsOutput.tests.forEach((test) => {
-  fs.writeFileSync(test.file, test.content, 'utf8');
-  console.log(`✅ Created: ${test.file}`);
+    fs.writeFileSync(test.file, test.content, 'utf8');
+    console.log(`✅ Created: ${test.file}`);
 });
 ```
 
@@ -83,8 +83,8 @@ apiTestsOutput.tests.forEach((test) => {
 
 ```javascript
 e2eTestsOutput.tests.forEach((test) => {
-  fs.writeFileSync(test.file, test.content, 'utf8');
-  console.log(`✅ Created: ${test.file}`);
+    fs.writeFileSync(test.file, test.content, 'utf8');
+    console.log(`✅ Created: ${test.file}`);
 });
 ```
 
@@ -120,26 +120,26 @@ const uniqueFixtures = [...new Set(allFixtureNeeds)];
 import { test as base } from '@playwright/test';
 
 export const test = base.extend({
-  authenticatedUser: async ({ page }, use) => {
-    // Login logic
-    await page.goto('/login');
-    await page.fill('[name="email"]', 'test@example.com');
-    await page.fill('[name="password"]', 'password');
-    await page.click('button[type="submit"]');
-    await page.waitForURL('/dashboard');
+    authenticatedUser: async ({ page }, use) => {
+        // Login logic
+        await page.goto('/login');
+        await page.fill('[name="email"]', 'test@example.com');
+        await page.fill('[name="password"]', 'password');
+        await page.click('button[type="submit"]');
+        await page.waitForURL('/dashboard');
 
-    await use(page);
-  },
+        await use(page);
+    },
 
-  authToken: async ({ request }, use) => {
-    // Get auth token for API tests
-    const response = await request.post('/api/auth/login', {
-      data: { email: 'test@example.com', password: 'password' },
-    });
-    const { token } = await response.json();
+    authToken: async ({ request }, use) => {
+        // Get auth token for API tests
+        const response = await request.post('/api/auth/login', {
+            data: { email: 'test@example.com', password: 'password' },
+        });
+        const { token } = await response.json();
 
-    await use(token);
-  },
+        await use(token);
+    },
 });
 ```
 
@@ -149,15 +149,15 @@ export const test = base.extend({
 import { faker } from '@faker-js/faker';
 
 export const createUserData = (overrides = {}) => ({
-  name: faker.person.fullName(),
-  email: faker.internet.email(),
-  ...overrides,
+    name: faker.person.fullName(),
+    email: faker.internet.email(),
+    ...overrides,
 });
 
 export const createProductData = (overrides = {}) => ({
-  name: faker.commerce.productName(),
-  price: faker.number.int({ min: 10, max: 1000 }),
-  ...overrides,
+    name: faker.commerce.productName(),
+    price: faker.number.int({ min: 10, max: 1000 }),
+    ...overrides,
 });
 ```
 
@@ -167,12 +167,12 @@ export const createProductData = (overrides = {}) => ({
 import { Page } from '@playwright/test';
 
 export const mockPaymentSuccess = async (page: Page) => {
-  await page.route('/api/payment/**', (route) => {
-    route.fulfill({
-      status: 200,
-      body: JSON.stringify({ success: true, transactionId: '12345' }),
+    await page.route('/api/payment/**', (route) => {
+        route.fulfill({
+            status: 200,
+            body: JSON.stringify({ success: true, transactionId: '12345' }),
+        });
     });
-  });
 };
 ```
 
@@ -182,7 +182,7 @@ export const mockPaymentSuccess = async (page: Page) => {
 import { expect, Page } from '@playwright/test';
 
 export const waitForApiResponse = async (page: Page, urlPattern: string) => {
-  return page.waitForResponse((response) => response.url().includes(urlPattern) && response.ok());
+    return page.waitForResponse((response) => response.url().includes(urlPattern) && response.ok());
 };
 ```
 
@@ -286,21 +286,21 @@ Proceed to Step 4 when:
 
 - **If `{outputFile}` does not exist** (first save), create it with YAML frontmatter:
 
-  ```yaml
-  ---
-  stepsCompleted: ['step-03c-aggregate']
-  lastStep: 'step-03c-aggregate'
-  lastSaved: '{date}'
-  ---
-  ```
+    ```yaml
+    ---
+    stepsCompleted: ['step-03c-aggregate']
+    lastStep: 'step-03c-aggregate'
+    lastSaved: '{date}'
+    ---
+    ```
 
-  Then write this step's output below the frontmatter.
+    Then write this step's output below the frontmatter.
 
 - **If `{outputFile}` already exists**, update:
-  - Add `'step-03c-aggregate'` to `stepsCompleted` array (only if not already present)
-  - Set `lastStep: 'step-03c-aggregate'`
-  - Set `lastSaved: '{date}'`
-  - Append this step's output to the appropriate section.
+    - Add `'step-03c-aggregate'` to `stepsCompleted` array (only if not already present)
+    - Set `lastStep: 'step-03c-aggregate'`
+    - Set `lastSaved: '{date}'`
+    - Append this step's output to the appropriate section.
 
 Load next step: `{nextStepFile}`
 

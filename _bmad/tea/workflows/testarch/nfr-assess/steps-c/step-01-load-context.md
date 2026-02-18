@@ -96,21 +96,21 @@ Summarize loaded NFR sources and evidence availability.
 
 - **If `{outputFile}` does not exist** (first save), create it using the workflow template (if available) with YAML frontmatter:
 
-  ```yaml
-  ---
-  stepsCompleted: ['step-01-load-context']
-  lastStep: 'step-01-load-context'
-  lastSaved: '{date}'
-  ---
-  ```
+    ```yaml
+    ---
+    stepsCompleted: ['step-01-load-context']
+    lastStep: 'step-01-load-context'
+    lastSaved: '{date}'
+    ---
+    ```
 
-  Then write this step's output below the frontmatter.
+    Then write this step's output below the frontmatter.
 
 - **If `{outputFile}` already exists**, update:
-  - Add `'step-01-load-context'` to `stepsCompleted` array (only if not already present)
-  - Set `lastStep: 'step-01-load-context'`
-  - Set `lastSaved: '{date}'`
-  - Append this step's output to the appropriate section of the document.
+    - Add `'step-01-load-context'` to `stepsCompleted` array (only if not already present)
+    - Set `lastStep: 'step-01-load-context'`
+    - Set `lastSaved: '{date}'`
+    - Append this step's output to the appropriate section of the document.
 
 Load next step: `{nextStepFile}`
 

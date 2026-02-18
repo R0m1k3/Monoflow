@@ -50,30 +50,30 @@ This is an **isolated subprocess** running in parallel with other NFR domain ass
 
 ```json
 {
-  "domain": "performance",
-  "risk_level": "LOW",
-  "findings": [
-    {
-      "category": "Response Times",
-      "status": "PASS",
-      "description": "API endpoints respond in <150ms (P95)",
-      "evidence": ["Load testing results show 140ms P95"],
-      "recommendations": []
+    "domain": "performance",
+    "risk_level": "LOW",
+    "findings": [
+        {
+            "category": "Response Times",
+            "status": "PASS",
+            "description": "API endpoints respond in <150ms (P95)",
+            "evidence": ["Load testing results show 140ms P95"],
+            "recommendations": []
+        },
+        {
+            "category": "Caching",
+            "status": "CONCERN",
+            "description": "No CDN for static assets",
+            "evidence": ["Static files served from origin"],
+            "recommendations": ["Implement CDN (CloudFront/Cloudflare)", "Cache static assets for 1 year"]
+        }
+    ],
+    "compliance": {
+        "SLA_99.9": "PASS",
+        "SLA_99.99": "CONCERN"
     },
-    {
-      "category": "Caching",
-      "status": "CONCERN",
-      "description": "No CDN for static assets",
-      "evidence": ["Static files served from origin"],
-      "recommendations": ["Implement CDN (CloudFront/Cloudflare)", "Cache static assets for 1 year"]
-    }
-  ],
-  "compliance": {
-    "SLA_99.9": "PASS",
-    "SLA_99.99": "CONCERN"
-  },
-  "priority_actions": ["Implement CDN for static assets", "Add database query caching for frequent reads"],
-  "summary": "Performance is acceptable with minor optimization opportunities"
+    "priority_actions": ["Implement CDN for static assets", "Add database query caching for frequent reads"],
+    "summary": "Performance is acceptable with minor optimization opportunities"
 }
 ```
 

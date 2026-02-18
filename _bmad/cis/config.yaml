@@ -9,4 +9,4 @@ visual_tools: intermediate
 user_name: Michael
 communication_language: French
 document_output_language: French
-output_folder: "{project-root}/_bmad-output"
+output_folder: '{project-root}/_bmad-output'

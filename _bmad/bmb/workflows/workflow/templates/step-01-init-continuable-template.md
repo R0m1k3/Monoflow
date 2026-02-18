@@ -96,8 +96,8 @@ If the document exists and has frontmatter with `stepsCompleted`:
 If the document exists AND all steps are marked complete in `stepsCompleted`:
 
 - Ask user: "I found an existing [workflow-output] from [date]. Would you like to:
-  1. Create a new [workflow-output]
-  2. Update/modify the existing [workflow-output]"
+    1. Create a new [workflow-output]
+    2. Update/modify the existing [workflow-output]"
 - If option 1: Create new document with timestamp suffix
 - If option 2: Load step-01b-continue.md
 

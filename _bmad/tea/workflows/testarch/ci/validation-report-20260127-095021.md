@@ -52,8 +52,8 @@ completionDate: 2026-01-27 10:03:10
 
 - No templates found in workflow root
 - Steps with outputFile in frontmatter:
-  - steps-c/step-02-generate-pipeline.md
-  - steps-v/step-01-validate.md
+    - steps-c/step-02-generate-pipeline.md
+    - steps-v/step-01-validate.md
 
 ## Validation Design Check
 

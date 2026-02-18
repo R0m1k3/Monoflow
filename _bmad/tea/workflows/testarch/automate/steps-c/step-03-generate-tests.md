@@ -127,7 +127,7 @@ const apiOutputExists = fs.existsSync(`/tmp/tea-automate-api-tests-${timestamp}.
 const e2eOutputExists = fs.existsSync(`/tmp/tea-automate-e2e-tests-${timestamp}.json`);
 
 if (!apiOutputExists || !e2eOutputExists) {
-  throw new Error('One or both subprocess outputs missing!');
+    throw new Error('One or both subprocess outputs missing!');
 }
 ```
 

@@ -70,6 +70,7 @@ Then load, read completely, and execute `{createWorkflow}` (steps-c/step-01-load
 ## CONFIGURATION
 
 This workflow references:
+
 - `{installed_path}/data/` — Module standards and templates
 - `{installed_path}/templates/` — Output templates
 
@@ -78,6 +79,7 @@ This workflow references:
 ## OUTPUT
 
 **Create mode produces:**
+
 - Module directory structure
 - `module.yaml` with install configuration
 - Agent placeholder/spec files

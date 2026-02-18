@@ -6,15 +6,15 @@
 - trigger: XX or fuzzy match on command-name
   [handler]: [value]
   description: '[XX] Display text'
-  data: [optional]   # Pass file to workflow
+  data: [optional] # Pass file to workflow
 ```
 
-| Field | Required | Validation |
-|-------|----------|------------|
-| `trigger` | Yes | Format: `XX or fuzzy match on command-name` |
-| `description` | Yes | Must start with `[XX]` code |
-| handler | Yes | `action` (Agent) or `exec` (Module) |
-| `data` | No | File path for workflow input |
+| Field         | Required | Validation                                  |
+| ------------- | -------- | ------------------------------------------- |
+| `trigger`     | Yes      | Format: `XX or fuzzy match on command-name` |
+| `description` | Yes      | Must start with `[XX]` code                 |
+| handler       | Yes      | `action` (Agent) or `exec` (Module)         |
+| `data`        | No       | File path for workflow input                |
 
 **Reserved codes (DO NOT USE):** MH, CH, PM, DA (auto-injected)
 
@@ -22,10 +22,10 @@
 
 ## Handlers
 
-| Handler | Use Case | Syntax |
-|---------|----------|--------|
+| Handler  | Use Case                        | Syntax                                            |
+| -------- | ------------------------------- | ------------------------------------------------- |
 | `action` | Agent self-contained operations | `action: '#prompt-id'` or `action: 'inline text'` |
-| `exec` | Module external workflows | `exec: '{project-root}/path/to/workflow.md'` |
+| `exec`   | Module external workflows       | `exec: '{project-root}/path/to/workflow.md'`      |
 
 ```yaml
 # Action - reference prompt
@@ -70,15 +70,15 @@ For `action: '#id'` references in Agent menus.
 
 ```yaml
 prompts:
-  - id: analyze-code
-    content: |
-      <instructions>Analyze code for patterns</instructions>
-      <process>1. Identify structure 2. Check issues 3. Suggest improvements</process>
+    - id: analyze-code
+      content: |
+          <instructions>Analyze code for patterns</instructions>
+          <process>1. Identify structure 2. Check issues 3. Suggest improvements</process>
 
 menu:
-  - trigger: AC or fuzzy match on analyze-code
-    action: '#analyze-code'
-    description: '[AC] Analyze code patterns'
+    - trigger: AC or fuzzy match on analyze-code
+      action: '#analyze-code'
+      description: '[AC] Analyze code patterns'
 ```
 
 **Common XML tags:** `<instructions>`, `<process>`, `<example>`, `<output_format>`
@@ -87,12 +87,12 @@ menu:
 
 ## Path Variables
 
-| Variable | Expands To |
-|----------|------------|
-| `{project-root}` | Project root directory |
-| `{output_folder}` | Document output location |
-| `{user_name}` | User's name from config |
-| `{communication_language}` | Language preference |
+| Variable                   | Expands To               |
+| -------------------------- | ------------------------ |
+| `{project-root}`           | Project root directory   |
+| `{output_folder}`          | Document output location |
+| `{user_name}`              | User's name from config  |
+| `{communication_language}` | Language preference      |
 
 ```yaml
 # ✅ CORRECT
@@ -106,17 +106,18 @@ exec: '../../../core/workflows/brainstorming/workflow.md'
 
 ## Agent Types
 
-| Type | hasSidecar | Additional Fields |
-|------|------------|-------------------|
-| Simple | false | `prompts`, `menu` |
-| Expert | true | `prompts`, `menu`, `critical_actions` |
-| Module | true | `menu` only (external workflows) |
+| Type   | hasSidecar | Additional Fields                     |
+| ------ | ---------- | ------------------------------------- |
+| Simple | false      | `prompts`, `menu`                     |
+| Expert | true       | `prompts`, `menu`, `critical_actions` |
+| Module | true       | `menu` only (external workflows)      |
 
 **Expert Agent sidecar path pattern:**
+
 ```yaml
 critical_actions:
-  - 'Load COMPLETE file {project-root}/_bmad/_memory/{sidecar-folder}/memories.md'
-  - 'ONLY read/write files in {project-root}/_bmad/_memory/{sidecar-folder}/'
+    - 'Load COMPLETE file {project-root}/_bmad/_memory/{sidecar-folder}/memories.md'
+    - 'ONLY read/write files in {project-root}/_bmad/_memory/{sidecar-folder}/'
 ```
 
 ---
@@ -127,53 +128,53 @@ critical_actions:
 
 ```yaml
 prompts:
-  - id: format-code
-    content: |
-      <instructions>Format code to style guidelines</instructions>
+    - id: format-code
+      content: |
+          <instructions>Format code to style guidelines</instructions>
 
 menu:
-  - trigger: FC or fuzzy match on format-code
-    action: '#format-code'
-    description: '[FC] Format code'
+    - trigger: FC or fuzzy match on format-code
+      action: '#format-code'
+      description: '[FC] Format code'
 
-  - trigger: LC or fuzzy match on lint-code
-    action: 'Check code for issues'
-    description: '[LC] Lint code'
+    - trigger: LC or fuzzy match on lint-code
+      action: 'Check code for issues'
+      description: '[LC] Lint code'
 ```
 
 ### Expert Agent (hasSidecar: true)
 
 ```yaml
 critical_actions:
-  - 'Load COMPLETE file {project-root}/_bmad/_memory/journal-keeper-sidecar/memories.md'
-  - 'ONLY read/write files in {project-root}/_bmad/_memory/journal-keeper-sidecar/'
+    - 'Load COMPLETE file {project-root}/_bmad/_memory/journal-keeper-sidecar/memories.md'
+    - 'ONLY read/write files in {project-root}/_bmad/_memory/journal-keeper-sidecar/'
 
 prompts:
-  - id: guided-entry
-    content: |
-      <instructions>Guide through journal entry</instructions>
+    - id: guided-entry
+      content: |
+          <instructions>Guide through journal entry</instructions>
 
 menu:
-  - trigger: WE or fuzzy match on write-entry
-    action: '#guided-entry'
-    description: '[WE] Write journal entry'
+    - trigger: WE or fuzzy match on write-entry
+      action: '#guided-entry'
+      description: '[WE] Write journal entry'
 
-  - trigger: SM or fuzzy match on save-memory
-    action: 'Update {project-root}/_bmad/_memory/journal-keeper-sidecar/memories.md'
-    description: '[SM] Save session'
+    - trigger: SM or fuzzy match on save-memory
+      action: 'Update {project-root}/_bmad/_memory/journal-keeper-sidecar/memories.md'
+      description: '[SM] Save session'
 ```
 
 ### Module Agent (hasSidecar: true)
 
 ```yaml
 menu:
-  - trigger: WI or fuzzy match on workflow-init
-    exec: '{project-root}/_bmad/bmm/workflows/workflow-status/workflow.md'
-    description: '[WI] Initialize workflow'
+    - trigger: WI or fuzzy match on workflow-init
+      exec: '{project-root}/_bmad/bmm/workflows/workflow-status/workflow.md'
+      description: '[WI] Initialize workflow'
 
-  - trigger: BS or fuzzy match on brainstorm
-    exec: '{project-root}/_bmad/core/workflows/brainstorming/workflow.md'
-    description: '[BS] Guided brainstorming'
+    - trigger: BS or fuzzy match on brainstorm
+      exec: '{project-root}/_bmad/core/workflows/brainstorming/workflow.md'
+      description: '[BS] Guided brainstorming'
 ```
 
 ---

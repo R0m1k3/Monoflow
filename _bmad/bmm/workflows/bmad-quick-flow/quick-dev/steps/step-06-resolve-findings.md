@@ -90,12 +90,12 @@ If `{execution_mode}` is "tech-spec":
 1. Load `{tech_spec_path}`
 2. Update status to "Completed"
 3. Add review notes:
-   ```
-   ## Review Notes
-   - Adversarial review completed
-   - Findings: {count} total, {fixed} fixed, {skipped} skipped
-   - Resolution approach: {walk-through/auto-fix/skip}
-   ```
+    ```
+    ## Review Notes
+    - Adversarial review completed
+    - Findings: {count} total, {fixed} fixed, {skipped} skipped
+    - Resolution approach: {walk-through/auto-fix/skip}
+    ```
 4. Save changes
 
 ---

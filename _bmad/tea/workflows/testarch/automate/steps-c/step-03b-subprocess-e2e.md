@@ -54,8 +54,8 @@ If `auto` (fall back to MCP if CLI unavailable; if neither available, generate f
 - Open the target page first, then verify selectors with a snapshot:
   `playwright-cli -s=tea-automate-{{timestamp}} open <target_url>`
   `playwright-cli -s=tea-automate-{{timestamp}} snapshot` → map refs to Playwright locators
-  - ref `{role: "button", name: "Submit"}` → `page.getByRole('button', { name: 'Submit' })`
-  - ref `{role: "textbox", name: "Email"}` → `page.getByRole('textbox', { name: 'Email' })`
+    - ref `{role: "button", name: "Submit"}` → `page.getByRole('button', { name: 'Submit' })`
+    - ref `{role: "textbox", name: "Email"}` → `page.getByRole('textbox', { name: 'Email' })`
 - `playwright-cli -s=tea-automate-{{timestamp}} close` when done
 
 If `cli` (CLI only — do NOT fall back to MCP; generate from best practices if CLI unavailable):
@@ -63,8 +63,8 @@ If `cli` (CLI only — do NOT fall back to MCP; generate from best practices if 
 - Open the target page first, then verify selectors with a snapshot:
   `playwright-cli -s=tea-automate-{{timestamp}} open <target_url>`
   `playwright-cli -s=tea-automate-{{timestamp}} snapshot` → map refs to Playwright locators
-  - ref `{role: "button", name: "Submit"}` → `page.getByRole('button', { name: 'Submit' })`
-  - ref `{role: "textbox", name: "Email"}` → `page.getByRole('textbox', { name: 'Email' })`
+    - ref `{role: "button", name: "Submit"}` → `page.getByRole('button', { name: 'Submit' })`
+    - ref `{role: "textbox", name: "Email"}` → `page.getByRole('textbox', { name: 'Email' })`
 - `playwright-cli -s=tea-automate-{{timestamp}} close` when done
 
 > **Session Hygiene:** Always close sessions using `playwright-cli -s=tea-automate-{{timestamp}} close`. Do NOT use `close-all` — it kills every session on the machine and breaks parallel execution.
@@ -87,20 +87,20 @@ For each user journey, create test file in `tests/e2e/[feature].spec.ts`:
 import { test, expect } from '@playwright/test';
 
 test.describe('[Feature] E2E User Journey', () => {
-  test('[P0] should complete [user journey]', async ({ page }) => {
-    // Navigate to starting point
-    await page.goto('/feature');
+    test('[P0] should complete [user journey]', async ({ page }) => {
+        // Navigate to starting point
+        await page.goto('/feature');
 
-    // Interact with UI
-    await page.getByRole('button', { name: 'Submit' }).click();
+        // Interact with UI
+        await page.getByRole('button', { name: 'Submit' }).click();
 
-    // Assert expected state
-    await expect(page.getByText('Success')).toBeVisible();
-  });
+        // Assert expected state
+        await expect(page.getByText('Success')).toBeVisible();
+    });
 
-  test('[P1] should handle [edge case]', async ({ page }) => {
-    // Test edge case scenario
-  });
+    test('[P1] should handle [edge case]', async ({ page }) => {
+        // Test edge case scenario
+    });
 });
 ```
 
@@ -133,36 +133,36 @@ Write JSON to temp file: `/tmp/tea-automate-e2e-tests-{{timestamp}}.json`
 
 ```json
 {
-  "success": true,
-  "subprocess": "e2e-tests",
-  "tests": [
-    {
-      "file": "tests/e2e/authentication.spec.ts",
-      "content": "[full TypeScript test file content]",
-      "description": "E2E tests for user authentication journey",
-      "priority_coverage": {
-        "P0": 2,
-        "P1": 3,
-        "P2": 2,
-        "P3": 0
-      }
-    },
-    {
-      "file": "tests/e2e/checkout.spec.ts",
-      "content": "[full TypeScript test file content]",
-      "description": "E2E tests for checkout journey",
-      "priority_coverage": {
-        "P0": 3,
-        "P1": 2,
-        "P2": 1,
-        "P3": 0
-      }
-    }
-  ],
-  "fixture_needs": ["authenticatedUserFixture", "paymentMockFixture", "checkoutDataFixture"],
-  "knowledge_fragments_used": ["fixture-architecture", "network-first", "selector-resilience"],
-  "test_count": 15,
-  "summary": "Generated 15 E2E test cases covering 5 user journeys"
+    "success": true,
+    "subprocess": "e2e-tests",
+    "tests": [
+        {
+            "file": "tests/e2e/authentication.spec.ts",
+            "content": "[full TypeScript test file content]",
+            "description": "E2E tests for user authentication journey",
+            "priority_coverage": {
+                "P0": 2,
+                "P1": 3,
+                "P2": 2,
+                "P3": 0
+            }
+        },
+        {
+            "file": "tests/e2e/checkout.spec.ts",
+            "content": "[full TypeScript test file content]",
+            "description": "E2E tests for checkout journey",
+            "priority_coverage": {
+                "P0": 3,
+                "P1": 2,
+                "P2": 1,
+                "P3": 0
+            }
+        }
+    ],
+    "fixture_needs": ["authenticatedUserFixture", "paymentMockFixture", "checkoutDataFixture"],
+    "knowledge_fragments_used": ["fixture-architecture", "network-first", "selector-resilience"],
+    "test_count": 15,
+    "summary": "Generated 15 E2E test cases covering 5 user journeys"
 }
 ```
 
@@ -170,12 +170,12 @@ Write JSON to temp file: `/tmp/tea-automate-e2e-tests-{{timestamp}}.json`
 
 ```json
 {
-  "success": false,
-  "subprocess": "e2e-tests",
-  "error": "Error message describing what went wrong",
-  "partial_output": {
-    /* any tests generated before error */
-  }
+    "success": false,
+    "subprocess": "e2e-tests",
+    "error": "Error message describing what went wrong",
+    "partial_output": {
+        /* any tests generated before error */
+    }
 }
 ```
 

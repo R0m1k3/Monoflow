@@ -115,21 +115,21 @@ Create helpers for:
 
 - **If `{outputFile}` does not exist** (first save), create it with YAML frontmatter:
 
-  ```yaml
-  ---
-  stepsCompleted: ['step-03-scaffold-framework']
-  lastStep: 'step-03-scaffold-framework'
-  lastSaved: '{date}'
-  ---
-  ```
+    ```yaml
+    ---
+    stepsCompleted: ['step-03-scaffold-framework']
+    lastStep: 'step-03-scaffold-framework'
+    lastSaved: '{date}'
+    ---
+    ```
 
-  Then write this step's output below the frontmatter.
+    Then write this step's output below the frontmatter.
 
 - **If `{outputFile}` already exists**, update:
-  - Add `'step-03-scaffold-framework'` to `stepsCompleted` array (only if not already present)
-  - Set `lastStep: 'step-03-scaffold-framework'`
-  - Set `lastSaved: '{date}'`
-  - Append this step's output to the appropriate section of the document.
+    - Add `'step-03-scaffold-framework'` to `stepsCompleted` array (only if not already present)
+    - Set `lastStep: 'step-03-scaffold-framework'`
+    - Set `lastSaved: '{date}'`
+    - Append this step's output to the appropriate section of the document.
 
 Load next step: `{nextStepFile}`
 

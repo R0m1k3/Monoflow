@@ -69,36 +69,36 @@ const recommendations = [];
 
 // Critical gaps (P0)
 if (criticalGaps.length > 0) {
-  recommendations.push({
-    priority: 'URGENT',
-    action: `Run /bmad:tea:atdd for ${criticalGaps.length} P0 requirements`,
-    requirements: criticalGaps.map((r) => r.id),
-  });
+    recommendations.push({
+        priority: 'URGENT',
+        action: `Run /bmad:tea:atdd for ${criticalGaps.length} P0 requirements`,
+        requirements: criticalGaps.map((r) => r.id),
+    });
 }
 
 // High priority gaps (P1)
 if (highGaps.length > 0) {
-  recommendations.push({
-    priority: 'HIGH',
-    action: `Run /bmad:tea:automate to expand coverage for ${highGaps.length} P1 requirements`,
-    requirements: highGaps.map((r) => r.id),
-  });
+    recommendations.push({
+        priority: 'HIGH',
+        action: `Run /bmad:tea:automate to expand coverage for ${highGaps.length} P1 requirements`,
+        requirements: highGaps.map((r) => r.id),
+    });
 }
 
 // Partial coverage
 if (partialCoverage.length > 0) {
-  recommendations.push({
-    priority: 'MEDIUM',
-    action: `Complete coverage for ${partialCoverage.length} partially covered requirements`,
-    requirements: partialCoverage.map((r) => r.id),
-  });
+    recommendations.push({
+        priority: 'MEDIUM',
+        action: `Complete coverage for ${partialCoverage.length} partially covered requirements`,
+        requirements: partialCoverage.map((r) => r.id),
+    });
 }
 
 // Quality issues
 recommendations.push({
-  priority: 'LOW',
-  action: 'Run /bmad:tea:test-review to assess test quality',
-  requirements: [],
+    priority: 'LOW',
+    action: 'Run /bmad:tea:test-review to assess test quality',
+    requirements: [],
 });
 ```
 
@@ -127,42 +127,42 @@ const p0CoveragePercentage = Math.round((p0Covered / p0Total) * 100);
 
 ```javascript
 const coverageMatrix = {
-  phase: 'PHASE_1_COMPLETE',
-  generated_at: new Date().toISOString(),
+    phase: 'PHASE_1_COMPLETE',
+    generated_at: new Date().toISOString(),
 
-  requirements: traceabilityMatrix, // Full matrix from Step 3
+    requirements: traceabilityMatrix, // Full matrix from Step 3
 
-  coverage_statistics: {
-    total_requirements: totalRequirements,
-    fully_covered: fullyCovered,
-    partially_covered: partialCoverage.length,
-    uncovered: uncoveredRequirements.length,
-    overall_coverage_percentage: coveragePercentage,
+    coverage_statistics: {
+        total_requirements: totalRequirements,
+        fully_covered: fullyCovered,
+        partially_covered: partialCoverage.length,
+        uncovered: uncoveredRequirements.length,
+        overall_coverage_percentage: coveragePercentage,
 
-    priority_breakdown: {
-      P0: { total: p0Total, covered: p0Covered, percentage: p0CoveragePercentage },
-      P1: {
-        /* calculate */
-      },
-      P2: {
-        /* calculate */
-      },
-      P3: {
-        /* calculate */
-      },
+        priority_breakdown: {
+            P0: { total: p0Total, covered: p0Covered, percentage: p0CoveragePercentage },
+            P1: {
+                /* calculate */
+            },
+            P2: {
+                /* calculate */
+            },
+            P3: {
+                /* calculate */
+            },
+        },
     },
-  },
 
-  gap_analysis: {
-    critical_gaps: criticalGaps,
-    high_gaps: highGaps,
-    medium_gaps: mediumGaps,
-    low_gaps: lowGaps,
-    partial_coverage_items: partialCoverage,
-    unit_only_items: unitOnlyCoverage,
-  },
+    gap_analysis: {
+        critical_gaps: criticalGaps,
+        high_gaps: highGaps,
+        medium_gaps: mediumGaps,
+        low_gaps: lowGaps,
+        partial_coverage_items: partialCoverage,
+        unit_only_items: unitOnlyCoverage,
+    },
 
-  recommendations: recommendations,
+    recommendations: recommendations,
 };
 ```
 
@@ -231,21 +231,21 @@ console.log(`✅ Phase 1 Complete: Coverage matrix saved to ${outputPath}`);
 
 - **If `{outputFile}` does not exist** (first save), create it using the workflow template (if available) with YAML frontmatter:
 
-  ```yaml
-  ---
-  stepsCompleted: ['step-04-analyze-gaps']
-  lastStep: 'step-04-analyze-gaps'
-  lastSaved: '{date}'
-  ---
-  ```
+    ```yaml
+    ---
+    stepsCompleted: ['step-04-analyze-gaps']
+    lastStep: 'step-04-analyze-gaps'
+    lastSaved: '{date}'
+    ---
+    ```
 
-  Then write this step's output below the frontmatter.
+    Then write this step's output below the frontmatter.
 
 - **If `{outputFile}` already exists**, update:
-  - Add `'step-04-analyze-gaps'` to `stepsCompleted` array (only if not already present)
-  - Set `lastStep: 'step-04-analyze-gaps'`
-  - Set `lastSaved: '{date}'`
-  - Append this step's output to the appropriate section of the document.
+    - Add `'step-04-analyze-gaps'` to `stepsCompleted` array (only if not already present)
+    - Set `lastStep: 'step-04-analyze-gaps'`
+    - Set `lastSaved: '{date}'`
+    - Append this step's output to the appropriate section of the document.
 
 Load next step: `{nextStepFile}`
 

@@ -64,10 +64,10 @@ If missing: **HALT** with "Run `framework` workflow first."
 ## 4. Detect CI Platform
 
 - Check for existing CI config:
-  - `.github/workflows/*.yml` (GitHub Actions)
-  - `.gitlab-ci.yml` (GitLab CI)
-  - `.circleci/config.yml` (Circle CI)
-  - `Jenkinsfile`
+    - `.github/workflows/*.yml` (GitHub Actions)
+    - `.gitlab-ci.yml` (GitLab CI)
+    - `.circleci/config.yml` (Circle CI)
+    - `Jenkinsfile`
 - If found, ask whether to update or replace
 - If not found, infer from git remote (github.com → GitHub Actions)
 - Respect `ci_platform` if explicitly set
@@ -87,21 +87,21 @@ If missing: **HALT** with "Run `framework` workflow first."
 
 - **If `{outputFile}` does not exist** (first save), create it with YAML frontmatter:
 
-  ```yaml
-  ---
-  stepsCompleted: ['step-01-preflight']
-  lastStep: 'step-01-preflight'
-  lastSaved: '{date}'
-  ---
-  ```
+    ```yaml
+    ---
+    stepsCompleted: ['step-01-preflight']
+    lastStep: 'step-01-preflight'
+    lastSaved: '{date}'
+    ---
+    ```
 
-  Then write this step's output below the frontmatter.
+    Then write this step's output below the frontmatter.
 
 - **If `{outputFile}` already exists**, update:
-  - Add `'step-01-preflight'` to `stepsCompleted` array (only if not already present)
-  - Set `lastStep: 'step-01-preflight'`
-  - Set `lastSaved: '{date}'`
-  - Append this step's output to the appropriate section of the document.
+    - Add `'step-01-preflight'` to `stepsCompleted` array (only if not already present)
+    - Set `lastStep: 'step-01-preflight'`
+    - Set `lastSaved: '{date}'`
+    - Append this step's output to the appropriate section of the document.
 
 Load next step: `{nextStepFile}`
 

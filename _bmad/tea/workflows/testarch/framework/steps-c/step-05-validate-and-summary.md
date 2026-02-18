@@ -65,21 +65,21 @@ Report:
 
 - **If `{outputFile}` does not exist** (first save), create it with YAML frontmatter:
 
-  ```yaml
-  ---
-  stepsCompleted: ['step-05-validate-and-summary']
-  lastStep: 'step-05-validate-and-summary'
-  lastSaved: '{date}'
-  ---
-  ```
+    ```yaml
+    ---
+    stepsCompleted: ['step-05-validate-and-summary']
+    lastStep: 'step-05-validate-and-summary'
+    lastSaved: '{date}'
+    ---
+    ```
 
-  Then write this step's output below the frontmatter.
+    Then write this step's output below the frontmatter.
 
 - **If `{outputFile}` already exists**, update:
-  - Add `'step-05-validate-and-summary'` to `stepsCompleted` array (only if not already present)
-  - Set `lastStep: 'step-05-validate-and-summary'`
-  - Set `lastSaved: '{date}'`
-  - Append this step's output to the appropriate section of the document.
+    - Add `'step-05-validate-and-summary'` to `stepsCompleted` array (only if not already present)
+    - Set `lastStep: 'step-05-validate-and-summary'`
+    - Set `lastSaved: '{date}'`
+    - Append this step's output to the appropriate section of the document.
 
 ## 🚨 SYSTEM SUCCESS/FAILURE METRICS:
 

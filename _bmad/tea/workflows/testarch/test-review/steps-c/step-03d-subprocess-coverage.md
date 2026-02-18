@@ -60,45 +60,45 @@ const score = criticalGaps === 0 ? Math.max(0, 100 - violations.length * 5) : Ma
 
 ```json
 {
-  "dimension": "coverage",
-  "score": 70,
-  "max_score": 100,
-  "grade": "C",
-  "violations": [
-    {
-      "file": "tests/api/",
-      "severity": "HIGH",
-      "category": "missing-endpoint-tests",
-      "description": "API endpoint /api/users/delete not tested",
-      "suggestion": "Add tests for user deletion including error scenarios"
+    "dimension": "coverage",
+    "score": 70,
+    "max_score": 100,
+    "grade": "C",
+    "violations": [
+        {
+            "file": "tests/api/",
+            "severity": "HIGH",
+            "category": "missing-endpoint-tests",
+            "description": "API endpoint /api/users/delete not tested",
+            "suggestion": "Add tests for user deletion including error scenarios"
+        },
+        {
+            "file": "tests/e2e/checkout.spec.ts",
+            "line": 25,
+            "severity": "MEDIUM",
+            "category": "missing-error-case",
+            "description": "Only happy path tested - no error handling tests",
+            "suggestion": "Add tests for payment failure, network errors, validation failures"
+        }
+    ],
+    "passed_checks": 8,
+    "failed_checks": 4,
+    "violation_summary": {
+        "HIGH": 1,
+        "MEDIUM": 2,
+        "LOW": 1
     },
-    {
-      "file": "tests/e2e/checkout.spec.ts",
-      "line": 25,
-      "severity": "MEDIUM",
-      "category": "missing-error-case",
-      "description": "Only happy path tested - no error handling tests",
-      "suggestion": "Add tests for payment failure, network errors, validation failures"
-    }
-  ],
-  "passed_checks": 8,
-  "failed_checks": 4,
-  "violation_summary": {
-    "HIGH": 1,
-    "MEDIUM": 2,
-    "LOW": 1
-  },
-  "coverage_gaps": {
-    "untested_endpoints": ["/api/users/delete", "/api/orders/cancel"],
-    "untested_user_paths": ["Password reset flow"],
-    "missing_error_scenarios": ["Payment failures", "Network timeouts"]
-  },
-  "recommendations": [
-    "Add tests for all CRUD operations (especially DELETE)",
-    "Test error scenarios for each user path",
-    "Add integration tests between API and E2E layers"
-  ],
-  "summary": "Coverage has critical gaps - 4 violations (1 HIGH critical endpoint missing)"
+    "coverage_gaps": {
+        "untested_endpoints": ["/api/users/delete", "/api/orders/cancel"],
+        "untested_user_paths": ["Password reset flow"],
+        "missing_error_scenarios": ["Payment failures", "Network timeouts"]
+    },
+    "recommendations": [
+        "Add tests for all CRUD operations (especially DELETE)",
+        "Test error scenarios for each user path",
+        "Add integration tests between API and E2E layers"
+    ],
+    "summary": "Coverage has critical gaps - 4 violations (1 HIGH critical endpoint missing)"
 }
 ```
 

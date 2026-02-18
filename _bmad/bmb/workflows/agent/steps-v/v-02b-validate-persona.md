@@ -50,43 +50,43 @@ Read `{personaProperties}`, `{principlesCrafting}`, `{validationReport}`, and `{
 Perform these checks systematically - validate EVERY rule specified in personaProperties.md:
 
 1. **Required Fields Existence**
-   - [ ] role: Present, clear, and specific
-   - [ ] identity: Present and defines who the agent is
-   - [ ] communication_style: Present and appropriate to role
-   - [ ] principles: Present as array, not empty (if applicable)
+    - [ ] role: Present, clear, and specific
+    - [ ] identity: Present and defines who the agent is
+    - [ ] communication_style: Present and appropriate to role
+    - [ ] principles: Present as array, not empty (if applicable)
 
 2. **Content Quality - Role**
-   - [ ] Role is specific (not generic like "assistant")
-   - [ ] Role aligns with agent's purpose and menu items
-   - [ ] Role is achievable within LLM capabilities
-   - [ ] Role scope is appropriate (not too broad/narrow)
+    - [ ] Role is specific (not generic like "assistant")
+    - [ ] Role aligns with agent's purpose and menu items
+    - [ ] Role is achievable within LLM capabilities
+    - [ ] Role scope is appropriate (not too broad/narrow)
 
 3. **Content Quality - Identity**
-   - [ ] Identity clearly defines the agent's character
-   - [ ] Identity is consistent with the role
-   - [ ] Identity provides context for behavior
-   - [ ] Identity is not generic or cliché
+    - [ ] Identity clearly defines the agent's character
+    - [ ] Identity is consistent with the role
+    - [ ] Identity provides context for behavior
+    - [ ] Identity is not generic or cliché
 
 4. **Content Quality - Communication Style**
-   - [ ] Communication style is clearly defined
-   - [ ] Style matches the role and target users
-   - [ ] Style is consistent throughout the definition
-   - [ ] Style examples or guidance provided if nuanced
-   - [ ] Style focuses on speech patterns only (not behavior)
+    - [ ] Communication style is clearly defined
+    - [ ] Style matches the role and target users
+    - [ ] Style is consistent throughout the definition
+    - [ ] Style examples or guidance provided if nuanced
+    - [ ] Style focuses on speech patterns only (not behavior)
 
 5. **Content Quality - Principles**
-   - [ ] Principles are actionable (not vague platitudes)
-   - [ ] Principles guide behavior and decisions
-   - [ ] Principles are consistent with role
-   - [ ] 3-7 principles recommended (not overwhelming)
-   - [ ] Each principle is clear and specific
-   - [ ] First principle activates domain knowledge
+    - [ ] Principles are actionable (not vague platitudes)
+    - [ ] Principles guide behavior and decisions
+    - [ ] Principles are consistent with role
+    - [ ] 3-7 principles recommended (not overwhelming)
+    - [ ] Each principle is clear and specific
+    - [ ] First principle activates domain knowledge
 
 6. **Consistency Checks**
-   - [ ] Role, identity, communication_style, principles all align
-   - [ ] No contradictions between principles
-   - [ ] Persona supports the menu items defined
-   - [ ] Language and terminology consistent
+    - [ ] Role, identity, communication_style, principles all align
+    - [ ] No contradictions between principles
+    - [ ] Persona supports the menu items defined
+    - [ ] Language and terminology consistent
 
 ### 3. Append Findings to Report
 
@@ -98,6 +98,7 @@ Append to `{validationReport}`:
 **Status:** {✅ PASS / ⚠️ WARNING / ❌ FAIL}
 
 **Checks:**
+
 - [ ] role: specific, not generic
 - [ ] identity: defines who agent is
 - [ ] communication_style: speech patterns only
@@ -105,13 +106,13 @@ Append to `{validationReport}`:
 
 **Detailed Findings:**
 
-*PASSING:*
+_PASSING:_
 {List of passing checks}
 
-*WARNINGS:*
+_WARNINGS:_
 {List of non-blocking issues}
 
-*FAILURES:*
+_FAILURES:_
 {List of blocking issues that must be fixed}
 ```
 

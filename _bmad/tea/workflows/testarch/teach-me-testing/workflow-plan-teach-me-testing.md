@@ -1,14 +1,14 @@
 ---
 stepsCompleted:
-  [
-    'step-01-discovery',
-    'step-02-classification',
-    'step-03-requirements',
-    'step-04-tools',
-    'step-05-plan-review',
-    'step-06-design',
-    'step-07-foundation',
-  ]
+    [
+        'step-01-discovery',
+        'step-02-classification',
+        'step-03-requirements',
+        'step-04-tools',
+        'step-05-plan-review',
+        'step-06-design',
+        'step-07-foundation',
+    ]
 created: 2026-01-27
 status: FOUNDATION_COMPLETE
 approvedDate: 2026-01-27
@@ -92,42 +92,42 @@ Create an ongoing learning companion that teaches testing progressively through 
 
 - Style: Mixed (mostly autonomous teaching with collaborative decision points)
 - Decision points:
-  - Role/experience assessment (entry)
-  - Session selection (menu-driven, can jump around)
-  - Quiz answers (validation gates)
-  - Continue to next session or exit
+    - Role/experience assessment (entry)
+    - Session selection (menu-driven, can jump around)
+    - Quiz answers (validation gates)
+    - Continue to next session or exit
 - Checkpoint frequency: At session completion (save progress, offer continue/exit)
 - Teaching approach: AI presents content, user absorbs - minimal interruption once learning
 
 **Inputs Required:**
 
 - Required:
-  - User role (QA, Dev, Lead, VP)
-  - Experience level (beginner, intermediate, experienced)
-  - Learning goals (fundamentals, TEA-specific, advanced patterns)
+    - User role (QA, Dev, Lead, VP)
+    - Experience level (beginner, intermediate, experienced)
+    - Learning goals (fundamentals, TEA-specific, advanced patterns)
 - Optional:
-  - Existing project for practical examples
-  - Specific pain points (flaky tests, slow tests, hard to maintain)
+    - Existing project for practical examples
+    - Specific pain points (flaky tests, slow tests, hard to maintain)
 - Prerequisites:
-  - TEA module installed
-  - Access to TEA docs and knowledge base
-  - Understanding of time commitment (30-90 min per session)
+    - TEA module installed
+    - Access to TEA docs and knowledge base
+    - Understanding of time commitment (30-90 min per session)
 
 **Output Specifications:**
 
 - Type: Multiple document types
 - Format: Mixed formats
-  - Progress file: Structured YAML with specific schema (sessions, scores, artifacts, completed_date, next_recommended)
-  - Session notes: Free-form markdown built progressively per session
-  - Completion certificate: Structured format with completion data
+    - Progress file: Structured YAML with specific schema (sessions, scores, artifacts, completed_date, next_recommended)
+    - Session notes: Free-form markdown built progressively per session
+    - Completion certificate: Structured format with completion data
 - Sections:
-  - Progress file has fixed schema
-  - Session notes vary by session content
-  - Certificate has standard completion fields
+    - Progress file has fixed schema
+    - Session notes vary by session content
+    - Certificate has standard completion fields
 - Frequency:
-  - Progress file: Updated after each session
-  - Session notes: Generated per session
-  - Certificate: Generated at final completion
+    - Progress file: Updated after each session
+    - Session notes: Generated per session
+    - Certificate: Generated at final completion
 
 **Success Criteria:**
 
@@ -142,15 +142,15 @@ Create an ongoing learning companion that teaches testing progressively through 
 
 - Overall: Mixed (prescriptive for structure, intent-based for teaching)
 - Prescriptive for:
-  - Initial assessment (consistent role/experience classification)
-  - Quiz questions (need exact validation logic)
-  - Progress tracking (exact state file updates)
-  - Session navigation (clear menu structure)
+    - Initial assessment (consistent role/experience classification)
+    - Quiz questions (need exact validation logic)
+    - Progress tracking (exact state file updates)
+    - Session navigation (clear menu structure)
 - Intent-based for:
-  - Teaching sessions (AI adapts explanations naturally)
-  - Example selection (AI chooses relevant TEA docs/knowledge fragments)
-  - Artifact generation (AI synthesizes learning into notes)
-  - Role-flavored content (AI adjusts examples based on user role)
+    - Teaching sessions (AI adapts explanations naturally)
+    - Example selection (AI chooses relevant TEA docs/knowledge fragments)
+    - Artifact generation (AI synthesizes learning into notes)
+    - Role-flavored content (AI adjusts examples based on user role)
 
 ## Tools Configuration
 
@@ -171,18 +171,18 @@ Create an ongoing learning companion that teaches testing progressively through 
 
 - Type: Continuable workflow with persistent state
 - Tracking:
-  - `stepsCompleted` array in progress YAML
-  - Session completion tracking (id, status, completed_date, score, artifacts)
-  - Progress metrics (completion_percentage, next_recommended)
-  - Progress file structure:
-    ```yaml
-    user: { user_name }
-    role: { qa/dev/lead/vp }
-    sessions: [{ id, status, completed_date, score, artifacts }]
-    completion_percentage: { percent }
-    next_recommended: { session-id }
-    ```
-  - Continuation support via step-01b-continue.md with progress dashboard
+    - `stepsCompleted` array in progress YAML
+    - Session completion tracking (id, status, completed_date, score, artifacts)
+    - Progress metrics (completion_percentage, next_recommended)
+    - Progress file structure:
+        ```yaml
+        user: { user_name }
+        role: { qa/dev/lead/vp }
+        sessions: [{ id, status, completed_date, score, artifacts }]
+        completion_percentage: { percent }
+        next_recommended: { session-id }
+        ```
+    - Continuation support via step-01b-continue.md with progress dashboard
 
 **External Integrations:**
 
@@ -206,46 +206,46 @@ Create an ongoing learning companion that teaches testing progressively through 
 #### Phase 1: Initialization & Continuation
 
 1. **step-01-init.md** (Init Step - Continuable)
-   - Goal: Welcome user, check for existing progress file, explain workflow, create initial progress if new
-   - Type: Init (Continuable) - checks for `{user}-tea-progress.yaml`, routes to step-01b if exists
-   - Menu: Auto-proceed (Pattern 3) - no user menu
-   - Logic: Checks for existing progress → routes to step-01b if exists, otherwise creates new and proceeds to step-02
+    - Goal: Welcome user, check for existing progress file, explain workflow, create initial progress if new
+    - Type: Init (Continuable) - checks for `{user}-tea-progress.yaml`, routes to step-01b if exists
+    - Menu: Auto-proceed (Pattern 3) - no user menu
+    - Logic: Checks for existing progress → routes to step-01b if exists, otherwise creates new and proceeds to step-02
 
 2. **step-01b-continue.md** (Continuation Step)
-   - Goal: Load existing progress, show dashboard with completion status, route to session menu
-   - Type: Continuation - reads `stepsCompleted`, displays progress percentage
-   - Menu: Auto-proceed (Pattern 3) - no user menu
-   - Logic: Shows progress dashboard → auto-routes to step-03-session-menu
+    - Goal: Load existing progress, show dashboard with completion status, route to session menu
+    - Type: Continuation - reads `stepsCompleted`, displays progress percentage
+    - Menu: Auto-proceed (Pattern 3) - no user menu
+    - Logic: Shows progress dashboard → auto-routes to step-03-session-menu
 
 #### Phase 2: Assessment & Path Selection
 
 3. **step-02-assess.md** (Middle Step - Standard)
-   - Goal: Gather role (QA/Dev/Lead/VP), experience level, learning goals, optional pain points
-   - Type: Middle (Standard) auto-proceed
-   - Menu: Auto-proceed (Pattern 3) - no user menu
-   - On completion: Saves assessment to progress file → loads step-03-session-menu
+    - Goal: Gather role (QA/Dev/Lead/VP), experience level, learning goals, optional pain points
+    - Type: Middle (Standard) auto-proceed
+    - Menu: Auto-proceed (Pattern 3) - no user menu
+    - On completion: Saves assessment to progress file → loads step-03-session-menu
 
 4. **step-03-session-menu.md** (Branch Step - Hub)
-   - Goal: Present 7 sessions with descriptions + completion status, allow non-linear selection
-   - Type: Branch Step (custom menu: 1-7, X for exit)
-   - Menu: Custom branching (Pattern 4)
-   - Display: [1-7] Select session | [X] Exit
-   - Logic:
-     - 1-7: Routes to corresponding session step
-     - X: If all sessions complete → routes to step-05-completion; if incomplete → saves and exits
-   - **This is the hub - all sessions return here**
+    - Goal: Present 7 sessions with descriptions + completion status, allow non-linear selection
+    - Type: Branch Step (custom menu: 1-7, X for exit)
+    - Menu: Custom branching (Pattern 4)
+    - Display: [1-7] Select session | [X] Exit
+    - Logic:
+        - 1-7: Routes to corresponding session step
+        - X: If all sessions complete → routes to step-05-completion; if incomplete → saves and exits
+    - **This is the hub - all sessions return here**
 
 #### Phase 3: Session Execution (7 Sessions)
 
 5-11. **step-04-session-[01-07].md** (Middle Steps - Complex)
 
 - Each session follows same pattern:
-  - Loads relevant TEA docs just-in-time
-  - Presents teaching content (mostly autonomous)
-  - Knowledge validation quiz (collaborative)
-  - Generates session notes artifact
-  - Updates progress file
-  - Returns to step-03-session-menu
+    - Loads relevant TEA docs just-in-time
+    - Presents teaching content (mostly autonomous)
+    - Knowledge validation quiz (collaborative)
+    - Generates session notes artifact
+    - Updates progress file
+    - Returns to step-03-session-menu
 - Menu: Standard A/P/C (Pattern 1) - users might want Advanced Elicitation
 - On C: Saves session notes, updates progress (mark complete, update score), returns to hub
 
@@ -290,15 +290,15 @@ started_date: 2026-01-27
 last_session_date: 2026-01-27
 
 sessions:
-  - id: session-01-quickstart
-    status: completed
-    completed_date: 2026-01-27
-    score: 90
-    notes_artifact: '{test_artifacts}/tea-academy/{user_name}/session-01-notes.md'
-  - id: session-02-concepts
-    status: in-progress
-    started_date: 2026-01-27
-  # ... sessions 03-07
+    - id: session-01-quickstart
+      status: completed
+      completed_date: 2026-01-27
+      score: 90
+      notes_artifact: '{test_artifacts}/tea-academy/{user_name}/session-01-notes.md'
+    - id: session-02-concepts
+      status: in-progress
+      started_date: 2026-01-27
+    # ... sessions 03-07
 
 sessions_completed: 1
 total_sessions: 7
@@ -514,44 +514,44 @@ teach-me-testing/
 **Files Created:**
 
 1. **workflow.md**
-   - Tri-modal routing logic (Create/Edit/Validate)
-   - Configuration loading from TEA module
-   - Step-file architecture principles
-   - Initialization sequence
+    - Tri-modal routing logic (Create/Edit/Validate)
+    - Configuration loading from TEA module
+    - Step-file architecture principles
+    - Initialization sequence
 
 2. **templates/progress-template.yaml**
-   - Complete progress tracking schema
-   - 7 sessions defined
-   - Session status tracking (not-started/in-progress/completed)
-   - stepsCompleted array for continuation
-   - Progress metrics (completion_percentage, next_recommended)
+    - Complete progress tracking schema
+    - 7 sessions defined
+    - Session status tracking (not-started/in-progress/completed)
+    - stepsCompleted array for continuation
+    - Progress metrics (completion_percentage, next_recommended)
 
 3. **templates/session-notes-template.md**
-   - Session metadata
-   - Key concepts, objectives, takeaways
-   - TEA resources referenced
-   - Quiz results
-   - Practical examples
+    - Session metadata
+    - Key concepts, objectives, takeaways
+    - TEA resources referenced
+    - Quiz results
+    - Practical examples
 
 4. **templates/certificate-template.md**
-   - Completion certificate structure
-   - All 7 sessions with scores
-   - Skills acquired checklist
-   - Learning artifacts paths
-   - Next steps recommendations
+    - Completion certificate structure
+    - All 7 sessions with scores
+    - Skills acquired checklist
+    - Learning artifacts paths
+    - Next steps recommendations
 
 5. **instructions.md**
-   - How to run the workflow
-   - Session structure and flow
-   - Progress tracking details
-   - Troubleshooting guide
+    - How to run the workflow
+    - Session structure and flow
+    - Progress tracking details
+    - Troubleshooting guide
 
 6. **checklist.md**
-   - Quality validation checklist
-   - Foundation quality checks
-   - Step file quality standards
-   - Data file quality requirements
-   - Completion criteria
+    - Quality validation checklist
+    - Foundation quality checks
+    - Step file quality standards
+    - Data file quality requirements
+    - Completion criteria
 
 **Next Steps:**
 

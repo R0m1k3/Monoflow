@@ -38,7 +38,7 @@ Generate README.md, TODO.md, and user documentation in docs/ folder for the modu
 
 Create `{targetLocation}/README.md`:
 
-```markdown
+````markdown
 # {module_display_name}
 
 {brief_header}
@@ -58,6 +58,7 @@ Create `{targetLocation}/README.md`:
 ```bash
 bmad install {module_code}
 ```
+````
 
 ---
 
@@ -110,6 +111,7 @@ The module supports these configuration options (set during installation):
 ## Documentation
 
 For detailed user guides and documentation, see the **[docs/](docs/)** folder:
+
 - [Getting Started](docs/getting-started.md)
 - [Agents Reference](docs/agents.md)
 - [Workflows Reference](docs/workflows.md)
@@ -137,7 +139,8 @@ Created via BMAD Module workflow
 ## License
 
 Part of the BMAD framework.
-```
+
+````
 
 ### 2. Generate TODO.md
 
@@ -195,7 +198,7 @@ Development roadmap for {module_code} module.
 ---
 
 _Last updated: {date}_
-```
+````
 
 ### 3. Create docs/ Folder
 
@@ -203,7 +206,7 @@ Create `{targetLocation}/docs/` folder with user documentation:
 
 ### 3.1. getting-started.md
 
-```markdown
+````markdown
 # Getting Started with {module_display_name}
 
 Welcome to {module_code}! This guide will help you get up and running.
@@ -223,6 +226,7 @@ If you haven't installed the module yet:
 ```bash
 bmad install {module_code}
 ```
+````
 
 Follow the prompts to configure the module for your needs.
 
@@ -251,10 +255,12 @@ Follow the prompts to configure the module for your needs.
 ## Need Help?
 
 If you run into issues:
+
 1. Check the troubleshooting section in examples.md
 2. Review your module configuration
 3. Consult the broader BMAD documentation
-```
+
+````
 
 ### 3.2. agents.md
 
@@ -284,7 +290,7 @@ If you run into issues:
 {menu_triggers_from_spec}
 
 ---
-```
+````
 
 ### 3.3. workflows.md
 
@@ -296,6 +302,7 @@ If you run into issues:
 ---
 
 {for each workflow}
+
 ## {workflow_title}
 
 **ID:** `{workflow_id}`
@@ -361,6 +368,7 @@ This section provides practical examples for using {module_display_name}.
 ### 4. Update Build Tracking
 
 Update `{buildTrackingFile}`:
+
 - Add 'step-06-docs' to stepsCompleted
 - Note: README.md, TODO.md, and docs/ folder created
 
@@ -371,14 +379,15 @@ Update `{buildTrackingFile}`:
 - README.md — module overview and navigation
 - TODO.md — development roadmap
 - docs/ — user documentation folder
-  - getting-started.md — quick start guide
-  - agents.md — agent reference
-  - workflows.md — workflow reference
-  - examples.md — practical examples
+    - getting-started.md — quick start guide
+    - agents.md — agent reference
+    - workflows.md — workflow reference
+    - examples.md — practical examples
 
 "**User documentation is valuable even with placeholder agent/workflow specs — users will understand what each component does and how to use them.**"
 
 "**TODO.md tracks the remaining work:**"
+
 - Build {agent_count} agents
 - Build {workflow_count} workflows
 - Test installation

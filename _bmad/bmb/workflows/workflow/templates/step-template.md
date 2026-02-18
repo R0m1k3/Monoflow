@@ -11,7 +11,7 @@ description: '[Brief description of what this step accomplishes]'
 
 <!-- Path Definitions -->
 
-workflow\*path: '{project-root}/_bmad/[module]/reference/workflows/[workflow-name]' # the folder the workflow.md file is in
+workflow\*path: '{project-root}/\_bmad/[module]/reference/workflows/[workflow-name]' # the folder the workflow.md file is in
 
 # File References (all use {variable} format in file)
 
@@ -23,8 +23,8 @@ outputFile: '{output_folder}/[output-file-name]-{project_name}.md'
 
 # Task References (IF THE workflow uses and it makes sense in this step to have these )
 
-advancedElicitationTask: '{project-root}/_bmad/core/workflows/advanced-elicitation/workflow.xml'
-partyModeWorkflow: '{project-root}/_bmad/core/workflows/party-mode/workflow.md'
+advancedElicitationTask: '{project-root}/\_bmad/core/workflows/advanced-elicitation/workflow.xml'
+partyModeWorkflow: '{project-root}/\_bmad/core/workflows/party-mode/workflow.md'
 
 # Template References (if this step uses a specific templates)
 
@@ -227,8 +227,8 @@ Display: "**Select an Option:** [A] [Continue to Step Foo] [A] [Continue to Step
 
 - IF A: Execute {customAction}
 - IF C: Save content to {outputFile}, update frontmatter, check [condition]:
-  - IF [condition true]: load, read entire file, then execute {pathA}
-  - IF [condition false]: load, read entire file, then execute {pathB}
+    - IF [condition true]: load, read entire file, then execute {pathA}
+    - IF [condition false]: load, read entire file, then execute {pathB}
 - IF Any other comments or queries: help user respond then [Redisplay Menu Options](#n-present-menu-options)
 
 #### EXECUTION RULES:

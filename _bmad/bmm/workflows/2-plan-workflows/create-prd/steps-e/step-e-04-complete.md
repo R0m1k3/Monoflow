@@ -61,17 +61,20 @@ Present summary of completed edits and offer next steps including seamless integ
 From step e-03 change execution, compile:
 
 **Changes Made:**
+
 - Sections added: {list with names}
 - Sections updated: {list with names}
 - Content removed: {list}
 - Structure changes: {description}
 
 **Edit Details:**
+
 - Total sections affected: {count}
 - Mode: {restructure/targeted/both}
 - Priority addressed: {Critical/High/Medium/Low}
 
 **PRD Status:**
+
 - Format: {BMAD Standard / BMAD Variant / Legacy (converted)}
 - Completeness: {assessment}
 - Ready for: {downstream use cases}
@@ -93,6 +96,7 @@ Display:
 **PRD Format:** {format}
 
 **PRD is now ready for:**
+
 - Downstream workflows (UX Design, Architecture)
 - Validation to ensure quality
 - Production use
@@ -116,31 +120,31 @@ Display:
 #### Menu Handling Logic:
 
 - **IF V (Run Full Validation):**
-  - Display: "**Starting Validation Workflow**"
-  - Display: "This will run all 13 validation checks on the updated PRD."
-  - Display: "Preparing to validate: {prd_file_path}"
-  - Display: "**Proceeding to validation...**"
-  - Read fully and follow: {validationWorkflow} (steps-v/step-v-01-discovery.md)
-  - Note: This hands off to the validation workflow which will run its complete 13-step process
+    - Display: "**Starting Validation Workflow**"
+    - Display: "This will run all 13 validation checks on the updated PRD."
+    - Display: "Preparing to validate: {prd_file_path}"
+    - Display: "**Proceeding to validation...**"
+    - Read fully and follow: {validationWorkflow} (steps-v/step-v-01-discovery.md)
+    - Note: This hands off to the validation workflow which will run its complete 13-step process
 
 - **IF E (Edit More):**
-  - Display: "**Additional Edits**"
-  - Ask: "What additional edits would you like to make?"
-  - Accept input, then display: "**Returning to edit step...**"
-  - Read fully and follow: step-e-03-edit.md again
+    - Display: "**Additional Edits**"
+    - Ask: "What additional edits would you like to make?"
+    - Accept input, then display: "**Returning to edit step...**"
+    - Read fully and follow: step-e-03-edit.md again
 
 - **IF S (Summary):**
-  - Display detailed summary including:
-    - Complete list of all changes made
-    - Before/after comparison (key improvements)
-    - Recommendations for next steps
-  - Display: "**Edit Workflow Complete**"
-  - Exit
+    - Display detailed summary including:
+        - Complete list of all changes made
+        - Before/after comparison (key improvements)
+        - Recommendations for next steps
+    - Display: "**Edit Workflow Complete**"
+    - Exit
 
 - **IF X (Exit):**
-  - Display summary
-  - Display: "**Edit Workflow Complete**"
-  - Exit
+    - Display summary
+    - Display: "**Edit Workflow Complete**"
+    - Exit
 
 - **IF Any other:** Help user, then redisplay menu
 

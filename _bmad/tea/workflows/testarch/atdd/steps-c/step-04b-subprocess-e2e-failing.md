@@ -66,8 +66,8 @@ If `auto` (fall back to MCP if CLI unavailable; if neither available, generate f
 - Open the target page first, then verify selectors with a snapshot:
   `playwright-cli -s=tea-atdd-{{timestamp}} open <target_url>`
   `playwright-cli -s=tea-atdd-{{timestamp}} snapshot` → map refs to Playwright locators
-  - ref `{role: "button", name: "Submit"}` → `page.getByRole('button', { name: 'Submit' })`
-  - ref `{role: "textbox", name: "Email"}` → `page.getByRole('textbox', { name: 'Email' })`
+    - ref `{role: "button", name: "Submit"}` → `page.getByRole('button', { name: 'Submit' })`
+    - ref `{role: "textbox", name: "Email"}` → `page.getByRole('textbox', { name: 'Email' })`
 - `playwright-cli -s=tea-atdd-{{timestamp}} close` when done
 
 If `cli` (CLI only — do NOT fall back to MCP; generate from best practices if CLI unavailable):
@@ -75,8 +75,8 @@ If `cli` (CLI only — do NOT fall back to MCP; generate from best practices if 
 - Open the target page first, then verify selectors with a snapshot:
   `playwright-cli -s=tea-atdd-{{timestamp}} open <target_url>`
   `playwright-cli -s=tea-atdd-{{timestamp}} snapshot` → map refs to Playwright locators
-  - ref `{role: "button", name: "Submit"}` → `page.getByRole('button', { name: 'Submit' })`
-  - ref `{role: "textbox", name: "Email"}` → `page.getByRole('textbox', { name: 'Email' })`
+    - ref `{role: "button", name: "Submit"}` → `page.getByRole('button', { name: 'Submit' })`
+    - ref `{role: "textbox", name: "Email"}` → `page.getByRole('textbox', { name: 'Email' })`
 - `playwright-cli -s=tea-atdd-{{timestamp}} close` when done
 
 > **Session Hygiene:** Always close sessions using `playwright-cli -s=tea-atdd-{{timestamp}} close`. Do NOT use `close-all` — it kills every session on the machine and breaks parallel execution.
@@ -99,31 +99,31 @@ For each user journey, create test file in `tests/e2e/[feature].spec.ts`:
 import { test, expect } from '@playwright/test';
 
 test.describe('[Story Name] E2E User Journey (ATDD)', () => {
-  test.skip('[P0] should complete user registration successfully', async ({ page }) => {
-    // THIS TEST WILL FAIL - UI not implemented yet
-    await page.goto('/register');
+    test.skip('[P0] should complete user registration successfully', async ({ page }) => {
+        // THIS TEST WILL FAIL - UI not implemented yet
+        await page.goto('/register');
 
-    // Expect registration form but will get 404 or missing elements
-    await page.fill('[name="email"]', 'newuser@example.com');
-    await page.fill('[name="password"]', 'SecurePass123!');
-    await page.click('button:has-text("Register")');
+        // Expect registration form but will get 404 or missing elements
+        await page.fill('[name="email"]', 'newuser@example.com');
+        await page.fill('[name="password"]', 'SecurePass123!');
+        await page.click('button:has-text("Register")');
 
-    // Expect success message and redirect
-    await expect(page.getByText('Registration successful!')).toBeVisible();
-    await page.waitForURL('/dashboard');
-  });
+        // Expect success message and redirect
+        await expect(page.getByText('Registration successful!')).toBeVisible();
+        await page.waitForURL('/dashboard');
+    });
 
-  test.skip('[P1] should show error if email exists', async ({ page }) => {
-    // THIS TEST WILL FAIL - UI not implemented yet
-    await page.goto('/register');
+    test.skip('[P1] should show error if email exists', async ({ page }) => {
+        // THIS TEST WILL FAIL - UI not implemented yet
+        await page.goto('/register');
 
-    await page.fill('[name="email"]', 'existing@example.com');
-    await page.fill('[name="password"]', 'SecurePass123!');
-    await page.click('button:has-text("Register")');
+        await page.fill('[name="email"]', 'existing@example.com');
+        await page.fill('[name="password"]', 'SecurePass123!');
+        await page.click('button:has-text("Register")');
 
-    // Expect error message
-    await expect(page.getByText('Email already exists')).toBeVisible();
-  });
+        // Expect error message
+        await expect(page.getByText('Email already exists')).toBeVisible();
+    });
 });
 ```
 
@@ -163,33 +163,33 @@ Write JSON to temp file: `/tmp/tea-atdd-e2e-tests-{{timestamp}}.json`
 
 ```json
 {
-  "success": true,
-  "subprocess": "atdd-e2e-tests",
-  "tests": [
-    {
-      "file": "tests/e2e/user-registration.spec.ts",
-      "content": "[full TypeScript test file content with test.skip()]",
-      "description": "ATDD E2E tests for user registration journey (RED PHASE)",
-      "expected_to_fail": true,
-      "acceptance_criteria_covered": [
-        "User can navigate to /register",
-        "User can fill registration form",
-        "System shows success message on registration",
-        "System shows error if email exists"
-      ],
-      "priority_coverage": {
-        "P0": 1,
-        "P1": 1,
-        "P2": 0,
-        "P3": 0
-      }
-    }
-  ],
-  "fixture_needs": ["registrationPageMock"],
-  "knowledge_fragments_used": ["fixture-architecture", "network-first", "selector-resilience"],
-  "test_count": 2,
-  "tdd_phase": "RED",
-  "summary": "Generated 2 FAILING E2E tests for user registration story"
+    "success": true,
+    "subprocess": "atdd-e2e-tests",
+    "tests": [
+        {
+            "file": "tests/e2e/user-registration.spec.ts",
+            "content": "[full TypeScript test file content with test.skip()]",
+            "description": "ATDD E2E tests for user registration journey (RED PHASE)",
+            "expected_to_fail": true,
+            "acceptance_criteria_covered": [
+                "User can navigate to /register",
+                "User can fill registration form",
+                "System shows success message on registration",
+                "System shows error if email exists"
+            ],
+            "priority_coverage": {
+                "P0": 1,
+                "P1": 1,
+                "P2": 0,
+                "P3": 0
+            }
+        }
+    ],
+    "fixture_needs": ["registrationPageMock"],
+    "knowledge_fragments_used": ["fixture-architecture", "network-first", "selector-resilience"],
+    "test_count": 2,
+    "tdd_phase": "RED",
+    "summary": "Generated 2 FAILING E2E tests for user registration story"
 }
 ```
 
@@ -197,12 +197,12 @@ Write JSON to temp file: `/tmp/tea-atdd-e2e-tests-{{timestamp}}.json`
 
 ```json
 {
-  "success": false,
-  "subprocess": "atdd-e2e-tests",
-  "error": "Error message describing what went wrong",
-  "partial_output": {
-    /* any tests generated before error */
-  }
+    "success": false,
+    "subprocess": "atdd-e2e-tests",
+    "error": "Error message describing what went wrong",
+    "partial_output": {
+        /* any tests generated before error */
+    }
 }
 ```
 

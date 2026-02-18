@@ -97,10 +97,10 @@ Perform final validation of the product brief:
 Provide guidance on logical next workflows:
 
 1. `create-prd` - Create detailed Product Requirements Document
-   - Brief provides foundation for detailed requirements
-   - User personas inform journey mapping
-   - Success metrics become specific acceptance criteria
-   - MVP scope becomes detailed feature specifications
+    - Brief provides foundation for detailed requirements
+    - User personas inform journey mapping
+    - Success metrics become specific acceptance criteria
+    - MVP scope becomes detailed feature specifications
 
 **Other Potential Next Steps:**
 

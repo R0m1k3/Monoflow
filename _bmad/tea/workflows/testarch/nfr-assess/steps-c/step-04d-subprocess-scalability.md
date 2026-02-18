@@ -53,31 +53,38 @@ This is an **isolated subprocess** running in parallel with other NFR domain ass
 
 ```json
 {
-  "domain": "scalability",
-  "risk_level": "MEDIUM",
-  "findings": [
-    {
-      "category": "Horizontal Scaling",
-      "status": "PASS",
-      "description": "Stateless architecture with container orchestration",
-      "evidence": ["Docker + Kubernetes setup", "Auto-scaling configured"],
-      "recommendations": []
+    "domain": "scalability",
+    "risk_level": "MEDIUM",
+    "findings": [
+        {
+            "category": "Horizontal Scaling",
+            "status": "PASS",
+            "description": "Stateless architecture with container orchestration",
+            "evidence": ["Docker + Kubernetes setup", "Auto-scaling configured"],
+            "recommendations": []
+        },
+        {
+            "category": "Data Scaling",
+            "status": "CONCERN",
+            "description": "No database sharding strategy for large data growth",
+            "evidence": ["Single database instance", "No partitioning"],
+            "recommendations": [
+                "Plan database sharding strategy",
+                "Implement read replicas",
+                "Consider database clustering"
+            ]
+        }
+    ],
+    "compliance": {
+        "1M_users": "PASS",
+        "10M_users": "CONCERN",
+        "100M_users": "FAIL"
     },
-    {
-      "category": "Data Scaling",
-      "status": "CONCERN",
-      "description": "No database sharding strategy for large data growth",
-      "evidence": ["Single database instance", "No partitioning"],
-      "recommendations": ["Plan database sharding strategy", "Implement read replicas", "Consider database clustering"]
-    }
-  ],
-  "compliance": {
-    "1M_users": "PASS",
-    "10M_users": "CONCERN",
-    "100M_users": "FAIL"
-  },
-  "priority_actions": ["Design database sharding strategy for future growth", "Implement read replicas for read-heavy workloads"],
-  "summary": "Scalability is good up to 1M users, concerns for 10M+ users"
+    "priority_actions": [
+        "Design database sharding strategy for future growth",
+        "Implement read replicas for read-heavy workloads"
+    ],
+    "summary": "Scalability is good up to 1M users, concerns for 10M+ users"
 }
 ```
 

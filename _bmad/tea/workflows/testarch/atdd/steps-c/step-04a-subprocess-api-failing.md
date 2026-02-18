@@ -68,38 +68,38 @@ import { test, expect } from '@playwright/test';
 // import { apiRequest } from '@playwright-utils/api';
 
 test.describe('[Story Name] API Tests (ATDD)', () => {
-  test.skip('[P0] should register new user successfully', async ({ request }) => {
-    // THIS TEST WILL FAIL - Endpoint not implemented yet
-    const response = await request.post('/api/users/register', {
-      data: {
-        email: 'newuser@example.com',
-        password: 'SecurePass123!',
-      },
+    test.skip('[P0] should register new user successfully', async ({ request }) => {
+        // THIS TEST WILL FAIL - Endpoint not implemented yet
+        const response = await request.post('/api/users/register', {
+            data: {
+                email: 'newuser@example.com',
+                password: 'SecurePass123!',
+            },
+        });
+
+        // Expect 201 but will get 404 (endpoint doesn't exist)
+        expect(response.status()).toBe(201);
+
+        const user = await response.json();
+        expect(user).toMatchObject({
+            id: expect.any(Number),
+            email: 'newuser@example.com',
+        });
     });
 
-    // Expect 201 but will get 404 (endpoint doesn't exist)
-    expect(response.status()).toBe(201);
+    test.skip('[P1] should return 400 if email exists', async ({ request }) => {
+        // THIS TEST WILL FAIL - Endpoint not implemented yet
+        const response = await request.post('/api/users/register', {
+            data: {
+                email: 'existing@example.com',
+                password: 'SecurePass123!',
+            },
+        });
 
-    const user = await response.json();
-    expect(user).toMatchObject({
-      id: expect.any(Number),
-      email: 'newuser@example.com',
+        expect(response.status()).toBe(400);
+        const error = await response.json();
+        expect(error.message).toContain('Email already exists');
     });
-  });
-
-  test.skip('[P1] should return 400 if email exists', async ({ request }) => {
-    // THIS TEST WILL FAIL - Endpoint not implemented yet
-    const response = await request.post('/api/users/register', {
-      data: {
-        email: 'existing@example.com',
-        password: 'SecurePass123!',
-      },
-    });
-
-    expect(response.status()).toBe(400);
-    const error = await response.json();
-    expect(error.message).toContain('Email already exists');
-  });
 });
 ```
 
@@ -138,32 +138,32 @@ Write JSON to temp file: `/tmp/tea-atdd-api-tests-{{timestamp}}.json`
 
 ```json
 {
-  "success": true,
-  "subprocess": "atdd-api-tests",
-  "tests": [
-    {
-      "file": "tests/api/user-registration.spec.ts",
-      "content": "[full TypeScript test file content with test.skip()]",
-      "description": "ATDD API tests for user registration (RED PHASE)",
-      "expected_to_fail": true,
-      "acceptance_criteria_covered": [
-        "User can register with email/password",
-        "System returns 201 on success",
-        "System returns 400 if email exists"
-      ],
-      "priority_coverage": {
-        "P0": 1,
-        "P1": 2,
-        "P2": 0,
-        "P3": 0
-      }
-    }
-  ],
-  "fixture_needs": ["userDataFactory"],
-  "knowledge_fragments_used": ["api-request", "data-factories", "api-testing-patterns"],
-  "test_count": 3,
-  "tdd_phase": "RED",
-  "summary": "Generated 3 FAILING API tests for user registration story"
+    "success": true,
+    "subprocess": "atdd-api-tests",
+    "tests": [
+        {
+            "file": "tests/api/user-registration.spec.ts",
+            "content": "[full TypeScript test file content with test.skip()]",
+            "description": "ATDD API tests for user registration (RED PHASE)",
+            "expected_to_fail": true,
+            "acceptance_criteria_covered": [
+                "User can register with email/password",
+                "System returns 201 on success",
+                "System returns 400 if email exists"
+            ],
+            "priority_coverage": {
+                "P0": 1,
+                "P1": 2,
+                "P2": 0,
+                "P3": 0
+            }
+        }
+    ],
+    "fixture_needs": ["userDataFactory"],
+    "knowledge_fragments_used": ["api-request", "data-factories", "api-testing-patterns"],
+    "test_count": 3,
+    "tdd_phase": "RED",
+    "summary": "Generated 3 FAILING API tests for user registration story"
 }
 ```
 
@@ -171,12 +171,12 @@ Write JSON to temp file: `/tmp/tea-atdd-api-tests-{{timestamp}}.json`
 
 ```json
 {
-  "success": false,
-  "subprocess": "atdd-api-tests",
-  "error": "Error message describing what went wrong",
-  "partial_output": {
-    /* any tests generated before error */
-  }
+    "success": false,
+    "subprocess": "atdd-api-tests",
+    "error": "Error message describing what went wrong",
+    "partial_output": {
+        /* any tests generated before error */
+    }
 }
 ```
 

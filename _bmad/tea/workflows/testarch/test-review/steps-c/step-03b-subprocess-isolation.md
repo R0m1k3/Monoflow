@@ -66,35 +66,35 @@ const score = Math.max(0, 100 - totalPenalty);
 
 ```json
 {
-  "dimension": "isolation",
-  "score": 90,
-  "max_score": 100,
-  "grade": "A-",
-  "violations": [
-    {
-      "file": "tests/api/integration.spec.ts",
-      "line": 15,
-      "severity": "HIGH",
-      "category": "test-order-dependency",
-      "description": "Test depends on previous test creating user record",
-      "suggestion": "Each test should create its own test data in beforeEach",
-      "code_snippet": "test('should update user', async () => { /* assumes user exists */ });"
-    }
-  ],
-  "passed_checks": 14,
-  "failed_checks": 1,
-  "total_checks": 15,
-  "violation_summary": {
-    "HIGH": 1,
-    "MEDIUM": 0,
-    "LOW": 0
-  },
-  "recommendations": [
-    "Add beforeEach hooks to create test data",
-    "Add afterEach hooks to cleanup created records",
-    "Use test.describe.configure({ mode: 'parallel' }) to enforce isolation"
-  ],
-  "summary": "Tests are well isolated with 1 HIGH severity violation"
+    "dimension": "isolation",
+    "score": 90,
+    "max_score": 100,
+    "grade": "A-",
+    "violations": [
+        {
+            "file": "tests/api/integration.spec.ts",
+            "line": 15,
+            "severity": "HIGH",
+            "category": "test-order-dependency",
+            "description": "Test depends on previous test creating user record",
+            "suggestion": "Each test should create its own test data in beforeEach",
+            "code_snippet": "test('should update user', async () => { /* assumes user exists */ });"
+        }
+    ],
+    "passed_checks": 14,
+    "failed_checks": 1,
+    "total_checks": 15,
+    "violation_summary": {
+        "HIGH": 1,
+        "MEDIUM": 0,
+        "LOW": 0
+    },
+    "recommendations": [
+        "Add beforeEach hooks to create test data",
+        "Add afterEach hooks to cleanup created records",
+        "Use test.describe.configure({ mode: 'parallel' }) to enforce isolation"
+    ],
+    "summary": "Tests are well isolated with 1 HIGH severity violation"
 }
 ```
 

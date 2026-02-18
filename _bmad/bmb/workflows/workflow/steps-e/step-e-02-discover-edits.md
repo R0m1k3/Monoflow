@@ -74,6 +74,7 @@ Present direct change options (step 3b)
 "**I found an existing validation report for this workflow.**
 
 **Validation Summary:**
+
 - Status: {status from report}
 - Critical Issues: {count}
 - Warnings: {count}
@@ -115,35 +116,41 @@ Which areas would you like to edit?"
 #### For Each Selected Category:
 
 **If Workflow.md selected:**
+
 - "What aspects need change?"
-  - Goal or description?
-  - Role definition?
-  - Architecture principles?
-  - Initialization/routing?
+    - Goal or description?
+    - Role definition?
+    - Architecture principles?
+    - Initialization/routing?
 
 **If Step Files selected:**
+
 - "What type of step changes?"
-  - Add new step?
-  - Remove existing step?
-  - Modify step content?
-  - Reorder steps?
+    - Add new step?
+    - Remove existing step?
+    - Modify step content?
+    - Reorder steps?
 
 **If Data Files selected:**
+
 - "What data changes?"
-  - Add new data file?
-  - Modify existing data?
-  - Add/remove data entries?
+    - Add new data file?
+    - Modify existing data?
+    - Add/remove data entries?
 
 **If Templates selected:**
+
 - "What template changes?"
-  - Add new template?
-  - Modify template structure?
-  - Change variable references?"
+    - Add new template?
+    - Modify template structure?
+    - Change variable references?"
 
 **If Multiple selected:**
+
 - Walk through each area systematically
 
 **If Other selected:**
+
 - "Describe what you'd like to change..."
 
 ---
@@ -160,10 +167,12 @@ Which areas would you like to edit?"
 **Priority: High** - These issues prevent compliance
 
 **Critical Issues to Fix:**
+
 - [ ] {issue from validation report}
 - [ ] {issue from validation report}
 
 **Warnings to Address:**
+
 - [ ] {warning from validation report}
 - [ ] {warning from validation report}
 ```
@@ -180,6 +189,7 @@ Which areas would you like to edit?"
 **Category:** [workflow.md / step files / data / templates / other]
 
 **Changes Requested:**
+
 - [ ] {specific change description}
 - [ ] {specific change description}
 
@@ -201,14 +211,14 @@ Which areas would you like to edit?"
 
 - [C] Yes, continue
 - [M] Modify the plan
-- [X] Cancel"
+- [x] Cancel"
 
 #### Menu Handling Logic:
 
 - IF C: Update editPlan stepsCompleted, then route based on goals:
-  - **If Fix goals only**: Load, read entirely, then execute {nextStepFile} (fix-validation)
-  - **If Change goals only**: Load, read entirely, then execute {directEditStep}
-  - **If Both**: Load, read entirely, then execute {nextStepFile} (fix first, then direct edit after)
+    - **If Fix goals only**: Load, read entirely, then execute {nextStepFile} (fix-validation)
+    - **If Change goals only**: Load, read entirely, then execute {directEditStep}
+    - **If Both**: Load, read entirely, then execute {nextStepFile} (fix first, then direct edit after)
 - IF M: Return to relevant discovery section
 - IF X: Exit with explanation
 - IF Any other: help user, then redisplay menu

@@ -57,23 +57,23 @@ lastSaved: ''
 **Source:** See Architecture doc "Quick Guide" for detailed mitigation plans
 
 1. **{Dependency 1}** - {Team} - {Timeline}
-   - {What QA needs}
-   - {Why it blocks testing}
+    - {What QA needs}
+    - {Why it blocks testing}
 
 2. **{Dependency 2}** - {Team} - {Timeline}
-   - {What QA needs}
-   - {Why it blocks testing}
+    - {What QA needs}
+    - {Why it blocks testing}
 
 ### QA Infrastructure Setup (Sprint 0)
 
 1. **Test Data Factories** - QA
-   - {Entity} factory with faker-based randomization
-   - Auto-cleanup fixtures for parallel safety
+    - {Entity} factory with faker-based randomization
+    - Auto-cleanup fixtures for parallel safety
 
 2. **Test Environments** - QA
-   - Local: {Setup details}
-   - CI/CD: {Setup details}
-   - Staging: {Setup details}
+    - Local: {Setup details}
+    - CI/CD: {Setup details}
+    - Staging: {Setup details}
 
 **Example factory pattern:**
 
@@ -83,18 +83,18 @@ import { expect } from '@playwright/test';
 import { faker } from '@faker-js/faker';
 
 test('example test @p0', async ({ apiRequest }) => {
-  const testData = {
-    id: `test-${faker.string.uuid()}`,
-    email: faker.internet.email(),
-  };
+    const testData = {
+        id: `test-${faker.string.uuid()}`,
+        email: faker.internet.email(),
+    };
 
-  const { status } = await apiRequest({
-    method: 'POST',
-    path: '/api/resource',
-    body: testData,
-  });
+    const { status } = await apiRequest({
+        method: 'POST',
+        path: '/api/resource',
+        body: testData,
+    });
 
-  expect(status).toBe(201);
+    expect(status).toBe(201);
 });
 ```
 
@@ -329,36 +329,36 @@ import { expect } from '@playwright/test';
 
 // P0 critical test
 test('@P0 @API @Security unauthenticated request returns 401', async ({ apiRequest }) => {
-  const { status, body } = await apiRequest({
-    method: 'POST',
-    path: '/api/endpoint',
-    body: { data: 'test' },
-    skipAuth: true,
-  });
+    const { status, body } = await apiRequest({
+        method: 'POST',
+        path: '/api/endpoint',
+        body: { data: 'test' },
+        skipAuth: true,
+    });
 
-  expect(status).toBe(401);
-  expect(body.error).toContain('unauthorized');
+    expect(status).toBe(401);
+    expect(body.error).toContain('unauthorized');
 });
 
 // P1 integration test
 test('@P1 @Integration data syncs correctly', async ({ apiRequest }) => {
-  // Seed data
-  await apiRequest({
-    method: 'POST',
-    path: '/api/seed',
-    body: {
-      /* test data */
-    },
-  });
+    // Seed data
+    await apiRequest({
+        method: 'POST',
+        path: '/api/seed',
+        body: {
+            /* test data */
+        },
+    });
 
-  // Validate
-  const { status, body } = await apiRequest({
-    method: 'GET',
-    path: '/api/resource',
-  });
+    // Validate
+    const { status, body } = await apiRequest({
+        method: 'GET',
+        path: '/api/resource',
+    });
 
-  expect(status).toBe(200);
-  expect(body).toHaveProperty('data');
+    expect(status).toBe(200);
+    expect(body).toHaveProperty('data');
 });
 ```
 

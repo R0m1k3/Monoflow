@@ -89,43 +89,51 @@ For each category, determine status:
 
 ```json
 {
-  "domain": "security",
-  "risk_level": "MEDIUM",
-  "findings": [
-    {
-      "category": "Authentication",
-      "status": "PASS",
-      "description": "OAuth2 with JWT tokens implemented",
-      "evidence": ["src/auth/oauth.ts", "JWT refresh token rotation"],
-      "recommendations": []
+    "domain": "security",
+    "risk_level": "MEDIUM",
+    "findings": [
+        {
+            "category": "Authentication",
+            "status": "PASS",
+            "description": "OAuth2 with JWT tokens implemented",
+            "evidence": ["src/auth/oauth.ts", "JWT refresh token rotation"],
+            "recommendations": []
+        },
+        {
+            "category": "Data Encryption",
+            "status": "CONCERN",
+            "description": "Database encryption at rest not enabled",
+            "evidence": ["Database config shows no encryption"],
+            "recommendations": [
+                "Enable database encryption at rest",
+                "Use AWS RDS encryption or equivalent",
+                "Implement key rotation policy"
+            ]
+        },
+        {
+            "category": "Input Validation",
+            "status": "FAIL",
+            "description": "SQL injection vulnerability in search endpoint",
+            "evidence": ["src/api/search.ts:42 - direct SQL concatenation"],
+            "recommendations": [
+                "URGENT: Use parameterized queries",
+                "Add input sanitization library",
+                "Implement WAF rules"
+            ]
+        }
+    ],
+    "compliance": {
+        "SOC2": "PARTIAL",
+        "GDPR": "PASS",
+        "HIPAA": "N/A",
+        "PCI-DSS": "FAIL"
     },
-    {
-      "category": "Data Encryption",
-      "status": "CONCERN",
-      "description": "Database encryption at rest not enabled",
-      "evidence": ["Database config shows no encryption"],
-      "recommendations": ["Enable database encryption at rest", "Use AWS RDS encryption or equivalent", "Implement key rotation policy"]
-    },
-    {
-      "category": "Input Validation",
-      "status": "FAIL",
-      "description": "SQL injection vulnerability in search endpoint",
-      "evidence": ["src/api/search.ts:42 - direct SQL concatenation"],
-      "recommendations": ["URGENT: Use parameterized queries", "Add input sanitization library", "Implement WAF rules"]
-    }
-  ],
-  "compliance": {
-    "SOC2": "PARTIAL",
-    "GDPR": "PASS",
-    "HIPAA": "N/A",
-    "PCI-DSS": "FAIL"
-  },
-  "priority_actions": [
-    "Fix SQL injection vulnerability (URGENT)",
-    "Enable database encryption within 30 days",
-    "Implement rate limiting for all APIs"
-  ],
-  "summary": "Security posture is MEDIUM risk with 1 critical vulnerability requiring immediate attention"
+    "priority_actions": [
+        "Fix SQL injection vulnerability (URGENT)",
+        "Enable database encryption within 30 days",
+        "Implement rate limiting for all APIs"
+    ],
+    "summary": "Security posture is MEDIUM risk with 1 critical vulnerability requiring immediate attention"
 }
 ```
 

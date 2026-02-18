@@ -32,8 +32,8 @@ const domains = ['security', 'performance', 'reliability', 'scalability'];
 const assessments = {};
 
 domains.forEach((domain) => {
-  const outputPath = `/tmp/tea-nfr-${domain}-{{timestamp}}.json`;
-  assessments[domain] = JSON.parse(fs.readFileSync(outputPath, 'utf8'));
+    const outputPath = `/tmp/tea-nfr-${domain}-{{timestamp}}.json`;
+    assessments[domain] = JSON.parse(fs.readFileSync(outputPath, 'utf8'));
 });
 ```
 
@@ -64,22 +64,22 @@ const overallRisk = Object.keys(riskLevels).find((k) => riskLevels[k] === maxRis
 const allCompliance = {};
 
 domains.forEach((domain) => {
-  const compliance = assessments[domain].compliance;
-  Object.entries(compliance).forEach(([standard, status]) => {
-    if (!allCompliance[standard]) {
-      allCompliance[standard] = [];
-    }
-    allCompliance[standard].push({ domain, status });
-  });
+    const compliance = assessments[domain].compliance;
+    Object.entries(compliance).forEach(([standard, status]) => {
+        if (!allCompliance[standard]) {
+            allCompliance[standard] = [];
+        }
+        allCompliance[standard].push({ domain, status });
+    });
 });
 
 // Determine overall compliance per standard
 const complianceSummary = {};
 Object.entries(allCompliance).forEach(([standard, statuses]) => {
-  const hasFail = statuses.some((s) => s.status === 'FAIL');
-  const hasPartial = statuses.some((s) => s.status === 'PARTIAL' || s.status === 'CONCERN');
+    const hasFail = statuses.some((s) => s.status === 'FAIL');
+    const hasPartial = statuses.some((s) => s.status === 'PARTIAL' || s.status === 'CONCERN');
 
-  complianceSummary[standard] = hasFail ? 'FAIL' : hasPartial ? 'PARTIAL' : 'PASS';
+    complianceSummary[standard] = hasFail ? 'FAIL' : hasPartial ? 'PARTIAL' : 'PASS';
 });
 ```
 
@@ -96,22 +96,22 @@ const crossDomainRisks = [];
 const perfConcerns = assessments.performance.findings.filter((f) => f.status !== 'PASS');
 const scaleConcerns = assessments.scalability.findings.filter((f) => f.status !== 'PASS');
 if (perfConcerns.length > 0 && scaleConcerns.length > 0) {
-  crossDomainRisks.push({
-    domains: ['performance', 'scalability'],
-    description: 'Performance issues may worsen under scale',
-    impact: 'HIGH',
-  });
+    crossDomainRisks.push({
+        domains: ['performance', 'scalability'],
+        description: 'Performance issues may worsen under scale',
+        impact: 'HIGH',
+    });
 }
 
 // Example: Security + Reliability issue
 const securityFails = assessments.security.findings.filter((f) => f.status === 'FAIL');
 const reliabilityConcerns = assessments.reliability.findings.filter((f) => f.status !== 'PASS');
 if (securityFails.length > 0 && reliabilityConcerns.length > 0) {
-  crossDomainRisks.push({
-    domains: ['security', 'reliability'],
-    description: 'Security vulnerabilities may cause reliability incidents',
-    impact: 'CRITICAL',
-  });
+    crossDomainRisks.push({
+        domains: ['security', 'reliability'],
+        description: 'Security vulnerabilities may cause reliability incidents',
+        impact: 'CRITICAL',
+    });
 }
 ```
 
@@ -121,11 +121,11 @@ if (securityFails.length > 0 && reliabilityConcerns.length > 0) {
 
 ```javascript
 const allPriorityActions = domains.flatMap((domain) =>
-  assessments[domain].priority_actions.map((action) => ({
-    domain,
-    action,
-    urgency: assessments[domain].risk_level === 'HIGH' ? 'URGENT' : 'NORMAL',
-  })),
+    assessments[domain].priority_actions.map((action) => ({
+        domain,
+        action,
+        urgency: assessments[domain].risk_level === 'HIGH' ? 'URGENT' : 'NORMAL',
+    }))
 );
 
 // Sort by urgency
@@ -138,26 +138,26 @@ const prioritizedActions = allPriorityActions.sort((a, b) => (a.urgency === 'URG
 
 ```javascript
 const executiveSummary = {
-  overall_risk: overallRisk,
-  assessment_date: new Date().toISOString(),
+    overall_risk: overallRisk,
+    assessment_date: new Date().toISOString(),
 
-  domain_assessments: assessments,
+    domain_assessments: assessments,
 
-  compliance_summary: complianceSummary,
+    compliance_summary: complianceSummary,
 
-  cross_domain_risks: crossDomainRisks,
+    cross_domain_risks: crossDomainRisks,
 
-  priority_actions: prioritizedActions,
+    priority_actions: prioritizedActions,
 
-  risk_breakdown: {
-    security: assessments.security.risk_level,
-    performance: assessments.performance.risk_level,
-    reliability: assessments.reliability.risk_level,
-    scalability: assessments.scalability.risk_level,
-  },
+    risk_breakdown: {
+        security: assessments.security.risk_level,
+        performance: assessments.performance.risk_level,
+        reliability: assessments.reliability.risk_level,
+        scalability: assessments.scalability.risk_level,
+    },
 
-  subprocess_execution: 'PARALLEL (4 NFR domains)',
-  performance_gain: '~67% faster than sequential',
+    subprocess_execution: 'PARALLEL (4 NFR domains)',
+    performance_gain: '~67% faster than sequential',
 };
 
 // Save for Step 5 (report generation)
@@ -201,21 +201,21 @@ fs.writeFileSync('/tmp/tea-nfr-summary-{{timestamp}}.json', JSON.stringify(execu
 
 - **If `{outputFile}` does not exist** (first save), create it using the workflow template (if available) with YAML frontmatter:
 
-  ```yaml
-  ---
-  stepsCompleted: ['step-04e-aggregate-nfr']
-  lastStep: 'step-04e-aggregate-nfr'
-  lastSaved: '{date}'
-  ---
-  ```
+    ```yaml
+    ---
+    stepsCompleted: ['step-04e-aggregate-nfr']
+    lastStep: 'step-04e-aggregate-nfr'
+    lastSaved: '{date}'
+    ---
+    ```
 
-  Then write this step's output below the frontmatter.
+    Then write this step's output below the frontmatter.
 
 - **If `{outputFile}` already exists**, update:
-  - Add `'step-04e-aggregate-nfr'` to `stepsCompleted` array (only if not already present)
-  - Set `lastStep: 'step-04e-aggregate-nfr'`
-  - Set `lastSaved: '{date}'`
-  - Append this step's output to the appropriate section of the document.
+    - Add `'step-04e-aggregate-nfr'` to `stepsCompleted` array (only if not already present)
+    - Set `lastStep: 'step-04e-aggregate-nfr'`
+    - Set `lastSaved: '{date}'`
+    - Append this step's output to the appropriate section of the document.
 
 ---
 

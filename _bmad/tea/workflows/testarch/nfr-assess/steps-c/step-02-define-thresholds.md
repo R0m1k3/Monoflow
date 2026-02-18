@@ -77,21 +77,21 @@ List each NFR category with its threshold or UNKNOWN status.
 
 - **If `{outputFile}` does not exist** (first save), create it using the workflow template (if available) with YAML frontmatter:
 
-  ```yaml
-  ---
-  stepsCompleted: ['step-02-define-thresholds']
-  lastStep: 'step-02-define-thresholds'
-  lastSaved: '{date}'
-  ---
-  ```
+    ```yaml
+    ---
+    stepsCompleted: ['step-02-define-thresholds']
+    lastStep: 'step-02-define-thresholds'
+    lastSaved: '{date}'
+    ---
+    ```
 
-  Then write this step's output below the frontmatter.
+    Then write this step's output below the frontmatter.
 
 - **If `{outputFile}` already exists**, update:
-  - Add `'step-02-define-thresholds'` to `stepsCompleted` array (only if not already present)
-  - Set `lastStep: 'step-02-define-thresholds'`
-  - Set `lastSaved: '{date}'`
-  - Append this step's output to the appropriate section of the document.
+    - Add `'step-02-define-thresholds'` to `stepsCompleted` array (only if not already present)
+    - Set `lastStep: 'step-02-define-thresholds'`
+    - Set `lastSaved: '{date}'`
+    - Append this step's output to the appropriate section of the document.
 
 Load next step: `{nextStepFile}`
 

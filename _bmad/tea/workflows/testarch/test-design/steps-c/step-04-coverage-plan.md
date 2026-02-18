@@ -93,21 +93,21 @@ Define thresholds:
 
 - **If `{outputFile}` does not exist** (first save), create it with YAML frontmatter:
 
-  ```yaml
-  ---
-  stepsCompleted: ['step-04-coverage-plan']
-  lastStep: 'step-04-coverage-plan'
-  lastSaved: '{date}'
-  ---
-  ```
+    ```yaml
+    ---
+    stepsCompleted: ['step-04-coverage-plan']
+    lastStep: 'step-04-coverage-plan'
+    lastSaved: '{date}'
+    ---
+    ```
 
-  Then write this step's output below the frontmatter.
+    Then write this step's output below the frontmatter.
 
 - **If `{outputFile}` already exists**, update:
-  - Add `'step-04-coverage-plan'` to `stepsCompleted` array (only if not already present)
-  - Set `lastStep: 'step-04-coverage-plan'`
-  - Set `lastSaved: '{date}'`
-  - Append this step's output to the appropriate section of the document.
+    - Add `'step-04-coverage-plan'` to `stepsCompleted` array (only if not already present)
+    - Set `lastStep: 'step-04-coverage-plan'`
+    - Set `lastSaved: '{date}'`
+    - Append this step's output to the appropriate section of the document.
 
 Load next step: `{nextStepFile}`
 

@@ -54,20 +54,25 @@ To validate that each step file follows the correct pattern for its step type - 
 **Load {stepTypePatterns} to understand the pattern for each type:**
 
 **If subprocess capability available:**
+
 ```markdown
 Launch a subprocess that:
+
 1. Loads {stepTypePatterns}
 2. Extracts all pattern definitions deeply
 3. Returns summary of patterns to parent (not full file - saves context)
 ```
 
 **If subprocess unavailable:**
+
 ```markdown
 Load {stepTypePatterns} in main context
+
 # Larger context but still functional - demonstrates graceful fallback
 ```
 
 **Step Types:**
+
 1. **Init (Non-Continuable)** - Auto-proceed, no continuation logic
 2. **Init (Continuable)** - Has continueFile reference, continuation detection
 3. **Continuation (01b)** - Paired with continuable init, routes based on stepsCompleted
@@ -84,9 +89,9 @@ Load {stepTypePatterns} in main context
 **DO NOT BE LAZY - For EACH file in steps-c/, launch a subprocess that:**
 
 1. Determines what type this step SHOULD be from:
-   - Step number (01 = init, 01b = continuation, last = final)
-   - Design in {workflowPlanFile}
-   - Step name pattern
+    - Step number (01 = init, 01b = continuation, last = final)
+    - Design in {workflowPlanFile}
+    - Step name pattern
 
 2. Loads the step file
 
@@ -98,44 +103,53 @@ Load {stepTypePatterns} in main context
 **SUBPROCESS ANALYSIS PATTERN - Validate each step file for:**
 
 **For Init Steps:**
+
 - ✅ Creates output from template (if document-producing)
 - ✅ No A/P menu (or C-only)
 - ✅ If continuable: has continueFile reference
 
 **For Continuation (01b):**
+
 - ✅ Has nextStepOptions in frontmatter
 - ✅ Reads stepsCompleted from output
 - ✅ Routes to appropriate step
 
 **For Middle (Standard):**
+
 - ✅ Has A/P/C menu
 - ✅ Outputs to document (if applicable)
 - ✅ Has mandatory execution rules
 
 **For Middle (Simple):**
+
 - ✅ Has C-only menu
 - ✅ No A/P options
 
 **For Branch:**
+
 - ✅ Has custom menu letters
 - ✅ Handler routes to different steps
 
 **For Validation Sequence:**
+
 - ✅ Auto-proceeds (no user choice)
 - ✅ Proceeds to next validation
 
 **For Final Polish:**
+
 - ✅ Loads entire document
 - ✅ Optimizes flow, removes duplication
 - ✅ Uses ## Level 2 headers
 
 **For Final:**
+
 - ✅ No nextStepFile in frontmatter
 - ✅ Completion message
 - ✅ No next step to load
 
 **RETURN FORMAT:**
 Return a concise summary containing:
+
 - File name analyzed
 - What type the step should be
 - What type it actually is
@@ -153,12 +167,12 @@ Return a concise summary containing:
 
 - Overall summary of step type validation (how many steps checked, pass/fail counts)
 - For each step file:
-  - File name
-  - What type the step should be (based on design, step number, naming)
-  - What type it actually is
-  - Whether it follows the correct pattern for its type
-  - Any violations or issues found
-  - Pass/fail/warning status
+    - File name
+    - What type the step should be (based on design, step number, naming)
+    - What type it actually is
+    - Whether it follows the correct pattern for its type
+    - Any violations or issues found
+    - Pass/fail/warning status
 
 **Format:** Create a clear, readable section in the validation report that shows the validation results for each step file.
 
@@ -177,7 +191,7 @@ Return a concise summary containing:
 
 ### 5. Append to Report
 
-Update {validationReportFile} - replace "## Step Type Validation *Pending...*" with actual findings.
+Update {validationReportFile} - replace "## Step Type Validation _Pending..._" with actual findings.
 
 ### 6. Save Report and Auto-Proceed
 

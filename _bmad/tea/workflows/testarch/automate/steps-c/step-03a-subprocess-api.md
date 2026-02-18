@@ -57,24 +57,24 @@ import { test, expect } from '@playwright/test';
 // import { apiRequest } from '@playwright-utils/api';
 
 test.describe('[Feature] API Tests', () => {
-  test('[P0] should handle successful [operation]', async ({ request }) => {
-    // Use apiRequest helper if Playwright Utils enabled
-    // Otherwise use standard request fixture
-    const response = await request.post('/api/endpoint', {
-      data: {
-        /* test data */
-      },
+    test('[P0] should handle successful [operation]', async ({ request }) => {
+        // Use apiRequest helper if Playwright Utils enabled
+        // Otherwise use standard request fixture
+        const response = await request.post('/api/endpoint', {
+            data: {
+                /* test data */
+            },
+        });
+
+        expect(response.status()).toBe(200);
+        expect(await response.json()).toMatchObject({
+            /* expected */
+        });
     });
 
-    expect(response.status()).toBe(200);
-    expect(await response.json()).toMatchObject({
-      /* expected */
+    test('[P1] should handle [error scenario]', async ({ request }) => {
+        // Test error handling
     });
-  });
-
-  test('[P1] should handle [error scenario]', async ({ request }) => {
-    // Test error handling
-  });
 });
 ```
 
@@ -106,36 +106,36 @@ Write JSON to temp file: `/tmp/tea-automate-api-tests-{{timestamp}}.json`
 
 ```json
 {
-  "success": true,
-  "subprocess": "api-tests",
-  "tests": [
-    {
-      "file": "tests/api/auth.spec.ts",
-      "content": "[full TypeScript test file content]",
-      "description": "API tests for authentication endpoints",
-      "priority_coverage": {
-        "P0": 3,
-        "P1": 2,
-        "P2": 1,
-        "P3": 0
-      }
-    },
-    {
-      "file": "tests/api/checkout.spec.ts",
-      "content": "[full TypeScript test file content]",
-      "description": "API tests for checkout endpoints",
-      "priority_coverage": {
-        "P0": 2,
-        "P1": 3,
-        "P2": 1,
-        "P3": 0
-      }
-    }
-  ],
-  "fixture_needs": ["authToken", "userDataFactory", "productDataFactory"],
-  "knowledge_fragments_used": ["api-request", "data-factories", "api-testing-patterns"],
-  "test_count": 12,
-  "summary": "Generated 12 API test cases covering 3 features"
+    "success": true,
+    "subprocess": "api-tests",
+    "tests": [
+        {
+            "file": "tests/api/auth.spec.ts",
+            "content": "[full TypeScript test file content]",
+            "description": "API tests for authentication endpoints",
+            "priority_coverage": {
+                "P0": 3,
+                "P1": 2,
+                "P2": 1,
+                "P3": 0
+            }
+        },
+        {
+            "file": "tests/api/checkout.spec.ts",
+            "content": "[full TypeScript test file content]",
+            "description": "API tests for checkout endpoints",
+            "priority_coverage": {
+                "P0": 2,
+                "P1": 3,
+                "P2": 1,
+                "P3": 0
+            }
+        }
+    ],
+    "fixture_needs": ["authToken", "userDataFactory", "productDataFactory"],
+    "knowledge_fragments_used": ["api-request", "data-factories", "api-testing-patterns"],
+    "test_count": 12,
+    "summary": "Generated 12 API test cases covering 3 features"
 }
 ```
 
@@ -143,12 +143,12 @@ Write JSON to temp file: `/tmp/tea-automate-api-tests-{{timestamp}}.json`
 
 ```json
 {
-  "success": false,
-  "subprocess": "api-tests",
-  "error": "Error message describing what went wrong",
-  "partial_output": {
-    /* any tests generated before error */
-  }
+    "success": false,
+    "subprocess": "api-tests",
+    "error": "Error message describing what went wrong",
+    "partial_output": {
+        /* any tests generated before error */
+    }
 }
 ```
 

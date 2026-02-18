@@ -41,8 +41,8 @@ const dimensions = ['determinism', 'isolation', 'maintainability', 'coverage', '
 const results = {};
 
 dimensions.forEach((dim) => {
-  const outputPath = `/tmp/tea-test-review-${dim}-{{timestamp}}.json`;
-  results[dim] = JSON.parse(fs.readFileSync(outputPath, 'utf8'));
+    const outputPath = `/tmp/tea-test-review-${dim}-{{timestamp}}.json`;
+    results[dim] = JSON.parse(fs.readFileSync(outputPath, 'utf8'));
 });
 ```
 
@@ -51,7 +51,7 @@ dimensions.forEach((dim) => {
 ```javascript
 const allSucceeded = dimensions.every((dim) => results[dim].score !== undefined);
 if (!allSucceeded) {
-  throw new Error('One or more quality subprocesses failed!');
+    throw new Error('One or more quality subprocesses failed!');
 }
 ```
 
@@ -63,11 +63,11 @@ if (!allSucceeded) {
 
 ```javascript
 const weights = {
-  determinism: 0.25, // 25% - Most critical for reliability
-  isolation: 0.25, // 25% - Critical for parallel execution
-  maintainability: 0.2, // 20% - Important for long-term health
-  coverage: 0.15, // 15% - Important but can be improved iteratively
-  performance: 0.15, // 15% - Important but less critical than correctness
+    determinism: 0.25, // 25% - Most critical for reliability
+    isolation: 0.25, // 25% - Critical for parallel execution
+    maintainability: 0.2, // 20% - Important for long-term health
+    coverage: 0.15, // 15% - Important but can be improved iteratively
+    performance: 0.15, // 15% - Important but less critical than correctness
 };
 ```
 
@@ -75,7 +75,7 @@ const weights = {
 
 ```javascript
 const overallScore = dimensions.reduce((sum, dim) => {
-  return sum + results[dim].score * weights[dim];
+    return sum + results[dim].score * weights[dim];
 }, 0);
 
 const roundedScore = Math.round(overallScore);
@@ -85,11 +85,11 @@ const roundedScore = Math.round(overallScore);
 
 ```javascript
 const getGrade = (score) => {
-  if (score >= 90) return 'A';
-  if (score >= 80) return 'B';
-  if (score >= 70) return 'C';
-  if (score >= 60) return 'D';
-  return 'F';
+    if (score >= 90) return 'A';
+    if (score >= 80) return 'B';
+    if (score >= 70) return 'C';
+    if (score >= 60) return 'D';
+    return 'F';
 };
 
 const overallGrade = getGrade(roundedScore);
@@ -103,10 +103,10 @@ const overallGrade = getGrade(roundedScore);
 
 ```javascript
 const allViolations = dimensions.flatMap((dim) =>
-  results[dim].violations.map((v) => ({
-    ...v,
-    dimension: dim,
-  })),
+    results[dim].violations.map((v) => ({
+        ...v,
+        dimension: dim,
+    }))
 );
 
 // Group by severity
@@ -115,10 +115,10 @@ const mediumSeverity = allViolations.filter((v) => v.severity === 'MEDIUM');
 const lowSeverity = allViolations.filter((v) => v.severity === 'LOW');
 
 const violationSummary = {
-  total: allViolations.length,
-  HIGH: highSeverity.length,
-  MEDIUM: mediumSeverity.length,
-  LOW: lowSeverity.length,
+    total: allViolations.length,
+    HIGH: highSeverity.length,
+    MEDIUM: mediumSeverity.length,
+    LOW: lowSeverity.length,
 };
 ```
 
@@ -130,11 +130,11 @@ const violationSummary = {
 
 ```javascript
 const allRecommendations = dimensions.flatMap((dim) =>
-  results[dim].recommendations.map((rec) => ({
-    dimension: dim,
-    recommendation: rec,
-    impact: results[dim].score < 70 ? 'HIGH' : 'MEDIUM',
-  })),
+    results[dim].recommendations.map((rec) => ({
+        dimension: dim,
+        recommendation: rec,
+        impact: results[dim].score < 70 ? 'HIGH' : 'MEDIUM',
+    }))
 );
 
 // Sort by impact (HIGH first)
@@ -149,36 +149,36 @@ const prioritizedRecommendations = allRecommendations.sort((a, b) => (a.impact =
 
 ```javascript
 const reviewSummary = {
-  overall_score: roundedScore,
-  overall_grade: overallGrade,
-  quality_assessment: getQualityAssessment(roundedScore),
+    overall_score: roundedScore,
+    overall_grade: overallGrade,
+    quality_assessment: getQualityAssessment(roundedScore),
 
-  dimension_scores: {
-    determinism: results.determinism.score,
-    isolation: results.isolation.score,
-    maintainability: results.maintainability.score,
-    coverage: results.coverage.score,
-    performance: results.performance.score,
-  },
+    dimension_scores: {
+        determinism: results.determinism.score,
+        isolation: results.isolation.score,
+        maintainability: results.maintainability.score,
+        coverage: results.coverage.score,
+        performance: results.performance.score,
+    },
 
-  dimension_grades: {
-    determinism: results.determinism.grade,
-    isolation: results.isolation.grade,
-    maintainability: results.maintainability.grade,
-    coverage: results.coverage.grade,
-    performance: results.performance.grade,
-  },
+    dimension_grades: {
+        determinism: results.determinism.grade,
+        isolation: results.isolation.grade,
+        maintainability: results.maintainability.grade,
+        coverage: results.coverage.grade,
+        performance: results.performance.grade,
+    },
 
-  violations_summary: violationSummary,
+    violations_summary: violationSummary,
 
-  all_violations: allViolations,
+    all_violations: allViolations,
 
-  high_severity_violations: highSeverity,
+    high_severity_violations: highSeverity,
 
-  top_10_recommendations: prioritizedRecommendations,
+    top_10_recommendations: prioritizedRecommendations,
 
-  subprocess_execution: 'PARALLEL (5 quality dimensions)',
-  performance_gain: '~60% faster than sequential',
+    subprocess_execution: 'PARALLEL (5 quality dimensions)',
+    performance_gain: '~60% faster than sequential',
 };
 
 // Save for Step 4 (report generation)
@@ -222,21 +222,21 @@ fs.writeFileSync('/tmp/tea-test-review-summary-{{timestamp}}.json', JSON.stringi
 
 - **If `{outputFile}` does not exist** (first save), create it using the workflow template (if available) with YAML frontmatter:
 
-  ```yaml
-  ---
-  stepsCompleted: ['step-03f-aggregate-scores']
-  lastStep: 'step-03f-aggregate-scores'
-  lastSaved: '{date}'
-  ---
-  ```
+    ```yaml
+    ---
+    stepsCompleted: ['step-03f-aggregate-scores']
+    lastStep: 'step-03f-aggregate-scores'
+    lastSaved: '{date}'
+    ---
+    ```
 
-  Then write this step's output below the frontmatter.
+    Then write this step's output below the frontmatter.
 
 - **If `{outputFile}` already exists**, update:
-  - Add `'step-03f-aggregate-scores'` to `stepsCompleted` array (only if not already present)
-  - Set `lastStep: 'step-03f-aggregate-scores'`
-  - Set `lastSaved: '{date}'`
-  - Append this step's output to the appropriate section of the document.
+    - Add `'step-03f-aggregate-scores'` to `stepsCompleted` array (only if not already present)
+    - Set `lastStep: 'step-03f-aggregate-scores'`
+    - Set `lastSaved: '{date}'`
+    - Append this step's output to the appropriate section of the document.
 
 ---
 
