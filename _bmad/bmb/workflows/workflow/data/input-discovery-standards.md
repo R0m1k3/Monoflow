@@ -73,7 +73,7 @@ Add selections to {inputDocuments} array in output frontmatter
 
 Requires PRD to proceed.
 
-Searching: {bmm_creations_output_folder}/prd-_.md, {planning_artifacts}/_-prd.md
+Searching: {bmm*creations_output_folder}/prd-*.md, {planning*artifacts}/*-prd.md
 
 [Found:] "Found PRD: prd-my-project.md. Use this?"
 [Missing:] "No PRD found. Run PRD workflow first or provide path."
