@@ -1,47 +1,47 @@
 services:
-  # Frontend Application
-  monochrome:
-    image: ghcr.io/r0m1k3/monoflow:latest
-    container_name: monochrome-app
-    restart: unless-stopped
-    ports:
-      - '${MONOCHROME_PORT:-3001}:4173'
-    environment:
-      # URL interne de PocketBase (pour les appels serveur-à-serveur)
-      - POCKETBASE_URL=${POCKETBASE_URL:-http://pocketbase:8090}
-      # URL externe de PocketBase (visible depuis le navigateur)
-      # Mettez ici l'URL publique de votre PocketBase, ex: https://pb.mondomaine.com
-      # Laissez vide pour utiliser l'instance publique par défaut (monodb.samidy.com)
-      - PUBLIC_POCKETBASE_URL=${PUBLIC_POCKETBASE_URL:-}
-      - BODY_SIZE_LIMIT=${BODY_SIZE_LIMIT:-0}
-      - ORIGIN=${ORIGIN:-*}
-    depends_on:
-      - pocketbase
-    networks:
-      - monochrome_net
+    # Frontend Application
+    monochrome:
+        image: ghcr.io/r0m1k3/monoflow:latest
+        container_name: monochrome-app
+        restart: unless-stopped
+        ports:
+            - '${MONOCHROME_PORT:-3001}:4173'
+        environment:
+            # URL interne de PocketBase (pour les appels serveur-à-serveur)
+            - POCKETBASE_URL=${POCKETBASE_URL:-http://pocketbase:8090}
+            # URL externe de PocketBase (visible depuis le navigateur)
+            # Mettez ici l'URL publique de votre PocketBase, ex: https://pb.mondomaine.com
+            # Laissez vide pour utiliser l'instance publique par défaut (monodb.samidy.com)
+            - PUBLIC_POCKETBASE_URL=${PUBLIC_POCKETBASE_URL:-}
+            - BODY_SIZE_LIMIT=${BODY_SIZE_LIMIT:-0}
+            - ORIGIN=${ORIGIN:-*}
+        depends_on:
+            - pocketbase
+        networks:
+            - monochrome_net
 
-  # Backend / Authentification & Sync (optionnel si vous utilisez l'instance publique)
-  pocketbase:
-    image: ghcr.io/muchobien/pocketbase:latest
-    container_name: monochrome-pb
-    restart: unless-stopped
-    ports:
-      - '${POCKETBASE_PORT:-8091}:8090'
-    volumes:
-      - ${HOST_DATA_PATH:-./data}/pb_data:/pb_data
-      - ${HOST_DATA_PATH:-./data}/pb_public:/pb_public
-      - ${HOST_DATA_PATH:-./data}/pb_hooks:/pb_hooks
-    environment:
-      - PB_ADMIN_EMAIL=${ADMIN_EMAIL:-admin@example.com}
-      - PB_ADMIN_PASSWORD=${ADMIN_PASSWORD:-changeme}
-    healthcheck:
-      test: [ 'CMD', 'wget', '--no-verbose', '--tries=1', '--spider', 'http://localhost:8090/api/health' ]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-    networks:
-      - monochrome_net
+    # Backend / Authentification & Sync (optionnel si vous utilisez l'instance publique)
+    pocketbase:
+        image: ghcr.io/muchobien/pocketbase:latest
+        container_name: monochrome-pb
+        restart: unless-stopped
+        ports:
+            - '${POCKETBASE_PORT:-8091}:8090'
+        volumes:
+            - ${HOST_DATA_PATH:-./data}/pb_data:/pb_data
+            - ${HOST_DATA_PATH:-./data}/pb_public:/pb_public
+            - ${HOST_DATA_PATH:-./data}/pb_hooks:/pb_hooks
+        environment:
+            - PB_ADMIN_EMAIL=${ADMIN_EMAIL:-admin@example.com}
+            - PB_ADMIN_PASSWORD=${ADMIN_PASSWORD:-changeme}
+        healthcheck:
+            test: ['CMD', 'wget', '--no-verbose', '--tries=1', '--spider', 'http://localhost:8090/api/health']
+            interval: 30s
+            timeout: 10s
+            retries: 3
+        networks:
+            - monochrome_net
 
 networks:
-  monochrome_net:
-    driver: bridge
+    monochrome_net:
+        driver: bridge
