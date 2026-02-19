@@ -34,9 +34,7 @@ const syncManager = {
         }
 
         try {
-            const record = await this.pb
-                .collection('DB_users')
-                .getFirstListItem(`pb_user_id="${pbUserId}"`);
+            const record = await this.pb.collection('DB_users').getFirstListItem(`pb_user_id="${pbUserId}"`);
             this._userRecordCache = record;
             return record;
         } catch (error) {
@@ -90,9 +88,7 @@ const syncManager = {
 
         try {
             const stringifiedData = typeof data === 'string' ? data : JSON.stringify(data);
-            const updated = await this.pb
-                .collection('DB_users')
-                .update(record.id, { [field]: stringifiedData });
+            const updated = await this.pb.collection('DB_users').update(record.id, { [field]: stringifiedData });
             this._userRecordCache = updated;
         } catch (error) {
             console.error(`[PocketBase] Failed to sync ${field}:`, error);
@@ -189,14 +185,14 @@ const syncManager = {
                 artists: item.artists?.map((a) => ({ id: a.id, name: a.name || null })) || [],
                 album: item.album
                     ? {
-                        id: item.album.id,
-                        title: item.album.title || null,
-                        cover: item.album.cover || null,
-                        releaseDate: item.album.releaseDate || null,
-                        vibrantColor: item.album.vibrantColor || null,
-                        artist: item.album.artist || null,
-                        numberOfTracks: item.album.numberOfTracks || null,
-                    }
+                          id: item.album.id,
+                          title: item.album.title || null,
+                          cover: item.album.cover || null,
+                          releaseDate: item.album.releaseDate || null,
+                          vibrantColor: item.album.vibrantColor || null,
+                          artist: item.album.artist || null,
+                          numberOfTracks: item.album.numberOfTracks || null,
+                      }
                     : null,
                 copyright: item.copyright || null,
                 isrc: item.isrc || null,
@@ -217,8 +213,8 @@ const syncManager = {
                 artist: item.artist
                     ? { name: item.artist.name || null, id: item.artist.id }
                     : item.artists?.[0]
-                        ? { name: item.artists[0].name || null, id: item.artists[0].id }
-                        : null,
+                      ? { name: item.artists[0].name || null, id: item.artists[0].id }
+                      : null,
                 type: item.type || null,
                 numberOfTracks: item.numberOfTracks || null,
             };
@@ -329,9 +325,7 @@ const syncManager = {
 
     async getPublicPlaylist(uuid) {
         try {
-            const record = await this.pb
-                .collection(PUBLIC_COLLECTION)
-                .getFirstListItem(`uuid="${uuid}"`);
+            const record = await this.pb.collection(PUBLIC_COLLECTION).getFirstListItem(`uuid="${uuid}"`);
 
             let rawCover = record.image || record.cover || record.playlist_cover || '';
             let extraData = this.safeParseInternal(record.data, 'data', {});
@@ -582,9 +576,7 @@ const syncManager = {
                         favorites_tracks: Object.values(library.tracks).filter((t) => t && typeof t === 'object'),
                         favorites_albums: Object.values(library.albums).filter((a) => a && typeof a === 'object'),
                         favorites_artists: Object.values(library.artists).filter((a) => a && typeof a === 'object'),
-                        favorites_playlists: Object.values(library.playlists).filter(
-                            (p) => p && typeof p === 'object'
-                        ),
+                        favorites_playlists: Object.values(library.playlists).filter((p) => p && typeof p === 'object'),
                         favorites_mixes: Object.values(library.mixes).filter((m) => m && typeof m === 'object'),
                         history_tracks: history,
                         user_playlists: Object.values(userPlaylists).filter((p) => p && typeof p === 'object'),

@@ -2665,7 +2665,6 @@ export function initializeSettings(scrobbler, player, api, ui) {
         reader.readAsText(file);
     });
 
-
     const customDbBtn = document.getElementById('custom-db-btn');
     const customDbModal = document.getElementById('custom-db-modal');
     const customPbUrlInput = document.getElementById('custom-pb-url');
@@ -2718,7 +2717,6 @@ export function initializeSettings(scrobbler, player, api, ui) {
             }
         });
     }
-
 
     // PWA Auto-Update Toggle
     const pwaAutoUpdateToggle = document.getElementById('pwa-auto-update-toggle');

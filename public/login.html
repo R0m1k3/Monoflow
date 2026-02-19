@@ -175,7 +175,9 @@
             }
 
             @keyframes spin {
-                to { transform: rotate(360deg); }
+                to {
+                    transform: rotate(360deg);
+                }
             }
 
             .forgot-link {
@@ -268,13 +270,7 @@
             <!-- Reset Password form -->
             <form id="form-reset" onsubmit="handleReset(event)" style="display: none">
                 <div class="form-group">
-                    <input
-                        type="email"
-                        id="reset-email"
-                        placeholder="Email"
-                        required
-                        autocomplete="email"
-                    />
+                    <input type="email" id="reset-email" placeholder="Email" required autocomplete="email" />
                 </div>
                 <button type="submit" id="reset-btn" class="btn btn-primary">
                     <span id="reset-btn-text">Send Reset Email</span>
@@ -289,9 +285,7 @@
             // Resolve PocketBase URL: server-injected env > localStorage > default
             const DEFAULT_PB_URL = 'https://monodb.samidy.com';
             const PB_URL =
-                window.__POCKETBASE_URL__ ||
-                localStorage.getItem('monochrome-pocketbase-url') ||
-                DEFAULT_PB_URL;
+                window.__POCKETBASE_URL__ || localStorage.getItem('monochrome-pocketbase-url') || DEFAULT_PB_URL;
 
             const pb = new PocketBase(PB_URL);
 
