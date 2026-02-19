@@ -102,7 +102,12 @@ export default function authGatePlugin() {
             const indexPath = join(distDir, 'index.html');
             if (configScript && existsSync(indexPath)) {
                 indexHtml = readFileSync(indexPath, 'utf-8');
-                indexHtml = indexHtml.replace('</head>', `${configScript}\n</head>`);
+                // Conflict prevention: If entrypoint.sh has already injected the config, do NOT overwrite it.
+                if (!indexHtml.includes('window.__POCKETBASE_URL__')) {
+                    indexHtml = indexHtml.replace('</head>', `${configScript}\n</head>`);
+                } else {
+                    console.log('[auth-gate] HTML already patched by entrypoint.sh — skipping plugin injection.');
+                }
             }
 
             let loginHtml = null;
@@ -110,7 +115,10 @@ export default function authGatePlugin() {
                 const loginPath = join(distDir, 'login.html');
                 if (existsSync(loginPath)) {
                     loginHtml = readFileSync(loginPath, 'utf-8');
-                    if (configScript) loginHtml = loginHtml.replace('</head>', `${configScript}\n</head>`);
+                    // Conflict prevention for login.html
+                    if (configScript && !loginHtml.includes('window.__POCKETBASE_URL__')) {
+                        loginHtml = loginHtml.replace('</head>', `${configScript}\n</head>`);
+                    }
                 }
             }
 
