@@ -25,11 +25,6 @@ jobs:
             binary_source: Monochrome-linux_x64
             binary_dest: Monochrome
             archive_name: monochrome-linux.zip
-          - os: macos-latest
-            platform: macos
-            binary_source: Monochrome-mac_universal
-            binary_dest: Monochrome
-            archive_name: monochrome-mac.zip
 
     steps:
       - name: Checkout code
