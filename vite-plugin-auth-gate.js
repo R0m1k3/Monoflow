@@ -78,7 +78,8 @@ export default function authGatePlugin() {
             // Public URL injected into window.__POCKETBASE_URL__ and used by the browser SDK.
             // Must be reachable from the end-user's browser (e.g. https://pb.yourdomain.com).
             // Falls back to POCKETBASE_URL only if explicitly the same as the public URL.
-            const POCKETBASE_PUBLIC_URL = env.PUBLIC_POCKETBASE_URL || env.POCKETBASE_URL || 'https://monodb.samidy.com';
+            const POCKETBASE_PUBLIC_URL =
+                env.PUBLIC_POCKETBASE_URL || env.POCKETBASE_URL || 'https://monodb.samidy.com';
 
             // --- Build injection script ---
 
