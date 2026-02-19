@@ -7,14 +7,15 @@ services:
         ports:
             - '${MONOCHROME_PORT:-3001}:4173'
         environment:
-            # URL interne de PocketBase (pour les appels serveur-à-serveur)
+            # URL interne Docker (server-to-server, jamais envoyée au navigateur)
             - POCKETBASE_URL=${POCKETBASE_URL:-http://pocketbase:8090}
-            # URL externe de PocketBase (visible depuis le navigateur)
-            # Mettez ici l'URL publique de votre PocketBase, ex: https://pb.mondomaine.com
-            # Laissez vide pour utiliser l'instance publique par défaut (monodb.samidy.com)
+            # URL PUBLIQUE de PocketBase, accessible depuis le navigateur de l'utilisateur.
+            # ⚠️ OBLIGATOIRE : doit être l'URL externe (ex: https://pb.mondomaine.com)
+            # Si vide, le navigateur tentera http://pocketbase:8090 → Mixed Content / erreur
             - PUBLIC_POCKETBASE_URL=${PUBLIC_POCKETBASE_URL:-}
-            - BODY_SIZE_LIMIT=${BODY_SIZE_LIMIT:-0}
-            - ORIGIN=${ORIGIN:-*}
+            # Auth gate (optionnel)
+            - AUTH_ENABLED=${AUTH_ENABLED:-false}
+            - AUTH_SECRET=${AUTH_SECRET:-}
         depends_on:
             - pocketbase
         networks:
@@ -35,7 +36,7 @@ services:
             - PB_ADMIN_EMAIL=${ADMIN_EMAIL:-admin@example.com}
             - PB_ADMIN_PASSWORD=${ADMIN_PASSWORD:-changeme}
         healthcheck:
-            test: ['CMD', 'wget', '--no-verbose', '--tries=1', '--spider', 'http://localhost:8090/api/health']
+            test: [ 'CMD', 'wget', '--no-verbose', '--tries=1', '--spider', 'http://localhost:8090/api/health' ]
             interval: 30s
             timeout: 10s
             retries: 3

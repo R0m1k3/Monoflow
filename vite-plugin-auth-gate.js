@@ -71,13 +71,20 @@ export default function authGatePlugin() {
 
         configurePreviewServer(server) {
             const AUTH_ENABLED = (env.AUTH_ENABLED ?? 'false') !== 'false';
-            const POCKETBASE_URL = env.POCKETBASE_URL || 'https://monodb.samidy.com';
 
-            // --- Build injection script (always active for env config) ---
+            // Internal server-to-server URL (used for token verification — never sent to browser)
+            const POCKETBASE_INTERNAL_URL = env.POCKETBASE_URL || 'https://monodb.samidy.com';
+
+            // Public URL injected into window.__POCKETBASE_URL__ and used by the browser SDK.
+            // Must be reachable from the end-user's browser (e.g. https://pb.yourdomain.com).
+            // Falls back to POCKETBASE_URL only if explicitly the same as the public URL.
+            const POCKETBASE_PUBLIC_URL = env.PUBLIC_POCKETBASE_URL || env.POCKETBASE_URL || 'https://monodb.samidy.com';
+
+            // --- Build injection script ---
 
             const flags = [];
             if (AUTH_ENABLED) flags.push('window.__AUTH_GATE__=true');
-            if (POCKETBASE_URL) flags.push(`window.__POCKETBASE_URL__=${JSON.stringify(POCKETBASE_URL)}`);
+            if (POCKETBASE_PUBLIC_URL) flags.push(`window.__POCKETBASE_URL__=${JSON.stringify(POCKETBASE_PUBLIC_URL)}`);
             const configScript = flags.length > 0 ? `<script>${flags.join(';')};</script>` : null;
 
             // --- Pre-cache injected HTML at startup ---
@@ -121,7 +128,7 @@ export default function authGatePlugin() {
                     process.exit(1);
                 }
 
-                console.log(`[auth-gate] Auth gate enabled (PocketBase: ${POCKETBASE_URL})`);
+                console.log(`[auth-gate] Auth gate enabled (PocketBase internal: ${POCKETBASE_INTERNAL_URL})`);
 
                 server.middlewares.use(
                     cookieSession({
@@ -165,7 +172,7 @@ export default function authGatePlugin() {
                                 return;
                             }
 
-                            const userInfo = await verifyPocketBaseToken(POCKETBASE_URL, body.token);
+                            const userInfo = await verifyPocketBaseToken(POCKETBASE_INTERNAL_URL, body.token);
 
                             if (!userInfo) {
                                 res.statusCode = 401;

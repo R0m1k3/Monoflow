@@ -10,13 +10,18 @@ services:
         environment:
             AUTH_ENABLED: ${AUTH_ENABLED:-false}
             AUTH_SECRET: ${AUTH_SECRET:-}
+            # Internal server-to-server PocketBase URL (never exposed to browser)
             POCKETBASE_URL: ${POCKETBASE_URL:-}
+            # Public PocketBase URL injected into the browser SDK.
+            # Must be reachable from the end-user's browser (e.g. https://pb.yourdomain.com).
+            # If unset, falls back to POCKETBASE_URL — only valid if that URL is also public.
+            PUBLIC_POCKETBASE_URL: ${PUBLIC_POCKETBASE_URL:-}
             SESSION_MAX_AGE: ${SESSION_MAX_AGE:-604800000}
         restart: unless-stopped
         networks:
             - monochrome-network
         healthcheck:
-            test: ['CMD', 'wget', '--no-verbose', '--tries=1', '--spider', 'http://localhost:4173/health']
+            test: [ 'CMD', 'wget', '--no-verbose', '--tries=1', '--spider', 'http://localhost:4173/health' ]
             interval: 30s
             timeout: 3s
             retries: 3
@@ -41,7 +46,7 @@ services:
             - pb_hooks:/pb_hooks
         command: serve --http=0.0.0.0:8090
         healthcheck:
-            test: ['CMD', 'wget', '--no-verbose', '--tries=1', '--spider', 'http://localhost:8090/api/health']
+            test: [ 'CMD', 'wget', '--no-verbose', '--tries=1', '--spider', 'http://localhost:8090/api/health' ]
             interval: 30s
             timeout: 10s
             retries: 3
