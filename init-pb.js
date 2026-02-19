@@ -1,4 +1,3 @@
-
 import PocketBase from 'pocketbase';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
@@ -29,11 +28,17 @@ async function init() {
             name: 'DB_users',
             type: 'base',
             schema: [
-                { name: 'pb_user_id', type: 'text', required: true, unique: true, options: { min: null, max: null, pattern: '' } },
+                {
+                    name: 'pb_user_id',
+                    type: 'text',
+                    required: true,
+                    unique: true,
+                    options: { min: null, max: null, pattern: '' },
+                },
                 { name: 'library', type: 'json', required: false },
                 { name: 'history', type: 'json', required: false },
                 { name: 'user_playlists', type: 'json', required: false },
-                { name: 'user_folders', type: 'json', required: false }
+                { name: 'user_folders', type: 'json', required: false },
             ],
             // Règles de sécurité :
             // Seul un utilisateur authentifié peut créer/lire/modifier SES propres données
@@ -53,14 +58,20 @@ async function init() {
             name: 'public_playlists',
             type: 'base',
             schema: [
-                { name: 'uuid', type: 'text', required: true, unique: true, options: { min: null, max: null, pattern: '' } },
+                {
+                    name: 'uuid',
+                    type: 'text',
+                    required: true,
+                    unique: true,
+                    options: { min: null, max: null, pattern: '' },
+                },
                 { name: 'pb_user_id', type: 'text', required: true, options: { min: null, max: null, pattern: '' } },
                 { name: 'title', type: 'text', required: false, options: { min: null, max: null, pattern: '' } },
                 { name: 'image', type: 'text', required: false, options: { min: null, max: null, pattern: '' } },
                 { name: 'description', type: 'text', required: false, options: { min: null, max: null, pattern: '' } },
                 { name: 'tracks', type: 'json', required: false }, // Liste des pistes
-                { name: 'data', type: 'json', required: false },   // Métadonnées extra
-                { name: 'isPublic', type: 'bool', required: false }
+                { name: 'data', type: 'json', required: false }, // Métadonnées extra
+                { name: 'isPublic', type: 'bool', required: false },
             ],
             // Règles de sécurité :
             // Lecture publique (règles vides = public)
@@ -73,7 +84,6 @@ async function init() {
         });
 
         console.log('[Init] 🎉 Initialisation terminée avec succès.');
-
     } catch (error) {
         console.error('[Init] Erreur fatale :', error);
         process.exit(1);
@@ -98,7 +108,6 @@ async function ensureCollection(def) {
 
         // Optionnel: Mettre à jour le schéma si nécessaire ?
         // Pour l'instant on touche pas si ça existe.
-
     } catch (err) {
         if (err.status === 404) {
             console.log(`[Init] ⚠️ Collection '${def.name}' introuvable. Création...`);
