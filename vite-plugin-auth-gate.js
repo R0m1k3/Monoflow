@@ -72,16 +72,21 @@ export default function authGatePlugin() {
         },
 
         configurePreviewServer(server) {
-            const AUTH_ENABLED = (env.AUTH_ENABLED ?? 'false') !== 'false';
+            // Read directly from process.env for Docker runtime variables.
+            // vite preview does NOT call the config() hook, so `env` may be empty.
+            // process.env is always populated by Docker at container startup.
+            const getVar = (key) => process.env[key] ?? env[key];
+
+            const AUTH_ENABLED = (getVar('AUTH_ENABLED') ?? 'false') !== 'false';
 
             // Internal server-to-server URL (used for token verification — never sent to browser)
-            const POCKETBASE_INTERNAL_URL = env.POCKETBASE_URL || 'https://monodb.samidy.com';
+            const POCKETBASE_INTERNAL_URL =
+                getVar('POCKETBASE_URL') || 'https://monodb.samidy.com';
 
             // Public URL injected into window.__POCKETBASE_URL__ and used by the browser SDK.
             // Must be reachable from the end-user's browser (e.g. https://pb.yourdomain.com).
-            // Falls back to POCKETBASE_URL only if explicitly the same as the public URL.
             const POCKETBASE_PUBLIC_URL =
-                env.PUBLIC_POCKETBASE_URL || env.POCKETBASE_URL || 'https://monodb.samidy.com';
+                getVar('PUBLIC_POCKETBASE_URL') || getVar('POCKETBASE_URL') || 'https://monodb.samidy.com';
 
             // --- Build injection script ---
 
