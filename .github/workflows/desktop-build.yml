@@ -13,6 +13,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     
     strategy:
+      fail-fast: false
       matrix:
         include:
           - os: windows-latest
@@ -78,6 +79,7 @@ jobs:
         shell: bash
 
       - name: Upload to R2
+        continue-on-error: true
         uses: ryand56/r2-upload-action@latest
         with:
           r2-account-id: ${{ secrets.R2_ACCOUNT_ID }}
