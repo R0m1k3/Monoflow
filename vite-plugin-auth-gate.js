@@ -80,8 +80,7 @@ export default function authGatePlugin() {
             const AUTH_ENABLED = (getVar('AUTH_ENABLED') ?? 'false') !== 'false';
 
             // Internal server-to-server URL (used for token verification — never sent to browser)
-            const POCKETBASE_INTERNAL_URL =
-                getVar('POCKETBASE_URL') || 'https://monodb.samidy.com';
+            const POCKETBASE_INTERNAL_URL = getVar('POCKETBASE_URL') || 'https://monodb.samidy.com';
 
             // Public URL injected into window.__POCKETBASE_URL__ and used by the browser SDK.
             // Must be reachable from the end-user's browser (e.g. https://pb.yourdomain.com).
