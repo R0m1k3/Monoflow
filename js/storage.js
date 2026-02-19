@@ -1654,8 +1654,6 @@ export const sidebarSectionSettings = {
         localStorage.setItem(this.SHOW_RECENT_KEY, enabled ? 'true' : 'false');
     },
 
-
-
     shouldShowSettings() {
         return true;
     },
@@ -1680,7 +1678,6 @@ export const sidebarSectionSettings = {
     setShowAccount(enabled) {
         localStorage.setItem(this.SHOW_ACCOUNT_KEY, enabled ? 'true' : 'false');
     },
-
 
     normalizeOrder(order) {
         const baseOrder = this.DEFAULT_ORDER;

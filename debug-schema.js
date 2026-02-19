@@ -17,13 +17,12 @@ async function debugSchema() {
         console.log('--- DB_users Schema ---');
         console.log(JSON.stringify(col.schema, null, 2));
 
-        const hasUserId = col.schema.find(f => f.name === 'pb_user_id');
+        const hasUserId = col.schema.find((f) => f.name === 'pb_user_id');
         if (hasUserId) {
             console.log('✅ Field pb_user_id found!');
         } else {
             console.error('❌ Field pb_user_id MISSING!');
         }
-
     } catch (err) {
         console.error('Error:', err);
     }

@@ -107,7 +107,6 @@ async function ensureCollection(def) {
         console.log(`[Init] 🔄 Mise à jour du schéma de '${def.name}'...`);
         await pb.collections.update(existing.id, def);
         console.log(`[Init] ✅ Schéma mis à jour avec succès.`);
-
     } catch (err) {
         if (err.status === 404) {
             console.log(`[Init] ⚠️ Collection '${def.name}' introuvable. Création...`);
