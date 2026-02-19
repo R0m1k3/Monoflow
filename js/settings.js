@@ -2303,23 +2303,9 @@ export function initializeSettings(scrobbler, player, api, ui) {
         });
     }
 
-    const sidebarShowUnreleasedToggle = document.getElementById('sidebar-show-unreleased-toggle');
-    if (sidebarShowUnreleasedToggle) {
-        sidebarShowUnreleasedToggle.checked = sidebarSectionSettings.shouldShowUnreleased();
-        sidebarShowUnreleasedToggle.addEventListener('change', (e) => {
-            sidebarSectionSettings.setShowUnreleased(e.target.checked);
-            sidebarSectionSettings.applySidebarVisibility();
-        });
-    }
 
-    const sidebarShowDonateToggle = document.getElementById('sidebar-show-donate-toggle');
-    if (sidebarShowDonateToggle) {
-        sidebarShowDonateToggle.checked = sidebarSectionSettings.shouldShowDonate();
-        sidebarShowDonateToggle.addEventListener('change', (e) => {
-            sidebarSectionSettings.setShowDonate(e.target.checked);
-            sidebarSectionSettings.applySidebarVisibility();
-        });
-    }
+
+
 
     const sidebarShowSettingsToggle = document.getElementById('sidebar-show-settings-toggle');
     if (sidebarShowSettingsToggle) {
@@ -2337,32 +2323,11 @@ export function initializeSettings(scrobbler, player, api, ui) {
         });
     }
 
-    const sidebarShowAboutToggle = document.getElementById('sidebar-show-about-bottom-toggle');
-    if (sidebarShowAboutToggle) {
-        sidebarShowAboutToggle.checked = sidebarSectionSettings.shouldShowAbout();
-        sidebarShowAboutToggle.addEventListener('change', (e) => {
-            sidebarSectionSettings.setShowAbout(e.target.checked);
-            sidebarSectionSettings.applySidebarVisibility();
-        });
-    }
 
-    const sidebarShowDownloadToggle = document.getElementById('sidebar-show-download-bottom-toggle');
-    if (sidebarShowDownloadToggle) {
-        sidebarShowDownloadToggle.checked = sidebarSectionSettings.shouldShowDownload();
-        sidebarShowDownloadToggle.addEventListener('change', (e) => {
-            sidebarSectionSettings.setShowDownload(e.target.checked);
-            sidebarSectionSettings.applySidebarVisibility();
-        });
-    }
 
-    const sidebarShowDiscordToggle = document.getElementById('sidebar-show-discordbtn-toggle');
-    if (sidebarShowDiscordToggle) {
-        sidebarShowDiscordToggle.checked = sidebarSectionSettings.shouldShowDiscord();
-        sidebarShowDiscordToggle.addEventListener('change', (e) => {
-            sidebarSectionSettings.setShowDiscord(e.target.checked);
-            sidebarSectionSettings.applySidebarVisibility();
-        });
-    }
+
+
+
 
     // Apply sidebar visibility on initialization
     sidebarSectionSettings.applySidebarVisibility();
