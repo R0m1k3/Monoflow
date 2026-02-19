@@ -163,7 +163,8 @@ export class LastFMScrobbler {
 
             let authUrl = `https://www.last.fm/api/auth/?api_key=${this.API_KEY}&token=${token}`;
             if (callbackUrl) {
-                authUrl += `&cb=${encodeURIComponent(callbackUrl)}`;
+                const encodedCb = encodeURIComponent(callbackUrl);
+                authUrl += `&cb=${encodedCb}&callback=${encodedCb}`;
             }
 
             return {
