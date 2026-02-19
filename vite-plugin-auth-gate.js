@@ -66,7 +66,9 @@ export default function authGatePlugin() {
         name: 'auth-gate',
 
         config(_, { mode }) {
-            env = loadEnv(mode, process.cwd(), '');
+            // Merge process.env (Docker runtime vars) with loadEnv (.env files).
+            // process.env takes priority so Docker environment variables always win.
+            env = { ...loadEnv(mode, process.cwd(), ''), ...process.env };
         },
 
         configurePreviewServer(server) {
