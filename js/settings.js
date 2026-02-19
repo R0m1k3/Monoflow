@@ -2303,10 +2303,6 @@ export function initializeSettings(scrobbler, player, api, ui) {
         });
     }
 
-
-
-
-
     const sidebarShowSettingsToggle = document.getElementById('sidebar-show-settings-toggle');
     if (sidebarShowSettingsToggle) {
         sidebarShowSettingsToggle.checked = true;
@@ -2322,12 +2318,6 @@ export function initializeSettings(scrobbler, player, api, ui) {
             sidebarSectionSettings.applySidebarVisibility();
         });
     }
-
-
-
-
-
-
 
     // Apply sidebar visibility on initialization
     sidebarSectionSettings.applySidebarVisibility();
