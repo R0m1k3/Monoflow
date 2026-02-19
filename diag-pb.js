@@ -19,9 +19,7 @@ async function diagnose() {
             const dummy = await pb.collections.create({
                 name: dummyName,
                 type: 'base',
-                fields: [
-                    { name: 'test_field', type: 'text' },
-                ],
+                fields: [{ name: 'test_field', type: 'text' }],
             });
             console.log('✅ Dummy created!');
             console.log('Dummy ID:', dummy.id);
@@ -39,7 +37,10 @@ async function diagnose() {
         console.log('\n[Diag] Checking public_playlists...');
         try {
             const playlistColl = await pb.collections.getOne('public_playlists');
-            if (!playlistColl.schema && !playlistColl.fields || (playlistColl.fields && playlistColl.fields.length <= 3)) {
+            if (
+                (!playlistColl.schema && !playlistColl.fields) ||
+                (playlistColl.fields && playlistColl.fields.length <= 3)
+            ) {
                 console.log('⚠️ public_playlists schema is MISSING or EMPTY. Fixing...');
                 const playlistDef = {
                     fields: [
@@ -74,7 +75,6 @@ async function diagnose() {
         } catch (e) {
             console.error(`❌ Filter [pb_user_id != ""]: FAILED (${e.status} ${e.message})`);
         }
-
     } catch (error) {
         console.error('[Diag] Fatal error:', error);
     }
