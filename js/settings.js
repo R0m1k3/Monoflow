@@ -39,7 +39,7 @@ import { getButterchurnPresets } from './visualizers/butterchurn.js';
 import { db } from './db.js';
 import { authManager } from './accounts/auth.js';
 import { syncManager } from './accounts/pocketbase.js';
-import { saveFirebaseConfig, clearFirebaseConfig } from './accounts/config.js';
+import { initializePocketBaseSettingsUI } from './accounts/config.js';
 
 export function initializeSettings(scrobbler, player, api, ui) {
     // Restore last active settings tab
@@ -2665,46 +2665,27 @@ export function initializeSettings(scrobbler, player, api, ui) {
         reader.readAsText(file);
     });
 
+
     const customDbBtn = document.getElementById('custom-db-btn');
     const customDbModal = document.getElementById('custom-db-modal');
     const customPbUrlInput = document.getElementById('custom-pb-url');
-    const customFirebaseConfigInput = document.getElementById('custom-firebase-config');
     const customDbSaveBtn = document.getElementById('custom-db-save');
     const customDbResetBtn = document.getElementById('custom-db-reset');
     const customDbCancelBtn = document.getElementById('custom-db-cancel');
 
     if (customDbBtn && customDbModal) {
-        const fbFromEnv = !!window.__FIREBASE_CONFIG__;
         const pbFromEnv = !!window.__POCKETBASE_URL__;
 
-        // Hide entire setting if both are server-configured
-        if (fbFromEnv && pbFromEnv) {
+        // Hide entire setting if server-configured
+        if (pbFromEnv) {
             const settingItem = customDbBtn.closest('.setting-item');
             if (settingItem) settingItem.style.display = 'none';
         }
 
-        // Hide individual fields in the modal
-        if (pbFromEnv && customPbUrlInput) customPbUrlInput.closest('div[style]').style.display = 'none';
-        if (fbFromEnv && customFirebaseConfigInput)
-            customFirebaseConfigInput.closest('div[style]').style.display = 'none';
-
         customDbBtn.addEventListener('click', () => {
-            const pbUrl = localStorage.getItem('monochrome-pocketbase-url') || '';
-            const fbConfig = localStorage.getItem('monochrome-firebase-config');
-
-            if (!pbFromEnv) customPbUrlInput.value = pbUrl;
-            if (!fbFromEnv) {
-                if (fbConfig) {
-                    try {
-                        customFirebaseConfigInput.value = JSON.stringify(JSON.parse(fbConfig), null, 2);
-                    } catch {
-                        customFirebaseConfigInput.value = fbConfig;
-                    }
-                } else {
-                    customFirebaseConfigInput.value = '';
-                }
+            if (!pbFromEnv && customPbUrlInput) {
+                customPbUrlInput.value = localStorage.getItem('monochrome-pocketbase-url') || '';
             }
-
             customDbModal.classList.add('active');
         });
 
@@ -2712,44 +2693,32 @@ export function initializeSettings(scrobbler, player, api, ui) {
             customDbModal.classList.remove('active');
         };
 
-        customDbCancelBtn.addEventListener('click', closeCustomDbModal);
-        customDbModal.querySelector('.modal-overlay').addEventListener('click', closeCustomDbModal);
+        customDbCancelBtn?.addEventListener('click', closeCustomDbModal);
+        customDbModal.querySelector('.modal-overlay')?.addEventListener('click', closeCustomDbModal);
 
-        customDbSaveBtn.addEventListener('click', () => {
-            const pbUrl = customPbUrlInput.value.trim();
-            const fbConfigStr = customFirebaseConfigInput.value.trim();
-
-            if (pbUrl) {
-                localStorage.setItem('monochrome-pocketbase-url', pbUrl);
-            } else {
-                localStorage.removeItem('monochrome-pocketbase-url');
-            }
-
-            if (fbConfigStr) {
-                try {
-                    const fbConfig = JSON.parse(fbConfigStr);
-                    saveFirebaseConfig(fbConfig);
-                } catch {
-                    alert('Invalid JSON for Firebase Config');
-                    return;
+        customDbSaveBtn?.addEventListener('click', () => {
+            if (!pbFromEnv && customPbUrlInput) {
+                const pbUrl = customPbUrlInput.value.trim();
+                if (pbUrl) {
+                    localStorage.setItem('monochrome-pocketbase-url', pbUrl);
+                } else {
+                    localStorage.removeItem('monochrome-pocketbase-url');
                 }
-            } else {
-                clearFirebaseConfig();
             }
 
             alert('Settings saved. Reloading...');
             window.location.reload();
         });
 
-        customDbResetBtn.addEventListener('click', () => {
+        customDbResetBtn?.addEventListener('click', () => {
             if (confirm('Reset custom database settings to default?')) {
                 localStorage.removeItem('monochrome-pocketbase-url');
-                clearFirebaseConfig();
                 alert('Settings reset. Reloading...');
                 window.location.reload();
             }
         });
     }
+
 
     // PWA Auto-Update Toggle
     const pwaAutoUpdateToggle = document.getElementById('pwa-auto-update-toggle');

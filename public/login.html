@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Monochrome — Login</title>
+        <title>Monoflow — Login</title>
         <style>
             *,
             *::before,
@@ -78,6 +78,7 @@
                 background: #1e1e1e;
                 border-color: #3a3a3a;
             }
+
             .btn:disabled {
                 opacity: 0.5;
                 cursor: not-allowed;
@@ -95,23 +96,29 @@
                 border-color: #e0e0e0;
             }
 
-            .divider {
+            .tab-row {
                 display: flex;
-                align-items: center;
-                gap: 1rem;
-                margin: 1.5rem 0;
-                color: #555;
-                font-size: 0.8rem;
-                text-transform: uppercase;
-                letter-spacing: 0.05em;
+                gap: 0.5rem;
+                margin-bottom: 1.5rem;
             }
 
-            .divider::before,
-            .divider::after {
-                content: '';
+            .tab-btn {
                 flex: 1;
-                height: 1px;
-                background: #2a2a2a;
+                padding: 0.5rem;
+                border: 1px solid #2a2a2a;
+                border-radius: 6px;
+                background: #0a0a0a;
+                color: #777;
+                font-size: 0.875rem;
+                font-family: inherit;
+                cursor: pointer;
+                transition: all 0.15s;
+            }
+
+            .tab-btn.active {
+                background: #1e1e1e;
+                border-color: #555;
+                color: #e0e0e0;
             }
 
             .form-group {
@@ -146,6 +153,17 @@
                 display: none;
             }
 
+            .success-msg {
+                background: #001a00;
+                border: 1px solid #113a11;
+                color: #6bff6b;
+                padding: 0.75rem 1rem;
+                border-radius: 8px;
+                font-size: 0.85rem;
+                margin-bottom: 1rem;
+                display: none;
+            }
+
             .spinner {
                 width: 18px;
                 height: 18px;
@@ -157,14 +175,20 @@
             }
 
             @keyframes spin {
-                to {
-                    transform: rotate(360deg);
-                }
+                to { transform: rotate(360deg); }
             }
 
-            .google-icon {
-                width: 18px;
-                height: 18px;
+            .forgot-link {
+                text-align: center;
+                margin-top: 0.75rem;
+                font-size: 0.825rem;
+                color: #555;
+                cursor: pointer;
+                text-decoration: underline;
+            }
+
+            .forgot-link:hover {
+                color: #888;
             }
         </style>
     </head>
@@ -178,148 +202,160 @@
                         />
                     </g>
                 </svg>
-                <span>Monochrome</span>
+                <span>Monoflow</span>
             </div>
 
             <div id="error" class="error-msg"></div>
+            <div id="success" class="success-msg"></div>
 
-            <button id="google-btn" class="btn" onclick="googleSignIn()" style="display: none">
-                <svg class="google-icon" viewBox="0 0 24 24">
-                    <path
-                        fill="#4285F4"
-                        d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"
-                    />
-                    <path
-                        fill="#34A853"
-                        d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
-                    />
-                    <path
-                        fill="#FBBC05"
-                        d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"
-                    />
-                    <path
-                        fill="#EA4335"
-                        d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
-                    />
-                </svg>
-                Sign in with Google
-            </button>
+            <!-- Tab switcher: Sign In / Sign Up / Reset -->
+            <div class="tab-row">
+                <button class="tab-btn active" id="tab-signin" onclick="switchTab('signin')">Sign In</button>
+                <button class="tab-btn" id="tab-signup" onclick="switchTab('signup')">Sign Up</button>
+                <button class="tab-btn" id="tab-reset" onclick="switchTab('reset')">Reset Password</button>
+            </div>
 
-            <div id="divider" class="divider" style="display: none">or</div>
-
-            <form id="email-form" onsubmit="emailAuth(event)" style="display: none">
+            <!-- Sign In form -->
+            <form id="form-signin" onsubmit="handleSignIn(event)">
                 <div class="form-group">
-                    <input type="email" id="email" placeholder="Email" required autocomplete="email" />
+                    <input type="email" id="signin-email" placeholder="Email" required autocomplete="email" />
                 </div>
                 <div class="form-group">
                     <input
                         type="password"
-                        id="password"
+                        id="signin-password"
                         placeholder="Password"
                         required
                         autocomplete="current-password"
                     />
                 </div>
-                <button type="submit" id="email-btn" class="btn btn-primary">
-                    <span id="email-btn-text">Sign In</span>
-                    <span id="email-btn-spinner" class="spinner"></span>
+                <button type="submit" id="signin-btn" class="btn btn-primary">
+                    <span id="signin-btn-text">Sign In</span>
+                    <span id="signin-btn-spinner" class="spinner"></span>
+                </button>
+            </form>
+
+            <!-- Sign Up form -->
+            <form id="form-signup" onsubmit="handleSignUp(event)" style="display: none">
+                <div class="form-group">
+                    <input type="email" id="signup-email" placeholder="Email" required autocomplete="email" />
+                </div>
+                <div class="form-group">
+                    <input
+                        type="password"
+                        id="signup-password"
+                        placeholder="Password (min. 8 characters)"
+                        required
+                        minlength="8"
+                        autocomplete="new-password"
+                    />
+                </div>
+                <div class="form-group">
+                    <input
+                        type="password"
+                        id="signup-password-confirm"
+                        placeholder="Confirm Password"
+                        required
+                        autocomplete="new-password"
+                    />
+                </div>
+                <button type="submit" id="signup-btn" class="btn btn-primary">
+                    <span id="signup-btn-text">Create Account</span>
+                    <span id="signup-btn-spinner" class="spinner"></span>
+                </button>
+            </form>
+
+            <!-- Reset Password form -->
+            <form id="form-reset" onsubmit="handleReset(event)" style="display: none">
+                <div class="form-group">
+                    <input
+                        type="email"
+                        id="reset-email"
+                        placeholder="Email"
+                        required
+                        autocomplete="email"
+                    />
+                </div>
+                <button type="submit" id="reset-btn" class="btn btn-primary">
+                    <span id="reset-btn-text">Send Reset Email</span>
+                    <span id="reset-btn-spinner" class="spinner"></span>
                 </button>
             </form>
         </div>
 
         <script type="module">
-            import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
-            import {
-                getAuth,
-                GoogleAuthProvider,
-                signInWithPopup,
-                signInWithEmailAndPassword,
-            } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+            import PocketBase from 'pocketbase';
 
-            const STORAGE_KEY = 'monochrome-firebase-config';
-            const DEFAULT_CONFIG = {
-                apiKey: 'AIzaSyDPU-unAjuLtQJt4IkGS5faG50UCF7lYyA',
-                authDomain: 'monochrome-database.firebaseapp.com',
-                projectId: 'monochrome-database',
-                storageBucket: 'monochrome-database.firebasestorage.app',
-                messagingSenderId: '895657412760',
-                appId: '1:895657412760:web:e81c5044c7f4e9b799e8ed',
-            };
+            // Resolve PocketBase URL: server-injected env > localStorage > default
+            const DEFAULT_PB_URL = 'https://monodb.samidy.com';
+            const PB_URL =
+                window.__POCKETBASE_URL__ ||
+                localStorage.getItem('monochrome-pocketbase-url') ||
+                DEFAULT_PB_URL;
 
-            // Check for setup_firebase hash import
-            const hash = window.location.hash;
-            if (hash.startsWith('#setup_firebase=')) {
-                try {
-                    const encoded = hash.split('#setup_firebase=')[1];
-                    const config = JSON.parse(atob(encoded));
-                    if (config.apiKey && config.authDomain) {
-                        localStorage.setItem(STORAGE_KEY, JSON.stringify(config));
-                        window.history.replaceState(null, null, '/login');
-                    }
-                } catch (e) {
-                    console.warn('Failed to import Firebase config from hash:', e);
-                }
-            }
+            const pb = new PocketBase(PB_URL);
 
-            let storedConfig = null;
-            try {
-                const raw = localStorage.getItem(STORAGE_KEY);
-                if (raw) storedConfig = JSON.parse(raw);
-            } catch (_) {}
-
-            // Priority: server-injected env > localStorage > hash-imported > default
-            const firebaseConfig = window.__FIREBASE_CONFIG__ || storedConfig || DEFAULT_CONFIG;
-            // Sync to localStorage so the app's config.js picks up the same project
-            if (window.__FIREBASE_CONFIG__ && !storedConfig) {
-                localStorage.setItem(STORAGE_KEY, JSON.stringify(firebaseConfig));
-            }
-            const fbApp = initializeApp(firebaseConfig);
-            const auth = getAuth(fbApp);
-            const provider = new GoogleAuthProvider();
+            // --- UI helpers ---
 
             function showError(msg) {
                 const el = document.getElementById('error');
                 el.textContent = msg;
                 el.style.display = 'block';
+                document.getElementById('success').style.display = 'none';
             }
 
-            function hideError() {
+            function showSuccess(msg) {
+                const el = document.getElementById('success');
+                el.textContent = msg;
+                el.style.display = 'block';
                 document.getElementById('error').style.display = 'none';
             }
 
-            const googleBtn = document.getElementById('google-btn');
-            const emailForm = document.getElementById('email-form');
-            const divider = document.getElementById('divider');
-            const providerState = {
-                google: true,
-                password: true,
-            };
-            const providerConfig = window.__AUTH_PROVIDERS__ || {};
-            if (typeof providerConfig.google === 'boolean') providerState.google = providerConfig.google;
-            if (typeof providerConfig.password === 'boolean') providerState.password = providerConfig.password;
+            function hideMessages() {
+                document.getElementById('error').style.display = 'none';
+                document.getElementById('success').style.display = 'none';
+            }
 
-            const NO_PROVIDER_MESSAGE = 'No sign-in providers are enabled for this Firebase project.';
+            /**
+             * Toggle loading state on a form's submit button.
+             * @param {string} prefix - 'signin' | 'signup' | 'reset'
+             * @param {boolean} loading
+             */
+            function setLoading(prefix, loading) {
+                const btn = document.getElementById(`${prefix}-btn`);
+                const text = document.getElementById(`${prefix}-btn-text`);
+                const spinner = document.getElementById(`${prefix}-btn-spinner`);
+                if (btn) btn.disabled = loading;
+                if (text) text.style.display = loading ? 'none' : 'inline';
+                if (spinner) spinner.style.display = loading ? 'inline-block' : 'none';
+            }
 
-            function renderProviders() {
-                if (googleBtn) googleBtn.style.display = providerState.google ? '' : 'none';
-                if (emailForm) emailForm.style.display = providerState.password ? '' : 'none';
-                if (divider) divider.style.display = providerState.google && providerState.password ? '' : 'none';
-                if (!providerState.google && !providerState.password) {
-                    showError(NO_PROVIDER_MESSAGE);
+            /**
+             * Extract a readable message from a PocketBase error.
+             * @param {unknown} error
+             * @returns {string}
+             */
+            function formatPbError(error) {
+                if (error && typeof error === 'object' && 'response' in error) {
+                    const resp = error.response;
+                    if (resp && resp.message) return resp.message;
+                    if (resp && resp.data) {
+                        // Collect field-level validation errors
+                        const msgs = Object.entries(resp.data)
+                            .map(([field, info]) => `${field}: ${info?.message || JSON.stringify(info)}`)
+                            .join('; ');
+                        if (msgs) return msgs;
+                    }
                 }
+                if (error instanceof Error) return error.message;
+                return String(error);
             }
 
-            renderProviders();
-
-            function setLoading(loading) {
-                document.getElementById('google-btn').disabled = loading;
-                document.getElementById('email-btn').disabled = loading;
-                document.getElementById('email-btn-text').style.display = loading ? 'none' : 'inline';
-                document.getElementById('email-btn-spinner').style.display = loading ? 'inline-block' : 'none';
-            }
-
-            async function sendTokenToServer(user) {
-                const token = await user.getIdToken();
+            /**
+             * Send PocketBase token to the auth-gate server to create a session cookie.
+             */
+            async function sendTokenToServer() {
+                const token = pb.authStore.token;
                 const res = await fetch('/api/auth/login', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -332,34 +368,86 @@
                 window.location.href = '/';
             }
 
-            window.googleSignIn = async function () {
-                hideError();
-                setLoading(true);
+            /**
+             * After a successful PocketBase auth, either hand off to the server
+             * (auth gate mode) or redirect directly to the app.
+             */
+            async function onAuthSuccess() {
+                if (window.__AUTH_GATE__) {
+                    await sendTokenToServer();
+                } else {
+                    window.location.href = '/';
+                }
+            }
+
+            // --- Tab switching ---
+
+            window.switchTab = function (tab) {
+                hideMessages();
+                ['signin', 'signup', 'reset'].forEach((t) => {
+                    document.getElementById(`form-${t}`).style.display = t === tab ? '' : 'none';
+                    document.getElementById(`tab-${t}`).classList.toggle('active', t === tab);
+                });
+            };
+
+            // --- Form handlers ---
+
+            window.handleSignIn = async function (e) {
+                e.preventDefault();
+                hideMessages();
+                setLoading('signin', true);
+
+                const email = document.getElementById('signin-email').value.trim();
+                const password = document.getElementById('signin-password').value;
+
                 try {
-                    const result = await signInWithPopup(auth, provider);
-                    await sendTokenToServer(result.user);
+                    await pb.collection('users').authWithPassword(email, password);
+                    await onAuthSuccess();
                 } catch (err) {
-                    if (err.code !== 'auth/popup-closed-by-user') {
-                        showError(err.message);
-                    }
-                    setLoading(false);
+                    showError(formatPbError(err));
+                    setLoading('signin', false);
                 }
             };
 
-            window.emailAuth = async function (e) {
+            window.handleSignUp = async function (e) {
                 e.preventDefault();
-                hideError();
-                setLoading(true);
+                hideMessages();
 
-                const email = document.getElementById('email').value;
-                const password = document.getElementById('password').value;
+                const email = document.getElementById('signup-email').value.trim();
+                const password = document.getElementById('signup-password').value;
+                const confirm = document.getElementById('signup-password-confirm').value;
+
+                if (password !== confirm) {
+                    showError('Passwords do not match.');
+                    return;
+                }
+
+                setLoading('signup', true);
 
                 try {
-                    const result = await signInWithEmailAndPassword(auth, email, password);
-                    await sendTokenToServer(result.user);
+                    await pb.collection('users').create({ email, password, passwordConfirm: confirm });
+                    await pb.collection('users').authWithPassword(email, password);
+                    await onAuthSuccess();
                 } catch (err) {
-                    showError(err.message);
-                    setLoading(false);
+                    showError(formatPbError(err));
+                    setLoading('signup', false);
+                }
+            };
+
+            window.handleReset = async function (e) {
+                e.preventDefault();
+                hideMessages();
+                setLoading('reset', true);
+
+                const email = document.getElementById('reset-email').value.trim();
+
+                try {
+                    await pb.collection('users').requestPasswordReset(email);
+                    showSuccess(`Password reset email sent to ${email}. Check your inbox.`);
+                } catch (err) {
+                    showError(formatPbError(err));
+                } finally {
+                    setLoading('reset', false);
                 }
             };
         </script>

@@ -1,155 +1,113 @@
 // js/accounts/auth.js
-import { auth, provider } from './config.js';
-import {
-    signInWithPopup,
-    signInWithRedirect,
-    getRedirectResult,
-    signOut as firebaseSignOut,
-    onAuthStateChanged,
-    signInWithEmailAndPassword,
-    createUserWithEmailAndPassword,
-    sendPasswordResetEmail,
-} from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+// Authentication manager using PocketBase as the sole identity provider.
+// Firebase has been fully removed. All auth (email/password) is handled by PocketBase SDK.
+
+import { pb } from './pocketbase-client.js';
 
 export class AuthManager {
     constructor() {
-        this.user = null;
-        this.unsubscribe = null;
+        /** @type {import('pocketbase').RecordModel | null} */
+        this.user = pb.authStore.isValid ? pb.authStore.model : null;
         this.authListeners = [];
-        this.init();
+
+        // Subscribe to PocketBase auth store changes
+        pb.authStore.onChange((token, model) => {
+            this.user = model;
+            this.updateUI(model);
+            this.authListeners.forEach((listener) => listener(model));
+        }, true); // true = trigger immediately with current state
     }
 
-    init() {
-        if (!auth) return;
-
-        this.unsubscribe = onAuthStateChanged(auth, (user) => {
-            this.user = user;
-            this.updateUI(user);
-
-            this.authListeners.forEach((listener) => listener(user));
-        });
-
-        // Handle redirect result (for Linux/Mobile where popup might be blocked)
-        getRedirectResult(auth).catch((error) => {
-            console.error('Redirect Login failed:', error);
-            alert(`Login failed: ${error.message}`);
-        });
-    }
-
+    /**
+     * Register a callback to be fired on auth state changes.
+     * @param {function(import('pocketbase').RecordModel | null): void} callback
+     */
     onAuthStateChanged(callback) {
         this.authListeners.push(callback);
-        // If we already have a user state, trigger immediately
-        if (this.user !== null) {
+        // Trigger immediately if state is already known
+        if (this.user !== undefined) {
             callback(this.user);
         }
     }
 
-    async signInWithGoogle() {
-        if (!auth) {
-            alert('Firebase is not configured. Please check console.');
-            return;
-        }
-
-        try {
-            const result = await signInWithPopup(auth, provider);
-
-            if (result.user) {
-                console.log('Login successful:', result.user.email);
-                this.user = result.user;
-                this.updateUI(result.user);
-                this.authListeners.forEach((listener) => listener(result.user));
-                return result.user;
-            }
-        } catch (error) {
-            console.error('Login failed:', error);
-
-            // On Linux, if popup is blocked or fails, we might be forced to redirect,
-            // but we've seen it "bug the app", so we alert the user first.
-            if (error.code === 'auth/popup-blocked' || error.code === 'auth/cancelled-popup-request') {
-                if (
-                    confirm(
-                        'The login popup was blocked or failed to communicate. Would you like to try a redirect instead? Note: This may reload the application.'
-                    )
-                ) {
-                    try {
-                        await signInWithRedirect(auth, provider);
-                        return;
-                    } catch (redirectError) {
-                        console.error('Redirect fallback failed:', redirectError);
-                        alert(`Login failed: ${redirectError.message}`);
-                    }
-                }
-            } else {
-                alert(`Login failed: ${error.message}`);
-            }
-            throw error;
-        }
-    }
-
+    /**
+     * Sign in with email and password via PocketBase.
+     * @param {string} email
+     * @param {string} password
+     * @returns {Promise<import('pocketbase').RecordModel>}
+     */
     async signInWithEmail(email, password) {
-        if (!auth) {
-            alert('Firebase is not configured.');
-            return;
-        }
         try {
-            const result = await signInWithEmailAndPassword(auth, email, password);
-            return result.user;
+            const authData = await pb.collection('users').authWithPassword(email, password);
+            return authData.record;
         } catch (error) {
-            console.error('Email Login failed:', error);
-            alert(`Login failed: ${error.message}`);
+            console.error('[Auth] Email sign-in failed:', error);
+            const message = this._formatError(error);
+            alert(`Sign-in failed: ${message}`);
             throw error;
         }
     }
 
+    /**
+     * Create a new account and sign in.
+     * @param {string} email
+     * @param {string} password
+     * @returns {Promise<import('pocketbase').RecordModel>}
+     */
     async signUpWithEmail(email, password) {
-        if (!auth) {
-            alert('Firebase is not configured.');
-            return;
-        }
         try {
-            const result = await createUserWithEmailAndPassword(auth, email, password);
-            return result.user;
+            await pb.collection('users').create({
+                email,
+                password,
+                passwordConfirm: password,
+            });
+            // Auto sign-in after successful registration
+            const authData = await pb.collection('users').authWithPassword(email, password);
+            return authData.record;
         } catch (error) {
-            console.error('Sign Up failed:', error);
-            alert(`Sign Up failed: ${error.message}`);
+            console.error('[Auth] Sign-up failed:', error);
+            const message = this._formatError(error);
+            alert(`Sign-up failed: ${message}`);
             throw error;
         }
     }
 
+    /**
+     * Request a password reset email via PocketBase.
+     * @param {string} email
+     */
     async sendPasswordReset(email) {
-        if (!auth) {
-            alert('Firebase is not configured.');
-            return;
-        }
         try {
-            await sendPasswordResetEmail(auth, email);
-            alert(`Password reset email sent to ${email}`);
+            await pb.collection('users').requestPasswordReset(email);
+            alert(`Password reset email sent to ${email}. Check your inbox.`);
         } catch (error) {
-            console.error('Password reset failed:', error);
-            alert(`Failed to send reset email: ${error.message}`);
+            console.error('[Auth] Password reset failed:', error);
+            const message = this._formatError(error);
+            alert(`Failed to send reset email: ${message}`);
             throw error;
         }
     }
 
+    /**
+     * Sign the current user out.
+     */
     async signOut() {
-        if (!auth) return;
+        pb.authStore.clear();
 
-        try {
-            await firebaseSignOut(auth);
-            if (window.__AUTH_GATE__) {
-                try {
-                    await fetch('/api/auth/logout', { method: 'POST' });
-                } catch {
-                    // Server endpoint may not exist in dev mode
-                }
-                window.location.href = '/login';
+        if (window.__AUTH_GATE__) {
+            try {
+                await fetch('/api/auth/logout', { method: 'POST' });
+            } catch {
+                // Server endpoint may not exist in dev mode
             }
-        } catch (error) {
-            console.error('Logout failed:', error);
-            throw error;
+            window.location.href = '/login';
         }
     }
 
+    /**
+     * Update the account page UI based on auth state.
+     * @param {import('pocketbase').RecordModel | null} user
+     */
     updateUI(user) {
         const connectBtn = document.getElementById('firebase-connect-btn');
         const clearDataBtn = document.getElementById('firebase-clear-cloud-btn');
@@ -157,9 +115,9 @@ export class AuthManager {
         const emailContainer = document.getElementById('email-auth-container');
         const emailToggleBtn = document.getElementById('toggle-email-auth-btn');
 
-        if (!connectBtn) return; // UI might not be rendered yet
+        if (!connectBtn) return; // UI not rendered yet
 
-        // Auth gate active: strip down to status + sign out only
+        // Auth gate active: minimal UI — status + sign out only
         if (window.__AUTH_GATE__) {
             connectBtn.textContent = 'Sign Out';
             connectBtn.classList.add('danger');
@@ -169,12 +127,10 @@ export class AuthManager {
             if (emailToggleBtn) emailToggleBtn.style.display = 'none';
             if (statusText) statusText.textContent = user ? `Signed in as ${user.email}` : 'Signed in';
 
-            // Account page: clean up unnecessary text
             const accountPage = document.getElementById('page-account');
             if (accountPage) {
                 const title = accountPage.querySelector('.section-title');
                 if (title) title.textContent = 'Account';
-                // Hide description + privacy paragraphs, keep only status
                 accountPage.querySelectorAll('.account-content > p, .account-content > div').forEach((el) => {
                     if (el.id !== 'firebase-status' && el.id !== 'auth-buttons-container') {
                         el.style.display = 'none';
@@ -182,12 +138,10 @@ export class AuthManager {
                 });
             }
 
-            // Settings page: hide custom DB/Auth config when fully server-configured
             const customDbBtn = document.getElementById('custom-db-btn');
             if (customDbBtn) {
-                const fbFromEnv = !!window.__FIREBASE_CONFIG__;
                 const pbFromEnv = !!window.__POCKETBASE_URL__;
-                if (fbFromEnv && pbFromEnv) {
+                if (pbFromEnv) {
                     const settingItem = customDbBtn.closest('.setting-item');
                     if (settingItem) settingItem.style.display = 'none';
                 }
@@ -207,15 +161,32 @@ export class AuthManager {
 
             if (statusText) statusText.textContent = `Signed in as ${user.email}`;
         } else {
-            connectBtn.textContent = 'Connect with Google';
+            connectBtn.textContent = 'Sign In / Sign Up';
             connectBtn.classList.remove('danger');
-            connectBtn.onclick = () => this.signInWithGoogle();
+            connectBtn.onclick = () => {
+                if (emailContainer) emailContainer.style.display = 'flex';
+                if (emailToggleBtn) emailToggleBtn.style.display = 'none';
+            };
 
             if (clearDataBtn) clearDataBtn.style.display = 'none';
-            if (emailToggleBtn) emailToggleBtn.style.display = 'inline-block';
+            if (emailToggleBtn) emailToggleBtn.style.display = 'none';
 
             if (statusText) statusText.textContent = 'Sync your library across devices';
         }
+    }
+
+    /**
+     * Extract a readable error message from a PocketBase ClientResponseError.
+     * @param {unknown} error
+     * @returns {string}
+     */
+    _formatError(error) {
+        if (error && typeof error === 'object' && 'response' in error) {
+            const resp = error.response;
+            if (resp && resp.message) return resp.message;
+        }
+        if (error instanceof Error) return error.message;
+        return String(error);
     }
 }
 
