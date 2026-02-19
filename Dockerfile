@@ -21,5 +21,10 @@ RUN npx vite build
 # Expose Vite preview port
 EXPOSE 4173
 
+# Entrypoint: injects PUBLIC_POCKETBASE_URL into dist/index.html at container startup
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+ENTRYPOINT ["/entrypoint.sh"]
+
 # Run the built project
 CMD ["npm", "run", "preview", "--", "--host", "0.0.0.0"]
