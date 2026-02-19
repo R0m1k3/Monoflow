@@ -27,13 +27,12 @@ async function init() {
         await ensureCollection({
             name: 'DB_users',
             type: 'base',
-            schema: [
+            fields: [
                 {
                     name: 'pb_user_id',
                     type: 'text',
                     required: true,
                     unique: true,
-                    options: { min: null, max: null, pattern: '' },
                 },
                 { name: 'library', type: 'json', required: false },
                 { name: 'history', type: 'json', required: false },
@@ -41,10 +40,6 @@ async function init() {
                 { name: 'user_folders', type: 'json', required: false },
             ],
             // Règles de sécurité :
-            // Seul un utilisateur authentifié peut créer/lire/modifier SES propres données
-            // Mais ici c'est une table de mapping, donc on permet l'accès auth général pour simplifier
-            // Idéalement : @request.auth.id != "" && pb_user_id = @request.auth.id
-            // Pour l'instant on met authentifié global comme demandé par le code client actuel
             listRule: '@request.auth.id != ""',
             viewRule: '@request.auth.id != ""',
             createRule: '@request.auth.id != ""',
@@ -57,25 +52,22 @@ async function init() {
         await ensureCollection({
             name: 'public_playlists',
             type: 'base',
-            schema: [
+            fields: [
                 {
                     name: 'uuid',
                     type: 'text',
                     required: true,
                     unique: true,
-                    options: { min: null, max: null, pattern: '' },
                 },
-                { name: 'pb_user_id', type: 'text', required: true, options: { min: null, max: null, pattern: '' } },
-                { name: 'title', type: 'text', required: false, options: { min: null, max: null, pattern: '' } },
-                { name: 'image', type: 'text', required: false, options: { min: null, max: null, pattern: '' } },
-                { name: 'description', type: 'text', required: false, options: { min: null, max: null, pattern: '' } },
+                { name: 'pb_user_id', type: 'text', required: true },
+                { name: 'title', type: 'text', required: false },
+                { name: 'image', type: 'text', required: false },
+                { name: 'description', type: 'text', required: false },
                 { name: 'tracks', type: 'json', required: false }, // Liste des pistes
                 { name: 'data', type: 'json', required: false }, // Métadonnées extra
                 { name: 'isPublic', type: 'bool', required: false },
             ],
             // Règles de sécurité :
-            // Lecture publique (règles vides = public)
-            // Écriture : Authentifié seulement
             listRule: '',
             viewRule: '',
             createRule: '@request.auth.id != ""',
