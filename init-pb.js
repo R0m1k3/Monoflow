@@ -97,23 +97,24 @@ async function init() {
 async function ensureCollection(def) {
     try {
         console.log(`[Init] Vérification de la collection '${def.name}'...`);
-        // On essaie de récupérer la collection par son nom (via getOne n'est pas possible par nom, on utilise getList sur 'collections' système est complexe via SDK)
-        // Le plus simple via SDK est d'essayer de la récupérer via collections.import ou getOne si on connait l'ID.
-        // Mais on ne connait pas l'ID.
-        // On va utiliser pb.collections.getContent(name) ou getFirstListItem appliqué à la collection système '_collections' ? non.
-        // Le SDK expose pb.collections.getOne(id/name)
 
-        await pb.collections.getOne(def.name);
-        console.log(`[Init] ✅ Collection '${def.name}' existe déjà.`);
+        // Tentative de récupération de la collection existante
+        const existing = await pb.collections.getOne(def.name);
+        console.log(`[Init] ✅ Collection '${def.name}' existe déjà (ID: ${existing.id}).`);
 
-        // Optionnel: Mettre à jour le schéma si nécessaire ?
-        // Pour l'instant on touche pas si ça existe.
+        // MISE À JOUR DU SCHÉMA
+        // On force la mise à jour pour s'assurer que tous les champs requis (pb_user_id) sont présents.
+        console.log(`[Init] 🔄 Mise à jour du schéma de '${def.name}'...`);
+        await pb.collections.update(existing.id, def);
+        console.log(`[Init] ✅ Schéma mis à jour avec succès.`);
+
     } catch (err) {
         if (err.status === 404) {
             console.log(`[Init] ⚠️ Collection '${def.name}' introuvable. Création...`);
             await pb.collections.create(def);
             console.log(`[Init] ✅ Collection '${def.name}' créée.`);
         } else {
+            console.error(`[Init] Erreur sur la collection '${def.name}':`, err);
             throw err;
         }
     }

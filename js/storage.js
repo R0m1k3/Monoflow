@@ -1599,25 +1599,14 @@ export const sidebarSectionSettings = {
     SHOW_HOME_KEY: 'sidebar-show-home',
     SHOW_LIBRARY_KEY: 'sidebar-show-library',
     SHOW_RECENT_KEY: 'sidebar-show-recent',
-    SHOW_UNRELEASED_KEY: 'sidebar-show-unreleased',
-    SHOW_DONATE_KEY: 'sidebar-show-donate',
-    SHOW_SETTINGS_KEY: 'sidebar-show-settings',
-    SHOW_ACCOUNT_KEY: 'sidebar-show-account',
-    SHOW_ABOUT_KEY: 'sidebar-show-about',
-    SHOW_DOWNLOAD_KEY: 'sidebar-show-download',
-    SHOW_DISCORD_KEY: 'sidebar-show-discord',
+
     ORDER_KEY: 'sidebar-menu-order',
     DEFAULT_ORDER: [
         'sidebar-nav-home',
         'sidebar-nav-library',
         'sidebar-nav-recent',
-        'sidebar-nav-unreleased',
-        'sidebar-nav-donate',
         'sidebar-nav-settings',
         'sidebar-nav-account',
-        'sidebar-nav-about-bottom',
-        'sidebar-nav-download-bottom',
-        'sidebar-nav-discordbtn',
     ],
 
     getBottomNavIds() {
@@ -1665,31 +1654,7 @@ export const sidebarSectionSettings = {
         localStorage.setItem(this.SHOW_RECENT_KEY, enabled ? 'true' : 'false');
     },
 
-    shouldShowUnreleased() {
-        try {
-            const val = localStorage.getItem(this.SHOW_UNRELEASED_KEY);
-            return val === null ? true : val === 'true';
-        } catch {
-            return true;
-        }
-    },
 
-    setShowUnreleased(enabled) {
-        localStorage.setItem(this.SHOW_UNRELEASED_KEY, enabled ? 'true' : 'false');
-    },
-
-    shouldShowDonate() {
-        try {
-            const val = localStorage.getItem(this.SHOW_DONATE_KEY);
-            return val === null ? true : val === 'true';
-        } catch {
-            return true;
-        }
-    },
-
-    setShowDonate(enabled) {
-        localStorage.setItem(this.SHOW_DONATE_KEY, enabled ? 'true' : 'false');
-    },
 
     shouldShowSettings() {
         return true;
@@ -1716,44 +1681,6 @@ export const sidebarSectionSettings = {
         localStorage.setItem(this.SHOW_ACCOUNT_KEY, enabled ? 'true' : 'false');
     },
 
-    shouldShowAbout() {
-        try {
-            const val = localStorage.getItem(this.SHOW_ABOUT_KEY);
-            return val === null ? true : val === 'true';
-        } catch {
-            return true;
-        }
-    },
-
-    setShowAbout(enabled) {
-        localStorage.setItem(this.SHOW_ABOUT_KEY, enabled ? 'true' : 'false');
-    },
-
-    shouldShowDownload() {
-        try {
-            const val = localStorage.getItem(this.SHOW_DOWNLOAD_KEY);
-            return val === null ? true : val === 'true';
-        } catch {
-            return true;
-        }
-    },
-
-    setShowDownload(enabled) {
-        localStorage.setItem(this.SHOW_DOWNLOAD_KEY, enabled ? 'true' : 'false');
-    },
-
-    shouldShowDiscord() {
-        try {
-            const val = localStorage.getItem(this.SHOW_DISCORD_KEY);
-            return val === null ? true : val === 'true';
-        } catch {
-            return true;
-        }
-    },
-
-    setShowDiscord(enabled) {
-        localStorage.setItem(this.SHOW_DISCORD_KEY, enabled ? 'true' : 'false');
-    },
 
     normalizeOrder(order) {
         const baseOrder = this.DEFAULT_ORDER;
@@ -1809,13 +1736,8 @@ export const sidebarSectionSettings = {
             { id: 'sidebar-nav-home', check: this.shouldShowHome() },
             { id: 'sidebar-nav-library', check: this.shouldShowLibrary() },
             { id: 'sidebar-nav-recent', check: this.shouldShowRecent() },
-            { id: 'sidebar-nav-unreleased', check: this.shouldShowUnreleased() },
-            { id: 'sidebar-nav-donate', check: this.shouldShowDonate() },
             { id: 'sidebar-nav-settings', check: this.shouldShowSettings() },
             { id: 'sidebar-nav-account', check: this.shouldShowAccount() },
-            { id: 'sidebar-nav-about-bottom', check: this.shouldShowAbout() },
-            { id: 'sidebar-nav-download-bottom', check: this.shouldShowDownload() },
-            { id: 'sidebar-nav-discordbtn', check: this.shouldShowDiscord() },
         ];
 
         items.forEach(({ id, check }) => {
