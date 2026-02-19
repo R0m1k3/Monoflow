@@ -13,7 +13,6 @@ jobs:
     runs-on: ${{ matrix.os }}
     
     strategy:
-      fail-fast: false
       matrix:
         include:
           - os: windows-latest
@@ -72,22 +71,7 @@ jobs:
           zip -r ../${{ matrix.archive_name }} .
         shell: bash
 
-      - name: Isolate Zip File
-        run: |
-          mkdir out_delivery
-          mv ${{ matrix.archive_name }} out_delivery/
-        shell: bash
 
-      - name: Upload to R2
-        continue-on-error: true
-        uses: ryand56/r2-upload-action@latest
-        with:
-          r2-account-id: ${{ secrets.R2_ACCOUNT_ID }}
-          r2-access-key-id: ${{ secrets.R2_ACCESS_KEY_ID }}
-          r2-secret-access-key: ${{ secrets.R2_SECRET_ACCESS_KEY }}
-          r2-bucket: ${{ secrets.R2_BUCKET }}
-          source-dir: 'out_delivery'
-          destination-dir: ''
 
       - name: Upload Artifact (GH Internal)
         uses: actions/upload-artifact@v4
