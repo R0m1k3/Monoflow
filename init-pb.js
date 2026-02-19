@@ -7,7 +7,7 @@ import path from 'path';
 // --- Configuration ---
 // Permet de lire depuis process.env ou un fichier .env local (si chargé via dotenv, ici on fait simple)
 const PB_URL = process.env.PUBLIC_POCKETBASE_URL || 'https://pb.vonrodbox.eu';
-const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'michaelchal@gmail.com';
+const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'michaelschal@gmail.com';
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'Lapin2509';
 
 console.log(`[Init] Cible : ${PB_URL}`);
