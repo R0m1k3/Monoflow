@@ -413,7 +413,7 @@ Alice (Product Owner): "Good thinking - helps us connect what we learned to what
 - Testing infrastructure requirements
 - Deployment or environment setup
 
-                                                <output>
+                                                  <output>
 
     Bob (Scrum Master): "Alright, I've reviewed Epic {{next_epic_num}}: '{{next_epic_title}}'"
 
