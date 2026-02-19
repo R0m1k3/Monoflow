@@ -33,6 +33,7 @@ import {
     musicProviderSettings,
     analyticsSettings,
     modalSettings,
+    systemSettings,
 } from './storage.js';
 import { audioContextManager, EQ_PRESETS } from './audio-context.js';
 import { getButterchurnPresets } from './visualizers/butterchurn.js';
@@ -228,7 +229,8 @@ export function initializeSettings(scrobbler, player, api, ui) {
         lastfmConnectBtn.textContent = 'Opening Last.fm...';
 
         try {
-            const { token, url } = await scrobbler.lastfm.getAuthUrl();
+            const appBaseUrl = systemSettings.getAppBaseUrl();
+            const { token, url } = await scrobbler.lastfm.getAuthUrl(appBaseUrl);
 
             if (window.Neutralino) {
                 try {
@@ -585,7 +587,8 @@ export function initializeSettings(scrobbler, player, api, ui) {
             librefmConnectBtn.textContent = 'Opening Libre.fm...';
 
             try {
-                const { token, url } = await scrobbler.librefm.getAuthUrl();
+                const appBaseUrl = systemSettings.getAppBaseUrl();
+                const { token, url } = await scrobbler.librefm.getAuthUrl(appBaseUrl);
 
                 if (window.Neutralino) {
                     await Neutralino.os.open(url);
@@ -3193,6 +3196,18 @@ function initializeBlockedContentManager() {
 
     // Initial render
     renderBlockedLists();
+
+    // ========================================
+    // System Settings - App Base URL
+    // ========================================
+    const appBaseUrlInput = document.getElementById('app-base-url-input');
+    if (appBaseUrlInput) {
+        appBaseUrlInput.value = systemSettings.getAppBaseUrl();
+        appBaseUrlInput.addEventListener('change', (e) => {
+            const url = e.target.value.trim();
+            systemSettings.setAppBaseUrl(url);
+        });
+    }
 }
 
 function escapeHtml(text) {

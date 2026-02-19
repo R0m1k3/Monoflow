@@ -156,14 +156,19 @@ export class LastFMScrobbler {
         }
     }
 
-    async getAuthUrl() {
+    async getAuthUrl(callbackUrl) {
         try {
             const data = await this.makeRequest('auth.getToken');
             const token = data.token;
 
+            let authUrl = `https://www.last.fm/api/auth/?api_key=${this.API_KEY}&token=${token}`;
+            if (callbackUrl) {
+                authUrl += `&cb=${encodeURIComponent(callbackUrl)}`;
+            }
+
             return {
                 token,
-                url: `https://www.last.fm/api/auth/?api_key=${this.API_KEY}&token=${token}`,
+                url: authUrl,
             };
         } catch (error) {
             console.error('Failed to get auth URL:', error);

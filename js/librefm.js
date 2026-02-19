@@ -133,7 +133,7 @@ export class LibreFmScrobbler {
         }
     }
 
-    async getAuthUrl() {
+    async getAuthUrl(callbackUrl) {
         try {
             // First, get a token from Libre.fm
             const data = await this.makeRequest('auth.getToken');
@@ -141,9 +141,14 @@ export class LibreFmScrobbler {
 
             localStorage.setItem('librefm-pending-token', token);
 
+            let authUrl = `https://libre.fm/api/auth/?api_key=${this.API_KEY}&token=${token}`;
+            if (callbackUrl) {
+                authUrl += `&cb=${encodeURIComponent(callbackUrl)}`;
+            }
+
             return {
                 token,
-                url: `https://libre.fm/api/auth/?api_key=${this.API_KEY}&token=${token}`,
+                url: authUrl,
             };
         } catch (error) {
             console.error('Failed to get auth URL:', error);
