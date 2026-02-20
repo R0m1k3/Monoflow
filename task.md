@@ -20,7 +20,21 @@ Ce fichier suit la progression globale des tâches pour le projet monochrome (Mu
 - [x] Corriger les traductions manquantes (Recently played, Visualizer, No playlists...).
 - [x] Retirer la section "Configuration Personnalisée" et le texte sur la confidentialité des données de la page Compte (pour instance locale).
 - [x] Commit et Push des changements.
-- [ ] Fix GitHub Actions `lint.yml` invalid inputs and any remaining HTML linting issues.
+- [x] Fix GitHub Actions `lint.yml` invalid inputs and any remaining HTML linting issues.
+
+## Objectifs Actuels : Nouvel ajout Thèmes Glossy
+
+L'objectif est d'ajouter deux nouveaux thèmes "Glossy" (façon Apple TV avec Glassmorphism).
+
+- Un thème **Glossy Light** (clair, translucide, givré).
+- Un thème **Glossy Dark** (sombre, néon, reflets de verre).
+
+- [x] Analyser le fonctionnement des thèmes actuels (CSS variables, attributs `data-theme`).
+- [x] Créer les définitions de variables CSS pour le thème `glossy-light`.
+- [x] Créer les définitions de variables CSS pour le thème `glossy-dark`.
+- [x] Assurer la bonne intégration du `backdrop-filter: blur(...)` sur les éléments fixes pour ces thèmes précis.
+- [x] Mettre à jour `<select id="theme-select">` dans `index.html` ou `settings.js`.
+- [x] Tester et valider visuellement les deux thèmes.
 
 ## Historique des Objectifs : Activation de l'Agent bmad-master
 
