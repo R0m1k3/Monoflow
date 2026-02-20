@@ -4,7 +4,7 @@
 
 import { pb, DEFAULT_POCKETBASE_URL } from './pocketbase-client.js';
 
-const PB_STORAGE_KEY = 'monochrome-pocketbase-url';
+const PB_STORAGE_KEY = 'musicflow-pocketbase-url';
 
 /**
  * Persist a custom PocketBase URL to localStorage.

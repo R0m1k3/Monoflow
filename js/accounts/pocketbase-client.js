@@ -4,7 +4,7 @@
 
 import PocketBase from 'pocketbase';
 
-const DEFAULT_POCKETBASE_URL = 'https://monodb.samidy.com';
+const DEFAULT_POCKETBASE_URL = 'https://musicflow.tf';
 
 /**
  * Resolve the PocketBase URL from environment injection, localStorage override, or the default.
@@ -14,7 +14,7 @@ const DEFAULT_POCKETBASE_URL = 'https://monodb.samidy.com';
 function resolvePocketBaseUrl() {
     if (window.__POCKETBASE_URL__) return window.__POCKETBASE_URL__;
 
-    const stored = localStorage.getItem('monochrome-pocketbase-url');
+    const stored = localStorage.getItem('musicflow-pocketbase-url');
     if (stored) return stored;
 
     return DEFAULT_POCKETBASE_URL;

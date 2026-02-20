@@ -29,7 +29,6 @@ import {
     musicProviderSettings,
     analyticsSettings,
     modalSettings,
-    systemSettings,
 } from './storage.js';
 import { audioContextManager, EQ_PRESETS } from './audio-context.js';
 import { getButterchurnPresets } from './visualizers/butterchurn.js';
@@ -2672,17 +2671,6 @@ function initializeBlockedContentManager() {
     // Initial render
     renderBlockedLists();
 
-    // ========================================
-    // System Settings - App Base URL
-    // ========================================
-    const appBaseUrlInput = document.getElementById('app-base-url-input');
-    if (appBaseUrlInput) {
-        appBaseUrlInput.value = systemSettings.getAppBaseUrl();
-        appBaseUrlInput.addEventListener('change', (e) => {
-            const url = e.target.value.trim();
-            systemSettings.setAppBaseUrl(url);
-        });
-    }
 }
 
 function escapeHtml(text) {

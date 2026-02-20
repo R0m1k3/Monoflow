@@ -19,7 +19,7 @@ echo "[entrypoint] POCKETBASE_URL         = ${POCKETBASE_URL:-<unset>}"
 echo "[entrypoint] Resolved browser URL   = ${PB_URL}"
 
 # Build the config script to inject before </head>
-CONFIG_SCRIPT="<script>window.__POCKETBASE_URL__=$(printf '%s' "\"${PB_URL}\"");"
+CONFIG_SCRIPT="<script>window.__POCKETBASE_URL__=$(printf '%s' "\"${PB_URL}\"");window.__URL_BASE_PUBLIC__=$(printf '%s' "\"${URL_BASE_PUBLIC:-}\"");"
 
 if [ "${AUTH_ENABLED:-false}" != "false" ]; then
     CONFIG_SCRIPT="${CONFIG_SCRIPT}window.__AUTH_GATE__=true;"

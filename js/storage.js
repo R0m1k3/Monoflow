@@ -1489,21 +1489,6 @@ export const libreFmSettings = {
     },
 };
 
-export const systemSettings = {
-    APP_BASE_URL_KEY: 'app-base-url',
-
-    getAppBaseUrl() {
-        try {
-            return localStorage.getItem(this.APP_BASE_URL_KEY) || '';
-        } catch {
-            return '';
-        }
-    },
-
-    setAppBaseUrl(url) {
-        localStorage.setItem(this.APP_BASE_URL_KEY, url);
-    },
-};
 
 export const homePageSettings = {
     SHOW_RECOMMENDED_SONGS_KEY: 'home-show-recommended-songs',

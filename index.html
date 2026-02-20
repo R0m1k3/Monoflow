@@ -15,20 +15,20 @@
         </script>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Monochrome Music</title>
+        <title>MusicFlow</title>
         <meta name="theme-color" content="#000000" />
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <base href="/" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-        <meta name="apple-mobile-web-app-title" content="Monochrome" />
+        <meta name="apple-mobile-web-app-title" content="MusicFlow" />
         <meta name="description" content="A minimalist music streaming application" />
 
         <!-- Preconnect to critical third-party origins -->
         <link rel="preconnect" href="https://api.fonts.coollabs.io" crossorigin />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://api.monochrome.tf" crossorigin />
+        <link rel="preconnect" href="https://api.musicflow.tf" crossorigin />
         <link rel="preconnect" href="https://ws.audioscrobbler.com" crossorigin />
         <link rel="preconnect" href="https://libre.fm" crossorigin />
         <link rel="preconnect" href="https://api.listenbrainz.org" crossorigin />
@@ -802,7 +802,7 @@
                 <div class="missing-tracks-content">
                     <p>
                         Unfortunately, some songs weren't able to be added. This could be an issue with our import
-                        system - try searching for the song and adding it. It could also be due to Monochrome not having
+                        system - try searching for the song and adding it. It could also be due to MusicFlow not having
                         the song :(
                     </p>
                     <div class="missing-tracks-list">
@@ -906,7 +906,7 @@
                     <br />
                     A Guide To Set This Up Can Be Found
                     <a
-                        href="https://github.com/monochrome-music/monochrome/blob/main/self-hosted-database.md"
+                        href="https://github.com/MusicFlow-music/MusicFlow/blob/main/self-hosted-database.md"
                         style="text-decoration: underline"
                         >Here</a
                     >.
@@ -1038,7 +1038,7 @@
             <aside class="sidebar">
                 <div class="sidebar-content">
                     <div class="sidebar-logo">
-                        <a href="https://monochrome.tf/" class="sidebar-logo-link">
+                        <a id="sidebar-logo-link" href="https://musicflow.tf/" class="sidebar-logo-link">
                             <svg
                                 class="app-logo"
                                 xmlns="http://www.w3.org/2000/svg"
@@ -1052,7 +1052,7 @@
                                     />
                                 </g>
                             </svg>
-                            <span>Monochrome</span>
+                            <span>MusicFlow</span>
                         </a>
                         <button
                             id="sidebar-toggle"
@@ -3615,22 +3615,6 @@
                                         <span class="description">View available keyboard shortcuts</span>
                                     </div>
                                     <button id="show-shortcuts-btn" class="btn-secondary">Show Shortcuts</button>
-                                </div>
-                                <div class="setting-item">
-                                    <div class="info">
-                                        <span class="label">App Base URL</span>
-                                        <span class="description"
-                                            >External URL of this site (e.g. https://monochrome.example.com) for
-                                            scrobbling callbacks</span
-                                        >
-                                    </div>
-                                    <input
-                                        type="url"
-                                        id="app-base-url-input"
-                                        class="template-input"
-                                        placeholder="https://..."
-                                        style="width: 250px"
-                                    />
                                 </div>
                                 <div class="setting-item">
                                     <div class="info">

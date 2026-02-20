@@ -1,449 +1,434 @@
 <!doctype html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Monoflow — Login</title>
-        <style>
-            *,
-            *::before,
-            *::after {
-                box-sizing: border-box;
-                margin: 0;
-                padding: 0;
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MusicFlow — Login</title>
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family:
+                'Inter',
+                -apple-system,
+                BlinkMacSystemFont,
+                'Segoe UI',
+                Roboto,
+                sans-serif;
+            background: #0a0a0a;
+            color: #e0e0e0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .login-container {
+            width: 100%;
+            max-width: 380px;
+            padding: 2rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .logo svg {
+            width: 40px;
+            height: 40px;
+        }
+
+        .logo span {
+            font-size: 1.5rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            color: #fff;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid #2a2a2a;
+            border-radius: 8px;
+            background: #151515;
+            color: #e0e0e0;
+            font-size: 0.925rem;
+            font-family: inherit;
+            cursor: pointer;
+            transition:
+                background 0.15s,
+                border-color 0.15s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn:hover {
+            background: #1e1e1e;
+            border-color: #3a3a3a;
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn-primary {
+            background: #fff;
+            color: #0a0a0a;
+            border-color: #fff;
+            font-weight: 600;
+        }
+
+        .btn-primary:hover {
+            background: #e0e0e0;
+            border-color: #e0e0e0;
+        }
+
+        .tab-row {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 0.5rem;
+            border: 1px solid #2a2a2a;
+            border-radius: 6px;
+            background: #0a0a0a;
+            color: #777;
+            font-size: 0.875rem;
+            font-family: inherit;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+
+        .tab-btn.active {
+            background: #1e1e1e;
+            border-color: #555;
+            color: #e0e0e0;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid #2a2a2a;
+            border-radius: 8px;
+            background: #151515;
+            color: #e0e0e0;
+            font-size: 0.925rem;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.15s;
+        }
+
+        .form-group input:focus {
+            border-color: #555;
+        }
+
+        .error-msg {
+            background: #1a0000;
+            border: 1px solid #3a1111;
+            color: #ff6b6b;
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+            display: none;
+        }
+
+        .success-msg {
+            background: #001a00;
+            border: 1px solid #113a11;
+            color: #6bff6b;
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+            display: none;
+        }
+
+        .spinner {
+            width: 18px;
+            height: 18px;
+            border: 2px solid transparent;
+            border-top-color: currentColor;
+            border-radius: 50%;
+            animation: spin 0.6s linear infinite;
+            display: none;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
             }
+        }
 
-            body {
-                font-family:
-                    'Inter',
-                    -apple-system,
-                    BlinkMacSystemFont,
-                    'Segoe UI',
-                    Roboto,
-                    sans-serif;
-                background: #0a0a0a;
-                color: #e0e0e0;
-                min-height: 100vh;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            }
+        .forgot-link {
+            text-align: center;
+            margin-top: 0.75rem;
+            font-size: 0.825rem;
+            color: #555;
+            cursor: pointer;
+            text-decoration: underline;
+        }
 
-            .login-container {
-                width: 100%;
-                max-width: 380px;
-                padding: 2rem;
-            }
+        .forgot-link:hover {
+            color: #888;
+        }
+    </style>
+</head>
 
-            .logo {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                gap: 0.75rem;
-                margin-bottom: 2.5rem;
-            }
-
-            .logo svg {
-                width: 40px;
-                height: 40px;
-            }
-
-            .logo span {
-                font-size: 1.5rem;
-                font-weight: 600;
-                letter-spacing: -0.02em;
-                color: #fff;
-            }
-
-            .btn {
-                width: 100%;
-                padding: 0.75rem 1rem;
-                border: 1px solid #2a2a2a;
-                border-radius: 8px;
-                background: #151515;
-                color: #e0e0e0;
-                font-size: 0.925rem;
-                font-family: inherit;
-                cursor: pointer;
-                transition:
-                    background 0.15s,
-                    border-color 0.15s;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                gap: 0.5rem;
-            }
-
-            .btn:hover {
-                background: #1e1e1e;
-                border-color: #3a3a3a;
-            }
-
-            .btn:disabled {
-                opacity: 0.5;
-                cursor: not-allowed;
-            }
-
-            .btn-primary {
-                background: #fff;
-                color: #0a0a0a;
-                border-color: #fff;
-                font-weight: 600;
-            }
-
-            .btn-primary:hover {
-                background: #e0e0e0;
-                border-color: #e0e0e0;
-            }
-
-            .tab-row {
-                display: flex;
-                gap: 0.5rem;
-                margin-bottom: 1.5rem;
-            }
-
-            .tab-btn {
-                flex: 1;
-                padding: 0.5rem;
-                border: 1px solid #2a2a2a;
-                border-radius: 6px;
-                background: #0a0a0a;
-                color: #777;
-                font-size: 0.875rem;
-                font-family: inherit;
-                cursor: pointer;
-                transition: all 0.15s;
-            }
-
-            .tab-btn.active {
-                background: #1e1e1e;
-                border-color: #555;
-                color: #e0e0e0;
-            }
-
-            .form-group {
-                margin-bottom: 1rem;
-            }
-
-            .form-group input {
-                width: 100%;
-                padding: 0.75rem 1rem;
-                border: 1px solid #2a2a2a;
-                border-radius: 8px;
-                background: #151515;
-                color: #e0e0e0;
-                font-size: 0.925rem;
-                font-family: inherit;
-                outline: none;
-                transition: border-color 0.15s;
-            }
-
-            .form-group input:focus {
-                border-color: #555;
-            }
-
-            .error-msg {
-                background: #1a0000;
-                border: 1px solid #3a1111;
-                color: #ff6b6b;
-                padding: 0.75rem 1rem;
-                border-radius: 8px;
-                font-size: 0.85rem;
-                margin-bottom: 1rem;
-                display: none;
-            }
-
-            .success-msg {
-                background: #001a00;
-                border: 1px solid #113a11;
-                color: #6bff6b;
-                padding: 0.75rem 1rem;
-                border-radius: 8px;
-                font-size: 0.85rem;
-                margin-bottom: 1rem;
-                display: none;
-            }
-
-            .spinner {
-                width: 18px;
-                height: 18px;
-                border: 2px solid transparent;
-                border-top-color: currentColor;
-                border-radius: 50%;
-                animation: spin 0.6s linear infinite;
-                display: none;
-            }
-
-            @keyframes spin {
-                to {
-                    transform: rotate(360deg);
-                }
-            }
-
-            .forgot-link {
-                text-align: center;
-                margin-top: 0.75rem;
-                font-size: 0.825rem;
-                color: #555;
-                cursor: pointer;
-                text-decoration: underline;
-            }
-
-            .forgot-link:hover {
-                color: #888;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="login-container">
-            <div class="logo">
-                <svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="14.75 14.75 70.5 70.5">
-                    <g fill="white">
-                        <path
-                            d="M38.25 14.75H85.25V61.75H61.75V38.25H38.25ZM14.75 38.25H38.25V61.75H61.75V85.25H14.75Z"
-                        />
-                    </g>
-                </svg>
-                <span>Monoflow</span>
-            </div>
-
-            <div id="error" class="error-msg"></div>
-            <div id="success" class="success-msg"></div>
-
-            <!-- Tab switcher: Sign In / Sign Up / Reset -->
-            <div class="tab-row">
-                <button class="tab-btn active" id="tab-signin" onclick="switchTab('signin')">Sign In</button>
-                <button class="tab-btn" id="tab-signup" onclick="switchTab('signup')">Sign Up</button>
-                <button class="tab-btn" id="tab-reset" onclick="switchTab('reset')">Reset Password</button>
-            </div>
-
-            <!-- Sign In form -->
-            <form id="form-signin" onsubmit="handleSignIn(event)">
-                <div class="form-group">
-                    <input type="email" id="signin-email" placeholder="Email" required autocomplete="email" />
-                </div>
-                <div class="form-group">
-                    <input
-                        type="password"
-                        id="signin-password"
-                        placeholder="Password"
-                        required
-                        autocomplete="current-password"
-                    />
-                </div>
-                <button type="submit" id="signin-btn" class="btn btn-primary">
-                    <span id="signin-btn-text">Sign In</span>
-                    <span id="signin-btn-spinner" class="spinner"></span>
-                </button>
-            </form>
-
-            <!-- Sign Up form -->
-            <form id="form-signup" onsubmit="handleSignUp(event)" style="display: none">
-                <div class="form-group">
-                    <input type="email" id="signup-email" placeholder="Email" required autocomplete="email" />
-                </div>
-                <div class="form-group">
-                    <input
-                        type="password"
-                        id="signup-password"
-                        placeholder="Password (min. 8 characters)"
-                        required
-                        minlength="8"
-                        autocomplete="new-password"
-                    />
-                </div>
-                <div class="form-group">
-                    <input
-                        type="password"
-                        id="signup-password-confirm"
-                        placeholder="Confirm Password"
-                        required
-                        autocomplete="new-password"
-                    />
-                </div>
-                <button type="submit" id="signup-btn" class="btn btn-primary">
-                    <span id="signup-btn-text">Create Account</span>
-                    <span id="signup-btn-spinner" class="spinner"></span>
-                </button>
-            </form>
-
-            <!-- Reset Password form -->
-            <form id="form-reset" onsubmit="handleReset(event)" style="display: none">
-                <div class="form-group">
-                    <input type="email" id="reset-email" placeholder="Email" required autocomplete="email" />
-                </div>
-                <button type="submit" id="reset-btn" class="btn btn-primary">
-                    <span id="reset-btn-text">Send Reset Email</span>
-                    <span id="reset-btn-spinner" class="spinner"></span>
-                </button>
-            </form>
+<body>
+    <div class="login-container">
+        <div class="logo">
+            <svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="14.75 14.75 70.5 70.5">
+                <g fill="white">
+                    <path d="M38.25 14.75H85.25V61.75H61.75V38.25H38.25ZM14.75 38.25H38.25V61.75H61.75V85.25H14.75Z" />
+                </g>
+            </svg>
+            <span>MusicFlow</span>
         </div>
 
-        <script type="module">
-            import PocketBase from 'pocketbase';
+        <div id="error" class="error-msg"></div>
+        <div id="success" class="success-msg"></div>
 
-            // Resolve PocketBase URL: server-injected env > localStorage > default
-            const DEFAULT_PB_URL = 'https://monodb.samidy.com';
-            const PB_URL =
-                window.__POCKETBASE_URL__ || localStorage.getItem('monochrome-pocketbase-url') || DEFAULT_PB_URL;
+        <!-- Tab switcher: Sign In / Sign Up / Reset -->
+        <div class="tab-row">
+            <button class="tab-btn active" id="tab-signin" onclick="switchTab('signin')">Sign In</button>
+            <button class="tab-btn" id="tab-signup" onclick="switchTab('signup')">Sign Up</button>
+            <button class="tab-btn" id="tab-reset" onclick="switchTab('reset')">Reset Password</button>
+        </div>
 
-            const pb = new PocketBase(PB_URL);
+        <!-- Sign In form -->
+        <form id="form-signin" onsubmit="handleSignIn(event)">
+            <div class="form-group">
+                <input type="email" id="signin-email" placeholder="Email" required autocomplete="email" />
+            </div>
+            <div class="form-group">
+                <input type="password" id="signin-password" placeholder="Password" required
+                    autocomplete="current-password" />
+            </div>
+            <button type="submit" id="signin-btn" class="btn btn-primary">
+                <span id="signin-btn-text">Sign In</span>
+                <span id="signin-btn-spinner" class="spinner"></span>
+            </button>
+        </form>
 
-            // --- UI helpers ---
+        <!-- Sign Up form -->
+        <form id="form-signup" onsubmit="handleSignUp(event)" style="display: none">
+            <div class="form-group">
+                <input type="email" id="signup-email" placeholder="Email" required autocomplete="email" />
+            </div>
+            <div class="form-group">
+                <input type="password" id="signup-password" placeholder="Password (min. 8 characters)" required
+                    minlength="8" autocomplete="new-password" />
+            </div>
+            <div class="form-group">
+                <input type="password" id="signup-password-confirm" placeholder="Confirm Password" required
+                    autocomplete="new-password" />
+            </div>
+            <button type="submit" id="signup-btn" class="btn btn-primary">
+                <span id="signup-btn-text">Create Account</span>
+                <span id="signup-btn-spinner" class="spinner"></span>
+            </button>
+        </form>
 
-            function showError(msg) {
-                const el = document.getElementById('error');
-                el.textContent = msg;
-                el.style.display = 'block';
-                document.getElementById('success').style.display = 'none';
-            }
+        <!-- Reset Password form -->
+        <form id="form-reset" onsubmit="handleReset(event)" style="display: none">
+            <div class="form-group">
+                <input type="email" id="reset-email" placeholder="Email" required autocomplete="email" />
+            </div>
+            <button type="submit" id="reset-btn" class="btn btn-primary">
+                <span id="reset-btn-text">Send Reset Email</span>
+                <span id="reset-btn-spinner" class="spinner"></span>
+            </button>
+        </form>
+    </div>
 
-            function showSuccess(msg) {
-                const el = document.getElementById('success');
-                el.textContent = msg;
-                el.style.display = 'block';
-                document.getElementById('error').style.display = 'none';
-            }
+    <script type="module">
+        import PocketBase from 'pocketbase';
 
-            function hideMessages() {
-                document.getElementById('error').style.display = 'none';
-                document.getElementById('success').style.display = 'none';
-            }
+        // Resolve PocketBase URL: server-injected env > localStorage > default
+        const DEFAULT_PB_URL = 'https://musicflow.tf';
+        const PB_URL =
+            window.__POCKETBASE_URL__ || localStorage.getItem('musicflow-pocketbase-url') || DEFAULT_PB_URL;
 
-            /**
-             * Toggle loading state on a form's submit button.
-             * @param {string} prefix - 'signin' | 'signup' | 'reset'
-             * @param {boolean} loading
-             */
-            function setLoading(prefix, loading) {
-                const btn = document.getElementById(`${prefix}-btn`);
-                const text = document.getElementById(`${prefix}-btn-text`);
-                const spinner = document.getElementById(`${prefix}-btn-spinner`);
-                if (btn) btn.disabled = loading;
-                if (text) text.style.display = loading ? 'none' : 'inline';
-                if (spinner) spinner.style.display = loading ? 'inline-block' : 'none';
-            }
+        const pb = new PocketBase(PB_URL);
 
-            /**
-             * Extract a readable message from a PocketBase error.
-             * @param {unknown} error
-             * @returns {string}
-             */
-            function formatPbError(error) {
-                if (error && typeof error === 'object' && 'response' in error) {
-                    const resp = error.response;
-                    if (resp && resp.message) return resp.message;
-                    if (resp && resp.data) {
-                        // Collect field-level validation errors
-                        const msgs = Object.entries(resp.data)
-                            .map(([field, info]) => `${field}: ${info?.message || JSON.stringify(info)}`)
-                            .join('; ');
-                        if (msgs) return msgs;
-                    }
+        // --- UI helpers ---
+
+        function showError(msg) {
+            const el = document.getElementById('error');
+            el.textContent = msg;
+            el.style.display = 'block';
+            document.getElementById('success').style.display = 'none';
+        }
+
+        function showSuccess(msg) {
+            const el = document.getElementById('success');
+            el.textContent = msg;
+            el.style.display = 'block';
+            document.getElementById('error').style.display = 'none';
+        }
+
+        function hideMessages() {
+            document.getElementById('error').style.display = 'none';
+            document.getElementById('success').style.display = 'none';
+        }
+
+        /**
+         * Toggle loading state on a form's submit button.
+         * @param {string} prefix - 'signin' | 'signup' | 'reset'
+         * @param {boolean} loading
+         */
+        function setLoading(prefix, loading) {
+            const btn = document.getElementById(`${prefix}-btn`);
+            const text = document.getElementById(`${prefix}-btn-text`);
+            const spinner = document.getElementById(`${prefix}-btn-spinner`);
+            if (btn) btn.disabled = loading;
+            if (text) text.style.display = loading ? 'none' : 'inline';
+            if (spinner) spinner.style.display = loading ? 'inline-block' : 'none';
+        }
+
+        /**
+         * Extract a readable message from a PocketBase error.
+         * @param {unknown} error
+         * @returns {string}
+         */
+        function formatPbError(error) {
+            if (error && typeof error === 'object' && 'response' in error) {
+                const resp = error.response;
+                if (resp && resp.message) return resp.message;
+                if (resp && resp.data) {
+                    // Collect field-level validation errors
+                    const msgs = Object.entries(resp.data)
+                        .map(([field, info]) => `${field}: ${info?.message || JSON.stringify(info)}`)
+                        .join('; ');
+                    if (msgs) return msgs;
                 }
-                if (error instanceof Error) return error.message;
-                return String(error);
             }
+            if (error instanceof Error) return error.message;
+            return String(error);
+        }
 
-            /**
-             * Send PocketBase token to the auth-gate server to create a session cookie.
-             */
-            async function sendTokenToServer() {
-                const token = pb.authStore.token;
-                const res = await fetch('/api/auth/login', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ token }),
-                });
-                if (!res.ok) {
-                    const data = await res.json().catch(() => ({}));
-                    throw new Error(data.error || 'Server authentication failed');
-                }
+        /**
+         * Send PocketBase token to the auth-gate server to create a session cookie.
+         */
+        async function sendTokenToServer() {
+            const token = pb.authStore.token;
+            const res = await fetch('/api/auth/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ token }),
+            });
+            if (!res.ok) {
+                const data = await res.json().catch(() => ({}));
+                throw new Error(data.error || 'Server authentication failed');
+            }
+            window.location.href = '/';
+        }
+
+        /**
+         * After a successful PocketBase auth, either hand off to the server
+         * (auth gate mode) or redirect directly to the app.
+         */
+        async function onAuthSuccess() {
+            if (window.__AUTH_GATE__) {
+                await sendTokenToServer();
+            } else {
                 window.location.href = '/';
             }
+        }
 
-            /**
-             * After a successful PocketBase auth, either hand off to the server
-             * (auth gate mode) or redirect directly to the app.
-             */
-            async function onAuthSuccess() {
-                if (window.__AUTH_GATE__) {
-                    await sendTokenToServer();
-                } else {
-                    window.location.href = '/';
-                }
+        // --- Tab switching ---
+
+        window.switchTab = function (tab) {
+            hideMessages();
+            ['signin', 'signup', 'reset'].forEach((t) => {
+                document.getElementById(`form-${t}`).style.display = t === tab ? '' : 'none';
+                document.getElementById(`tab-${t}`).classList.toggle('active', t === tab);
+            });
+        };
+
+        // --- Form handlers ---
+
+        window.handleSignIn = async function (e) {
+            e.preventDefault();
+            hideMessages();
+            setLoading('signin', true);
+
+            const email = document.getElementById('signin-email').value.trim();
+            const password = document.getElementById('signin-password').value;
+
+            try {
+                await pb.collection('users').authWithPassword(email, password);
+                await onAuthSuccess();
+            } catch (err) {
+                showError(formatPbError(err));
+                setLoading('signin', false);
+            }
+        };
+
+        window.handleSignUp = async function (e) {
+            e.preventDefault();
+            hideMessages();
+
+            const email = document.getElementById('signup-email').value.trim();
+            const password = document.getElementById('signup-password').value;
+            const confirm = document.getElementById('signup-password-confirm').value;
+
+            if (password !== confirm) {
+                showError('Passwords do not match.');
+                return;
             }
 
-            // --- Tab switching ---
+            setLoading('signup', true);
 
-            window.switchTab = function (tab) {
-                hideMessages();
-                ['signin', 'signup', 'reset'].forEach((t) => {
-                    document.getElementById(`form-${t}`).style.display = t === tab ? '' : 'none';
-                    document.getElementById(`tab-${t}`).classList.toggle('active', t === tab);
-                });
-            };
+            try {
+                await pb.collection('users').create({ email, password, passwordConfirm: confirm });
+                await pb.collection('users').authWithPassword(email, password);
+                await onAuthSuccess();
+            } catch (err) {
+                showError(formatPbError(err));
+                setLoading('signup', false);
+            }
+        };
 
-            // --- Form handlers ---
+        window.handleReset = async function (e) {
+            e.preventDefault();
+            hideMessages();
+            setLoading('reset', true);
 
-            window.handleSignIn = async function (e) {
-                e.preventDefault();
-                hideMessages();
-                setLoading('signin', true);
+            const email = document.getElementById('reset-email').value.trim();
 
-                const email = document.getElementById('signin-email').value.trim();
-                const password = document.getElementById('signin-password').value;
+            try {
+                await pb.collection('users').requestPasswordReset(email);
+                showSuccess(`Password reset email sent to ${email}. Check your inbox.`);
+            } catch (err) {
+                showError(formatPbError(err));
+            } finally {
+                setLoading('reset', false);
+            }
+        };
+    </script>
+</body>
 
-                try {
-                    await pb.collection('users').authWithPassword(email, password);
-                    await onAuthSuccess();
-                } catch (err) {
-                    showError(formatPbError(err));
-                    setLoading('signin', false);
-                }
-            };
-
-            window.handleSignUp = async function (e) {
-                e.preventDefault();
-                hideMessages();
-
-                const email = document.getElementById('signup-email').value.trim();
-                const password = document.getElementById('signup-password').value;
-                const confirm = document.getElementById('signup-password-confirm').value;
-
-                if (password !== confirm) {
-                    showError('Passwords do not match.');
-                    return;
-                }
-
-                setLoading('signup', true);
-
-                try {
-                    await pb.collection('users').create({ email, password, passwordConfirm: confirm });
-                    await pb.collection('users').authWithPassword(email, password);
-                    await onAuthSuccess();
-                } catch (err) {
-                    showError(formatPbError(err));
-                    setLoading('signup', false);
-                }
-            };
-
-            window.handleReset = async function (e) {
-                e.preventDefault();
-                hideMessages();
-                setLoading('reset', true);
-
-                const email = document.getElementById('reset-email').value.trim();
-
-                try {
-                    await pb.collection('users').requestPasswordReset(email);
-                    showSuccess(`Password reset email sent to ${email}. Check your inbox.`);
-                } catch (err) {
-                    showError(formatPbError(err));
-                } finally {
-                    setLoading('reset', false);
-                }
-            };
-        </script>
-    </body>
 </html>
