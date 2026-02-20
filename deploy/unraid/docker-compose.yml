@@ -1,11 +1,11 @@
 services:
     # Frontend Application
-    monochrome:
-        image: ghcr.io/r0m1k3/monoflow:latest
-        container_name: monochrome-app
+    musicflow:
+        image: ghcr.io/r0m1k3/musicflow:latest
+        container_name: musicflow-app
         restart: unless-stopped
         ports:
-            - '${MONOCHROME_PORT:-3001}:4173'
+            - '${MUSICFLOW_PORT:-3001}:4173'
         environment:
             # URL interne Docker (server-to-server)
             # Par défaut, utilise le nom du service "pocketbase". Surchargé par POCKETBASE_URL.
@@ -13,19 +13,18 @@ services:
             # URL PUBLIQUE de PocketBase, accessible depuis le navigateur.
             # ⚠️ DOIT être définie dans votre configuration Unraid/Docker si différente
             - PUBLIC_POCKETBASE_URL=${PUBLIC_POCKETBASE_URL:-https://pb.vonrodbox.eu}
-            - URL_BASE_PUBLIC=${URL_BASE_PUBLIC:-https://monochrome.tf}
             # Auth gate (optionnel)
             - AUTH_ENABLED=${AUTH_ENABLED:-false}
             - AUTH_SECRET=${AUTH_SECRET:-}
         depends_on:
             - pocketbase
         networks:
-            - monochrome_net
+            - musicflow_net
 
     # Backend / Authentification & Sync (optionnel si vous utilisez l'instance publique)
     pocketbase:
         image: ghcr.io/muchobien/pocketbase:latest
-        container_name: monochrome-pb
+        container_name: musicflow-pb
         restart: unless-stopped
         ports:
             - '${POCKETBASE_PORT:-8091}:8090'
@@ -37,13 +36,13 @@ services:
             - PB_ADMIN_EMAIL=${ADMIN_EMAIL:-admin@example.com}
             - PB_ADMIN_PASSWORD=${ADMIN_PASSWORD:-changeme}
         healthcheck:
-            test: ['CMD', 'wget', '--no-verbose', '--tries=1', '--spider', 'http://localhost:8090/api/health']
+            test: [ 'CMD', 'wget', '--no-verbose', '--tries=1', '--spider', 'http://localhost:8090/api/health' ]
             interval: 30s
             timeout: 10s
             retries: 3
         networks:
-            - monochrome_net
+            - musicflow_net
 
 networks:
-    monochrome_net:
+    musicflow_net:
         driver: bridge
