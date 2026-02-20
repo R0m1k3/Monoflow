@@ -59,8 +59,9 @@ L'objectif est d'ajouter deux nouveaux thèmes "Glossy" (façon Apple TV avec Gl
 - [x] Traduire les tooltips et éléments UI en français.
 - [x] Accentuer l'esthétique "Glossy" (Dégradés vibrants et verre marqué).
 - [x] Fixer l'invisibilité de l'icône de lecture (ajout de `--background-solid`).
-- [x] Centrer parfaitement l'icône triangle (compensation d'asymétrie).
-- [x] Commit et Push des changements.
+- [x] Centrer parfaitement l'icône triangle (compensation d'asymétrie 2px).
+- [x] Rendre le bouton fermer (X) parfaitement visible (cercle à haut contraste).
+- [x] Commit et Push des changements finaux.
 
 ## Historique des Objectifs : Activation de l'Agent bmad-master
 
