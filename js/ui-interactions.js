@@ -64,7 +64,7 @@ export function initializeUIInteractions(player, api, ui) {
                     if (subtitle) {
                         subtitle.textContent = `${updatedFolder.playlists.length} playlists`;
                     }
-                    showNotification('Playlist added to folder');
+                    showNotification('Playlist ajoutée au dossier');
                 }
             }
         };
@@ -145,9 +145,9 @@ export function initializeUIInteractions(player, api, ui) {
                 }
 
                 if (addedCount > 0) {
-                    showNotification(`Added ${addedCount} track${addedCount > 1 ? 's' : ''} to Liked`);
+                    showNotification(`Ajout de ${addedCount} titre${addedCount > 1 ? 's' : ''} aux Favoris`);
                 } else {
-                    showNotification('All tracks in queue are already liked');
+                    showNotification("Tous les titres de la file d'attente sont déjà en favoris");
                 }
 
                 refreshQueuePanel();
@@ -159,7 +159,7 @@ export function initializeUIInteractions(player, api, ui) {
             addToPlaylistBtn.addEventListener('click', async () => {
                 const playlists = await db.getPlaylists();
                 if (playlists.length === 0) {
-                    showNotification('No playlists yet. Create one first.');
+                    showNotification("Aucune playlist. Créez-en une d'abord.");
                     return;
                 }
 
@@ -171,12 +171,12 @@ export function initializeUIInteractions(player, api, ui) {
                         <h3>Add Queue to Playlist</h3>
                         <div class="modal-list">
                             ${playlists
-                                .map(
-                                    (p) => `
+                        .map(
+                            (p) => `
                                 <div class="modal-option" data-id="${p.id}">${escapeHtml(p.name)}</div>
                             `
-                                )
-                                .join('')}
+                        )
+                        .join('')}
                         </div>
                         <div class="modal-actions">
                             <button class="btn-secondary cancel-btn">Cancel</button>
@@ -211,10 +211,10 @@ export function initializeUIInteractions(player, api, ui) {
                             const updatedPlaylist = await db.getPlaylist(playlistId);
                             syncManager.syncUserPlaylist(updatedPlaylist, 'update');
 
-                            showNotification(`Added ${addedCount} tracks to playlist: ${playlistName}`);
+                            showNotification(`Ajout de ${addedCount} titres à la playlist : ${playlistName}`);
                         } catch (error) {
                             console.error('Failed to add tracks to playlist:', error);
-                            showNotification('Failed to add tracks to playlist');
+                            showNotification("Échec de l'ajout des titres à la playlist");
                         }
 
                         closeModal();
@@ -426,10 +426,10 @@ export function initializeUIInteractions(player, api, ui) {
                     const updatedFolder = await db.addPlaylistToFolder(folderId, playlistId);
                     syncManager.syncUserFolder(updatedFolder, 'update');
                     window.dispatchEvent(new HashChangeEvent('hashchange'));
-                    showNotification('Playlist added to folder');
+                    showNotification('Playlist ajoutée au dossier');
                 } catch (error) {
                     console.error('Failed to add playlist to folder:', error);
-                    showNotification('Failed to add playlist to folder', 'error');
+                    showNotification("Échec de l'ajout de la playlist au dossier", 'error');
                 }
             }
         });

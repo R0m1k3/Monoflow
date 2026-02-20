@@ -346,7 +346,7 @@ export async function renderTrackerArtistPage(sheetId, container) {
     // Set up download button
     if (downloadBtn) {
         downloadBtn.onclick = () => {
-            alert('Bulk download coming soon! You can download individual tracks from the project pages.');
+            alert('Le téléchargement en masse arrive bientôt ! Vous pouvez télécharger des titres individuels depuis la page des projets.');
         };
     }
 
@@ -586,7 +586,7 @@ export async function renderTrackerProjectPage(sheetId, projectName, container, 
     if (downloadBtn) {
         downloadBtn.innerHTML = `<span>Download</span>`;
         downloadBtn.onclick = () => {
-            alert('Project download coming soon! You can download individual tracks from the menu.');
+            alert('Le téléchargement du projet complet arrive bientôt !');
         };
     }
 

@@ -94,13 +94,13 @@ function initializeCasting(audioPlayer, castBtn) {
 
         castBtn.addEventListener('click', () => {
             if (!audioPlayer.src) {
-                alert('Please play a track first to enable casting.');
+                alert("Veuillez lancer un titre d'abord pour activer le cast.");
                 return;
             }
             audioPlayer.remote.prompt().catch((err) => {
                 if (err.name === 'NotAllowedError') return;
                 if (err.name === 'NotFoundError') {
-                    alert('No remote playback devices (Chromecast/AirPlay) were found on your network.');
+                    alert('Aucun appareil de lecture à distance (Chromecast/AirPlay) trouvé sur votre réseau.');
                     return;
                 }
                 console.log('Cast prompt error:', err);
@@ -142,7 +142,7 @@ function initializeCasting(audioPlayer, castBtn) {
     } else if (window.innerWidth > 768) {
         castBtn.style.display = 'flex';
         castBtn.addEventListener('click', () => {
-            alert('Casting is not supported in this browser. Try Chrome for Chromecast or Safari for AirPlay.');
+            alert("Le cast n'est pas supporté sur ce navigateur. Essayez Chrome pour Chromecast ou Safari pour AirPlay.");
         });
     }
 }
@@ -427,7 +427,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     document.querySelector('.now-playing-bar .cover').addEventListener('click', async () => {
         if (!player.currentTrack) {
-            alert('No track is currently playing');
+            alert('Aucun titre en cours de lecture');
             return;
         }
 
@@ -636,7 +636,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         // Validate file type
         if (!file.type.startsWith('image/')) {
-            alert('Please select an image file');
+            alert('Veuillez sélectionner un fichier image');
             return;
         }
 
@@ -691,7 +691,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.getElementById('toggle-lyrics-btn')?.addEventListener('click', async (e) => {
         e.stopPropagation();
         if (!player.currentTrack) {
-            alert('No track is currently playing');
+            alert('Aucun titre en cours de lecture');
             return;
         }
 
@@ -786,7 +786,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             } catch (error) {
                 console.error('Failed to play album:', error);
                 const { showNotification } = await loadDownloadsModule();
-                showNotification('Failed to play album');
+                showNotification("Échec de la lecture de l'album");
             }
         }
 
@@ -815,12 +815,12 @@ document.addEventListener('DOMContentLoaded', async () => {
                     player.playTrackFromQueue();
 
                     const { showNotification } = await loadDownloadsModule();
-                    showNotification('Shuffling album');
+                    showNotification("Lecture aléatoire de l'album");
                 }
             } catch (error) {
                 console.error('Failed to shuffle album:', error);
                 const { showNotification } = await loadDownloadsModule();
-                showNotification('Failed to shuffle album');
+                showNotification("Échec de la lecture aléatoire de l'album");
             }
         }
 
@@ -847,7 +847,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 await downloadPlaylistAsZip(mix, tracks, api, downloadQualitySettings.getQuality(), lyricsManager);
             } catch (error) {
                 console.error('Mix download failed:', error);
-                alert('Failed to download mix: ' + error.message);
+                alert('Échec du téléchargement du mix : ' + error.message);
             } finally {
                 btn.disabled = false;
                 btn.innerHTML = originalHTML;
@@ -891,7 +891,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 await downloadPlaylistAsZip(playlist, tracks, api, downloadQualitySettings.getQuality(), lyricsManager);
             } catch (error) {
                 console.error('Playlist download failed:', error);
-                alert('Failed to download playlist: ' + error.message);
+                alert('Échec du téléchargement de la playlist : ' + error.message);
             } finally {
                 btn.disabled = false;
                 btn.innerHTML = originalHTML;
@@ -1005,7 +1005,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                             await syncManager.publishPlaylist(playlist);
                         } catch (e) {
                             console.error('Failed to publish playlist:', e);
-                            alert('Failed to publish playlist. Please ensure you are logged in.');
+                            alert("Échec de la publication de la playlist. Assurez-vous d'être connecté.");
                         }
                     } else {
                         try {
@@ -1077,7 +1077,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                         const workerUrl = `https://ytmimport.samidy.workers.dev?playlistId=${playlistId}`;
 
                         if (!playlistId) {
-                            alert("Invalid URL. Make sure it has 'list=' in it.");
+                            alert("URL invalide. Assurez-vous qu'elle contient 'list='.");
                             return;
                         }
 
@@ -1130,7 +1130,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                             const missingTracks = result.missingTracks;
 
                             if (tracks.length === 0) {
-                                alert('No valid tracks found in the YouTube playlist!');
+                                alert('Aucun titre valide trouvé dans la playlist YouTube !');
                                 progressElement.style.display = 'none';
                                 return;
                             }
@@ -1145,7 +1145,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                             }
                         } catch (err) {
                             console.error('YTM Import Error:', err);
-                            alert(`Error importing from YouTube: ${err.message}`);
+                            alert(`Erreur lors de l'importation depuis YouTube : ${err.message}`);
                             progressElement.style.display = 'none';
                             return;
                         } finally {
@@ -1189,7 +1189,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                             const missingTracks = result.missingTracks;
 
                             if (tracks.length === 0) {
-                                alert('No valid tracks found in the JSPF file! Please check the format.');
+                                alert('Aucun titre valide trouvé dans le fichier JSPF ! Veuillez vérifier le format.');
                                 progressElement.style.display = 'none';
                                 return;
                             }
@@ -1230,7 +1230,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                             }
                         } catch (error) {
                             console.error('Failed to parse JSPF!', error);
-                            alert('Failed to parse JSPF file! ' + error.message);
+                            alert("Échec de l'analyse du fichier JSPF ! " + error.message);
                             progressElement.style.display = 'none';
                             return;
                         } finally {
@@ -1276,7 +1276,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                             const missingTracks = result.missingTracks;
 
                             if (tracks.length === 0) {
-                                alert('No valid tracks found in the CSV file! Please check the format.');
+                                alert('Aucun titre valide trouvé dans le fichier CSV ! Veuillez vérifier le format.');
                                 progressElement.style.display = 'none';
                                 return;
                             }
@@ -1291,7 +1291,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                             }
                         } catch (error) {
                             console.error('Failed to parse CSV!', error);
-                            alert('Failed to parse CSV file! ' + error.message);
+                            alert("Échec de l'analyse du fichier CSV ! " + error.message);
                             progressElement.style.display = 'none';
                             return;
                         } finally {
@@ -1335,7 +1335,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                             const missingTracks = result.missingTracks;
 
                             if (tracks.length === 0) {
-                                alert('No valid tracks found in the XSPF file! Please check the format.');
+                                alert('Aucun titre valide trouvé dans le fichier XSPF ! Veuillez vérifier le format.');
                                 progressElement.style.display = 'none';
                                 return;
                             }
@@ -1350,7 +1350,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                             }
                         } catch (error) {
                             console.error('Failed to parse XSPF!', error);
-                            alert('Failed to parse XSPF file! ' + error.message);
+                            alert("Échec de l'analyse du fichier XSPF ! " + error.message);
                             progressElement.style.display = 'none';
                             return;
                         } finally {
@@ -1394,7 +1394,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                             const missingTracks = result.missingTracks;
 
                             if (tracks.length === 0) {
-                                alert('No valid tracks found in the XML file! Please check the format.');
+                                alert('Aucun titre valide trouvé dans le fichier XML ! Veuillez vérifier le format.');
                                 progressElement.style.display = 'none';
                                 return;
                             }
@@ -1409,7 +1409,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                             }
                         } catch (error) {
                             console.error('Failed to parse XML!', error);
-                            alert('Failed to parse XML file! ' + error.message);
+                            alert("Échec de l'analyse du fichier XML ! " + error.message);
                             progressElement.style.display = 'none';
                             return;
                         } finally {
@@ -1453,7 +1453,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                             const missingTracks = result.missingTracks;
 
                             if (tracks.length === 0) {
-                                alert('No valid tracks found in the M3U file! Please check the format.');
+                                alert('Aucun titre valide trouvé dans le fichier M3U ! Veuillez vérifier le format.');
                                 progressElement.style.display = 'none';
                                 return;
                             }
@@ -1468,7 +1468,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                             }
                         } catch (error) {
                             console.error('Failed to parse M3U!', error);
-                            alert('Failed to parse M3U file! ' + error.message);
+                            alert("Échec de l'analyse du fichier M3U ! " + error.message);
                             progressElement.style.display = 'none';
                             return;
                         } finally {
@@ -1740,7 +1740,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
                 if (!tracks || tracks.length === 0) {
                     const { showNotification } = await loadDownloadsModule();
-                    showNotification('No tracks found in this album.');
+                    showNotification('Aucun titre trouvé dans cet album.');
                     return;
                 }
 
@@ -1800,7 +1800,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                         const updatedPlaylist = await db.getPlaylist(playlistId);
                         await syncManager.syncUserPlaylist(updatedPlaylist, 'update');
                         const { showNotification } = await loadDownloadsModule();
-                        showNotification(`Added ${tracks.length} tracks to playlist.`);
+                        showNotification(`${tracks.length} titres ajoutés à la playlist.`);
                         closeModal();
                     } catch (err) {
                         console.error(err);

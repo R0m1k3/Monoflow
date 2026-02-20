@@ -1007,12 +1007,12 @@ function createBulkDownloadNotification(type, name, _totalItems) {
         type === 'album'
             ? 'Album'
             : type === 'playlist'
-              ? 'Playlist'
-              : type === 'liked'
-                ? 'Liked Tracks'
-                : type === 'queue'
-                  ? 'Queue'
-                  : 'Discography';
+                ? 'Playlist'
+                : type === 'liked'
+                    ? 'Liked Tracks'
+                    : type === 'queue'
+                        ? 'Queue'
+                        : 'Discography';
 
     notifEl.innerHTML = `
         <div style="display: flex; align-items: start; gap: 0.75rem;">
@@ -1082,13 +1082,13 @@ function completeBulkDownload(notifEl, success = true, message = null) {
 
 export async function downloadTrackWithMetadata(track, quality, api, lyricsManager = null, abortController = null) {
     if (!track) {
-        alert('No track is currently playing');
+        alert('Aucun titre en cours de lecture');
         return;
     }
 
     const downloadKey = `track-${track.id}`;
     if (ongoingDownloads.has(downloadKey)) {
-        showNotification('This track is already being downloaded');
+        showNotification('Ce titre est déjà en cours de téléchargement');
         return;
     }
 

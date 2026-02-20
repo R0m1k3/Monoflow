@@ -81,7 +81,7 @@ export function initializeSettings(player, api, ui) {
             const email = emailInput.value;
             const password = passwordInput.value;
             if (!email || !password) {
-                alert('Please enter both email and password.');
+                alert('Veuillez entrer un e-mail et un mot de passe.');
                 return;
             }
             try {
@@ -101,7 +101,7 @@ export function initializeSettings(player, api, ui) {
             const email = emailInput.value;
             const password = passwordInput.value;
             if (!email || !password) {
-                alert('Please enter both email and password.');
+                alert('Veuillez entrer un e-mail et un mot de passe.');
                 return;
             }
             try {
@@ -120,7 +120,7 @@ export function initializeSettings(player, api, ui) {
         resetPasswordBtn.addEventListener('click', async () => {
             const email = emailInput.value;
             if (!email) {
-                alert('Please enter your email address to reset your password.');
+                alert('Veuillez entrer votre adresse e-mail pour réinitialiser votre mot de passe.');
                 return;
             }
             try {
@@ -940,7 +940,7 @@ export function initializeSettings(player, api, ui) {
         saveCustomPresetBtn.addEventListener('click', () => {
             const name = customPresetNameInput.value.trim();
             if (!name) {
-                alert('Please enter a name for your preset');
+                alert('Veuillez entrer un nom pour votre préréglage');
                 return;
             }
 
@@ -963,7 +963,7 @@ export function initializeSettings(player, api, ui) {
                     saveCustomPresetBtn.textContent = originalText;
                 }, 1500);
             } else {
-                alert('Failed to save preset. Please try again.');
+                alert("Échec de l'enregistrement du préréglage. Veuillez réessayer.");
             }
         });
 
@@ -996,7 +996,7 @@ export function initializeSettings(player, api, ui) {
                     equalizerSettings.setPreset('flat');
                     updateDeleteButtonVisibility();
                 } else {
-                    alert('Failed to delete preset. Please try again.');
+                    alert('Échec de la suppression du préréglage. Veuillez réessayer.');
                 }
             }
         });
@@ -1019,12 +1019,12 @@ export function initializeSettings(player, api, ui) {
 
             // Validate range
             if (isNaN(newMin) || isNaN(newMax)) {
-                alert('Please enter valid numbers for the range');
+                alert('Veuillez entrer des nombres valides pour la plage');
                 return;
             }
 
             if (newMin >= 0 || newMax <= 0) {
-                alert('Minimum must be negative and maximum must be positive');
+                alert('Le minimum doit être négatif et le maximum positif');
                 return;
             }
 
@@ -1122,19 +1122,19 @@ export function initializeSettings(player, api, ui) {
 
             // Validate range
             if (isNaN(newMin) || isNaN(newMax)) {
-                alert('Please enter valid numbers for the frequency range');
+                alert('Veuillez entrer des nombres valides pour la plage de fréquences');
                 return;
             }
 
             if (newMin < equalizerSettings.ABSOLUTE_FREQ_MIN || newMax > equalizerSettings.ABSOLUTE_FREQ_MAX) {
                 alert(
-                    `Frequency range must be between ${equalizerSettings.ABSOLUTE_FREQ_MIN} Hz and ${equalizerSettings.ABSOLUTE_FREQ_MAX} Hz`
+                    `La plage de fréquences doit être comprise entre ${equalizerSettings.ABSOLUTE_FREQ_MIN} Hz et ${equalizerSettings.ABSOLUTE_FREQ_MAX} Hz`
                 );
                 return;
             }
 
             if (newMin >= newMax) {
-                alert('Minimum frequency must be less than maximum frequency');
+                alert('La fréquence minimale doit être inférieure à la fréquence maximale');
                 return;
             }
 
@@ -2050,11 +2050,11 @@ export function initializeSettings(player, api, ui) {
         if (confirm('Are you sure you want to delete ALL your data from the cloud? This cannot be undone.')) {
             try {
                 await syncManager.clearCloudData();
-                alert('Cloud data cleared successfully.');
+                alert('Données cloud supprimées avec succès.');
                 authManager.signOut();
             } catch (error) {
                 console.error('Failed to clear cloud data:', error);
-                alert('Failed to clear cloud data: ' + error.message);
+                alert('Échec de la suppression des données cloud : ' + error.message);
             }
         }
     });
@@ -2087,11 +2087,11 @@ export function initializeSettings(player, api, ui) {
             try {
                 const data = JSON.parse(event.target.result);
                 await db.importData(data);
-                alert('Library imported successfully!');
+                alert('Bibliothèque importée avec succès !');
                 window.location.reload(); // Simple way to refresh all state
             } catch (err) {
                 console.error('Import failed:', err);
-                alert('Failed to import library. Please check the file format.');
+                alert("Échec de l'importation de la bibliothèque. Veuillez vérifier le format du fichier.");
             }
         };
         reader.readAsText(file);
@@ -2137,14 +2137,14 @@ export function initializeSettings(player, api, ui) {
                 }
             }
 
-            alert('Settings saved. Reloading...');
+            alert('Paramètres enregistrés. Rechargement...');
             window.location.reload();
         });
 
         customDbResetBtn?.addEventListener('click', () => {
             if (confirm('Reset custom database settings to default?')) {
                 localStorage.removeItem('monochrome-pocketbase-url');
-                alert('Settings reset. Reloading...');
+                alert('Paramètres réinitialisés. Rechargement...');
                 window.location.reload();
             }
         });
@@ -2216,11 +2216,11 @@ export function initializeSettings(player, api, ui) {
                         }
                     }
 
-                    alert('All local data has been cleared. The app will now reload.');
+                    alert("Toutes les données locales ont été effacées. L'application va redémarrer.");
                     window.location.reload();
                 } catch (error) {
                     console.error('Failed to reset local data:', error);
-                    alert('Failed to reset local data: ' + error.message);
+                    alert('Échec de la réinitialisation des données locales : ' + error.message);
                 }
             }
         });
@@ -2343,7 +2343,7 @@ function initializeFontSettings() {
             fontUploadInput.value = '';
         } catch (err) {
             console.error('Failed to upload font:', err);
-            alert('Failed to upload font');
+            alert("Échec du téléchargement de la police");
         }
     });
 

@@ -474,7 +474,7 @@ export class LyricsManager {
     downloadLRC(lyricsData, track) {
         const lrcContent = this.generateLRCContent(lyricsData, track);
         if (!lrcContent) {
-            alert('No synced lyrics available for this track');
+            alert('Aucune parole synchronisée disponible pour ce titre');
             return;
         }
 

@@ -2136,10 +2136,10 @@ export class UIRenderer {
                     dateDisplay =
                         window.innerWidth > 768
                             ? releaseDate.toLocaleDateString('en-US', {
-                                  year: 'numeric',
-                                  month: 'long',
-                                  day: 'numeric',
-                              })
+                                year: 'numeric',
+                                month: 'long',
+                                day: 'numeric',
+                            })
                             : year;
                 }
             }
@@ -2379,11 +2379,11 @@ export class UIRenderer {
                                             }
                                         }
 
-                                        showNotification(`Added "${trackData.title}" to playlist`);
+                                        showNotification(`"${trackData.title}" ajouté à la playlist`);
                                     }
                                 } catch (error) {
                                     console.error('Failed to add track to playlist:', error);
-                                    showNotification('Failed to add track to playlist');
+                                    showNotification('Échec de l\'ajout du titre à la playlist');
                                 }
                             }
                         };
@@ -2961,9 +2961,9 @@ export class UIRenderer {
                 <span>${artist.popularity}% popularity</span>
                 <div class="artist-tags">
                     ${(artist.artistRoles || [])
-                        .filter((role) => role.category)
-                        .map((role) => `<span class="artist-tag">${role.category}</span>`)
-                        .join('')}
+                    .filter((role) => role.category)
+                    .map((role) => `<span class="artist-tag">${role.category}</span>`)
+                    .join('')}
                 </div>
             `;
 
@@ -3189,7 +3189,7 @@ export class UIRenderer {
                             clearBtn.style.display = 'none';
                         } catch (err) {
                             console.error('Failed to clear history:', err);
-                            alert('Failed to clear history');
+                            alert('Échec de la suppression de l\'historique');
                         }
                     }
                 };
@@ -3331,7 +3331,7 @@ export class UIRenderer {
 
             shareBtn.onclick = () => {
                 const url = getShareUrl(`/userplaylist/${playlist.id || playlist.uuid}`);
-                navigator.clipboard.writeText(url).then(() => alert('Link copied to clipboard!'));
+                navigator.clipboard.writeText(url).then(() => alert('Lien copié dans le presse-papiers !'));
             };
             fragment.appendChild(shareBtn);
         }
@@ -3670,7 +3670,7 @@ export class UIRenderer {
             shareBtn.onclick = () => {
                 const url = getShareUrl(`/track/${track.id}`);
                 navigator.clipboard.writeText(url).then(() => {
-                    showNotification('Link copied to clipboard!');
+                    showNotification('Lien copié dans le presse-papiers !');
                 });
             };
 

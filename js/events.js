@@ -246,7 +246,7 @@ export function initializePlayerEvents(player, audioPlayer, scrobbler, ui) {
             if (player.isSleepTimerActive()) {
                 player.clearSleepTimer();
                 trackCancelSleepTimer();
-                showNotification('Sleep timer cancelled');
+                showNotification('Minuteur de mise en veille annulé');
             } else {
                 showSleepTimerModal(player);
             }
@@ -259,7 +259,7 @@ export function initializePlayerEvents(player, audioPlayer, scrobbler, ui) {
             if (player.isSleepTimerActive()) {
                 player.clearSleepTimer();
                 trackCancelSleepTimer();
-                showNotification('Sleep timer cancelled');
+                showNotification('Minuteur de mise en veille annulé');
             } else {
                 showSleepTimerModal(player);
             }
@@ -666,11 +666,10 @@ export async function showAddToPlaylistModal(track) {
                     return `
                 <div class="modal-option ${alreadyContains ? 'already-contains' : ''}" data-id="${p.id}">
                     <span>${p.name}</span>
-                    ${
-                        alreadyContains
+                    ${alreadyContains
                             ? `<button class="remove-from-playlist-btn-modal" title="Remove from playlist" style="background: transparent; border: none; color: inherit; cursor: pointer; padding: 4px; display: flex; align-items: center;">${SVG_BIN}</button>`
                             : ''
-                    }
+                        }
                 </div>
             `;
                 })
@@ -731,7 +730,7 @@ export async function showAddToPlaylistModal(track) {
             await db.removeTrackFromPlaylist(playlistId, track.id);
             const updatedPlaylist = await db.getPlaylist(playlistId);
             syncManager.syncUserPlaylist(updatedPlaylist, 'update');
-            showNotification(`Removed from playlist: ${option.querySelector('span').textContent}`);
+            showNotification(`Retiré de la playlist : ${option.querySelector('span').textContent}`);
             await renderModal();
         } else {
             if (option.classList.contains('already-contains')) return;
@@ -739,7 +738,7 @@ export async function showAddToPlaylistModal(track) {
             await db.addTrackToPlaylist(playlistId, track);
             const updatedPlaylist = await db.getPlaylist(playlistId);
             syncManager.syncUserPlaylist(updatedPlaylist, 'update');
-            showNotification(`Added to playlist: ${option.querySelector('span').textContent}`);
+            showNotification(`Ajouté à la playlist : ${option.querySelector('span').textContent}`);
             closeModal();
         }
     };
@@ -772,7 +771,7 @@ export async function handleTrackAction(
     // Actions not allowed for unavailable tracks
     const forbiddenForUnavailable = ['add-to-queue', 'play-next', 'track-mix', 'download'];
     if (item.isUnavailable && forbiddenForUnavailable.includes(action)) {
-        showNotification('This track is unavailable.');
+        showNotification('Ce titre est indisponible.');
         return;
     }
 
@@ -792,7 +791,7 @@ export async function handleTrackAction(
             // Check if album/artist is blocked
             const { contentBlockingSettings } = await import('./storage.js');
             if (type === 'album' && contentBlockingSettings.shouldHideAlbum(item)) {
-                showNotification('This album is blocked');
+                showNotification('Cet album est bloqué');
                 return;
             }
 
@@ -825,7 +824,7 @@ export async function handleTrackAction(
             }
 
             if (tracks.length === 0 && action !== 'start-mix') {
-                showNotification(`No tracks found in this ${type}`);
+                showNotification(`Aucun titre trouvé dans ce ${type}`);
                 return;
             }
 
@@ -856,14 +855,14 @@ export async function handleTrackAction(
             if (action === 'add-to-queue') {
                 player.addToQueue(tracks);
                 if (window.renderQueueFunction) window.renderQueueFunction();
-                showNotification(`Added ${tracks.length} tracks to queue`);
+                showNotification(`${tracks.length} titres ajoutés à la file d'attente`);
                 return;
             }
 
             if (action === 'play-next') {
                 player.addNextToQueue(tracks);
                 if (window.renderQueueFunction) window.renderQueueFunction();
-                showNotification(`Playing next: ${tracks.length} tracks`);
+                showNotification(`Lecture suivante : ${tracks.length} titres`);
                 return;
             }
 
@@ -899,17 +898,17 @@ export async function handleTrackAction(
             }
             player.playAtIndex(0);
             const name = type === 'user-playlist' ? collectionItem.name : collectionItem.title;
-            showNotification(`Playing ${type.replace('user-', '')}: ${name}`);
+            showNotification(`Lecture de ${type.replace('user-', '')} : ${name}`);
         } catch (error) {
             console.error('Failed to handle collection action:', error);
-            showNotification(`Failed to process ${type} action`);
+            showNotification(`Échec du traitement de l'action ${type}`);
         }
         return;
     }
 
     if (action === 'toggle-pin') {
         const pinned = await db.togglePinned(item, type);
-        showNotification(pinned ? `Pinned to sidebar` : `Unpinned from sidebar`);
+        showNotification(pinned ? `Épinglé à la barre latérale` : `Désépinglé de la barre latérale`);
 
         if (ui && typeof ui.renderPinnedItems === 'function') {
             ui.renderPinnedItems();
@@ -920,7 +919,7 @@ export async function handleTrackAction(
     // Check if track/artist is blocked
     const { contentBlockingSettings } = await import('./storage.js');
     if (type === 'track' && contentBlockingSettings.shouldHideTrack(item)) {
-        showNotification('This track is blocked');
+        showNotification('Ce titre est bloqué');
         return;
     }
 
@@ -928,22 +927,22 @@ export async function handleTrackAction(
         trackAddToQueue(item, 'end');
         player.addToQueue(item);
         if (window.renderQueueFunction) window.renderQueueFunction();
-        showNotification(`Added to queue: ${item.title}`);
+        showNotification(`Ajouté à la file d'attente : ${item.title}`);
     } else if (action === 'play-next') {
         trackPlayNext(item);
         player.addNextToQueue(item);
         if (window.renderQueueFunction) window.renderQueueFunction();
-        showNotification(`Playing next: ${item.title}`);
+        showNotification(`Lecture suivante : ${item.title}`);
     } else if (action === 'play-card') {
         player.setQueue([item], 0);
         player.playAtIndex(0);
-        showNotification(`Playing track: ${item.title}`);
+        showNotification(`Lecture du titre : ${item.title}`);
     } else if (action === 'start-mix') {
         trackStartMix(type, item);
         if (item.mixes?.TRACK_MIX) {
             navigate(`/mix/${item.mixes.TRACK_MIX}`);
         } else {
-            showNotification('No mix available for this track');
+            showNotification('Aucun mix disponible pour ce titre');
         }
     } else if (action === 'download') {
         trackDownloadTrack(item, downloadQualitySettings.getQuality());
@@ -1081,11 +1080,10 @@ export async function handleTrackAction(
                         return `
                     <div class="modal-option ${alreadyContains ? 'already-contains' : ''}" data-id="${p.id}">
                         <span>${p.name}</span>
-                        ${
-                            alreadyContains
+                        ${alreadyContains
                                 ? `<button class="remove-from-playlist-btn-modal" title="Remove from playlist" style="background: transparent; border: none; color: inherit; cursor: pointer; padding: 4px; display: flex; align-items: center;">${SVG_BIN}</button>`
                                 : ''
-                        }
+                            }
                     </div>
                 `;
                     })
@@ -1146,7 +1144,7 @@ export async function handleTrackAction(
                 await db.removeTrackFromPlaylist(playlistId, item.id);
                 const updatedPlaylist = await db.getPlaylist(playlistId);
                 syncManager.syncUserPlaylist(updatedPlaylist, 'update');
-                showNotification(`Removed from playlist: ${option.querySelector('span').textContent}`);
+                showNotification(`Retiré de la playlist : ${option.querySelector('span').textContent}`);
                 await renderModal();
             } else {
                 if (option.classList.contains('already-contains')) return;
@@ -1154,7 +1152,7 @@ export async function handleTrackAction(
                 await db.addTrackToPlaylist(playlistId, item);
                 const updatedPlaylist = await db.getPlaylist(playlistId);
                 syncManager.syncUserPlaylist(updatedPlaylist, 'update');
-                showNotification(`Added to playlist: ${option.querySelector('span').textContent}`);
+                showNotification(`Ajouté à la playlist : ${option.querySelector('span').textContent}`);
                 closeModal();
             }
         };
@@ -1187,7 +1185,7 @@ export async function handleTrackAction(
 
         trackCopyLink(type, item.id || item.uuid);
         navigator.clipboard.writeText(url).then(() => {
-            showNotification('Link copied to clipboard!');
+            showNotification('Lien copié dans le presse-papiers !');
         });
     } else if (action === 'open-in-new-tab') {
         // Use stored href from card if available, otherwise construct URL
@@ -1235,31 +1233,28 @@ export async function handleTrackAction(
                             ${item.trackerInfo.recordingDate ? `<p><strong style="color: var(--foreground);">Recording Date:</strong> ${escapeHtml(new Date(item.trackerInfo.recordingDate).toLocaleDateString())}</p>` : ''}
                         </div>
                         
-                        ${
-                            item.trackerInfo.description
-                                ? `
+                        ${item.trackerInfo.description
+                    ? `
                             <div style="margin-top: 1rem; padding: 0.75rem; background: var(--accent); border-radius: 8px;">
                                 <p style="color: var(--foreground); font-weight: 500; margin-bottom: 0.5rem;">Description</p>
                                 <p style="font-size: 0.85rem; line-height: 1.6;">${escapeHtml(item.trackerInfo.description)}</p>
                             </div>
                         `
-                                : ''
-                        }
+                    : ''
+                }
                         
-                        ${
-                            item.trackerInfo.notes
-                                ? `
+                        ${item.trackerInfo.notes
+                    ? `
                             <div style="margin-top: 1rem; padding: 0.75rem; background: var(--accent); border-radius: 8px;">
                                 <p style="color: var(--foreground); font-weight: 500; margin-bottom: 0.5rem;">Notes</p>
                                 <p style="font-size: 0.85rem; line-height: 1.6;">${escapeHtml(item.trackerInfo.notes)}</p>
                             </div>
                         `
-                                : ''
-                        }
+                    : ''
+                }
                         
-                        ${
-                            item.trackerInfo.sourceUrl
-                                ? `
+                        ${item.trackerInfo.sourceUrl
+                    ? `
                             <div style="margin-top: 1rem;">
                                 <p style="margin-bottom: 0.5rem;"><strong style="color: var(--foreground);">Source URL:</strong></p>
                                 <a href="${escapeHtml(item.trackerInfo.sourceUrl)}" target="_blank" style="color: var(--primary); word-break: break-all; font-size: 0.85rem; display: block; padding: 0.5rem; background: var(--accent); border-radius: 6px; text-decoration: none;">
@@ -1267,8 +1262,8 @@ export async function handleTrackAction(
                                 </a>
                             </div>
                         `
-                                : ''
-                        }
+                    : ''
+                }
                         
                         ${item.id ? `<p style="margin-top: 1rem; font-size: 0.8rem; color: var(--muted);"><strong>Track ID:</strong> ${escapeHtml(item.id)}</p>` : ''}
                     </div>
@@ -1299,9 +1294,8 @@ export async function handleTrackAction(
                             <p><strong style="color: var(--foreground);">Quality:</strong> ${escapeHtml(quality)} ${bitrate ? `(${escapeHtml(bitrate)})` : ''}</p>
                         </div>
                         
-                        ${
-                            item.credits && item.credits.length > 0
-                                ? `
+                        ${item.credits && item.credits.length > 0
+                    ? `
                             <div style="margin-top: 1rem; padding: 0.75rem; background: var(--accent); border-radius: 8px;">
                                 <p style="color: var(--foreground); font-weight: 500; margin-bottom: 0.5rem;">Credits</p>
                                 <div style="font-size: 0.85rem; line-height: 1.6;">
@@ -1309,26 +1303,24 @@ export async function handleTrackAction(
                                 </div>
                             </div>
                         `
-                                : ''
-                        }
+                    : ''
+                }
                         
-                        ${
-                            item.composers && item.composers.length > 0
-                                ? `
+                        ${item.composers && item.composers.length > 0
+                    ? `
                             <p style="margin-top: 0.5rem;"><strong style="color: var(--foreground);">Composers:</strong> ${escapeHtml(item.composers.map((c) => c.name).join(', '))}</p>
                         `
-                                : ''
-                        }
+                    : ''
+                }
                         
-                        ${
-                            item.lyrics?.text
-                                ? `
+                        ${item.lyrics?.text
+                    ? `
                             <div style="margin-top: 1rem; padding: 0.75rem; background: var(--accent); border-radius: 8px;">
                                 <p style="color: var(--foreground); font-weight: 500; margin-bottom: 0.5rem;">Has Lyrics</p>
                             </div>
                         `
-                                : ''
-                        }
+                    : ''
+                }
                         
                         ${item.id ? `<p style="margin-top: 1rem; font-size: 0.8rem; color: var(--muted);"><strong>Track ID:</strong> ${escapeHtml(item.id)}</p>` : ''}
                         ${item.album?.id ? `<p style="font-size: 0.8rem; color: var(--muted);"><strong>Album ID:</strong> ${escapeHtml(item.album.id)}</p>` : ''}
@@ -1365,18 +1357,18 @@ export async function handleTrackAction(
         if (url) {
             window.open(url, '_blank');
         } else {
-            showNotification('No original URL available for this track.');
+            showNotification('Aucune URL originale disponible pour ce titre.');
         }
     } else if (action === 'block-track') {
         const { contentBlockingSettings } = await import('./storage.js');
         if (contentBlockingSettings.isTrackBlocked(item.id)) {
             contentBlockingSettings.unblockTrack(item.id);
             trackUnblockTrack(item);
-            showNotification(`Unblocked track: ${item.title}`);
+            showNotification(`Titre débloqué : ${item.title}`);
         } else {
             contentBlockingSettings.blockTrack(item);
             trackBlockTrack(item);
-            showNotification(`Blocked track: ${item.title}`);
+            showNotification(`Titre bloqué : ${item.title}`);
         }
     } else if (action === 'block-album') {
         const { contentBlockingSettings } = await import('./storage.js');
@@ -1385,7 +1377,7 @@ export async function handleTrackAction(
         const albumArtist = type === 'album' ? item.artist : item.album?.artist;
 
         if (!albumId) {
-            showNotification('No album information available');
+            showNotification("Aucune information sur l'album disponible");
             return;
         }
 
@@ -1394,11 +1386,11 @@ export async function handleTrackAction(
         if (contentBlockingSettings.isAlbumBlocked(albumId)) {
             contentBlockingSettings.unblockAlbum(albumId);
             trackUnblockAlbum(albumObj);
-            showNotification(`Unblocked album: ${albumTitle || 'Unknown Album'}`);
+            showNotification(`Album débloqué : ${albumTitle || 'Album inconnu'}`);
         } else {
             contentBlockingSettings.blockAlbum(albumObj);
             trackBlockAlbum(albumObj);
-            showNotification(`Blocked album: ${albumTitle || 'Unknown Album'}`);
+            showNotification(`Album bloqué : ${albumTitle || 'Album inconnu'}`);
         }
     } else if (action === 'block-artist') {
         const { contentBlockingSettings } = await import('./storage.js');
@@ -1406,7 +1398,7 @@ export async function handleTrackAction(
         const artistName = item.artist?.name || item.artists?.[0]?.name || item.name;
 
         if (!artistId) {
-            showNotification('No artist information available');
+            showNotification("Aucune information sur l'artiste disponible");
             return;
         }
 
@@ -1415,11 +1407,11 @@ export async function handleTrackAction(
         if (contentBlockingSettings.isArtistBlocked(artistId)) {
             contentBlockingSettings.unblockArtist(artistId);
             trackUnblockArtist(artistObj);
-            showNotification(`Unblocked artist: ${artistName || 'Unknown Artist'}`);
+            showNotification(`Artiste débloqué : ${artistName || 'Artiste inconnu'}`);
         } else {
             contentBlockingSettings.blockArtist(artistObj);
             trackBlockArtist(artistObj);
-            showNotification(`Blocked artist: ${artistName || 'Unknown Artist'}`);
+            showNotification(`Artiste bloqué : ${artistName || 'Artiste inconnu'}`);
         }
     }
 }
@@ -1679,12 +1671,12 @@ export function initializeTrackInteractions(player, api, mainContent, contextMen
             const type = card.dataset.albumId
                 ? 'album'
                 : card.dataset.playlistId
-                  ? 'playlist'
-                  : card.dataset.mixId
-                    ? 'mix'
-                    : card.dataset.href
-                      ? card.dataset.href.split('/')[1]
-                      : 'item';
+                    ? 'playlist'
+                    : card.dataset.mixId
+                        ? 'mix'
+                        : card.dataset.href
+                            ? card.dataset.href.split('/')[1]
+                            : 'item';
             const id = card.dataset.albumId || card.dataset.playlistId || card.dataset.mixId;
 
             const item = trackDataStore.get(card) || {
@@ -1862,7 +1854,7 @@ function showSleepTimerModal(player) {
                 const customInput = document.getElementById('custom-minutes');
                 minutes = parseInt(customInput.value);
                 if (!minutes || minutes < 1) {
-                    showNotification('Please enter a valid number of minutes');
+                    showNotification('Veuillez entrer un nombre de minutes valide');
                     return;
                 }
             } else {
@@ -1872,7 +1864,7 @@ function showSleepTimerModal(player) {
             if (minutes) {
                 player.setSleepTimer(minutes);
                 trackSetSleepTimer(minutes);
-                showNotification(`Sleep timer set for ${minutes} minute${minutes === 1 ? '' : 's'}`);
+                showNotification(`Minuteur de mise en veille réglé sur ${minutes} minute${minutes === 1 ? '' : 's'}`);
                 closeModal();
             }
         }
