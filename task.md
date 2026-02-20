@@ -50,6 +50,7 @@ L'objectif est d'ajouter deux nouveaux thèmes "Glossy" (façon Apple TV avec Gl
 - [x] Forcer un accent/teinte "or" (`#d4af37`) global sur les deux variantes glossy.
 - [x] Remplacer le fond d'écran (pochette floue) par un dégradé radial façon "Apple TV" pour `glossy-light` et `glossy-dark`.
 - [x] Améliorer la lisibilité et l'opacité des cartes d'albums (`.card`) sur `glossy-light` (augmentation de l'opacité, ajout d'ombrage et de flou de fond).
+- [x] Correction de la visibilité du fond dégradé (changement de `background-color` à `background`).
 
 ## Historique des Objectifs : Activation de l'Agent bmad-master
 
