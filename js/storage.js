@@ -1489,7 +1489,6 @@ export const libreFmSettings = {
     },
 };
 
-
 export const homePageSettings = {
     SHOW_RECOMMENDED_SONGS_KEY: 'home-show-recommended-songs',
     SHOW_RECOMMENDED_ALBUMS_KEY: 'home-show-recommended-albums',

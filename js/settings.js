@@ -2670,7 +2670,6 @@ function initializeBlockedContentManager() {
 
     // Initial render
     renderBlockedLists();
-
 }
 
 function escapeHtml(text) {

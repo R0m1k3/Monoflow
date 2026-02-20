@@ -4,9 +4,7 @@
     "description": "MusicFlow: A minimalist music streaming application",
     "start_url": "./",
     "display": "standalone",
-    "display_override": [
-        "window-controls-overlay"
-    ],
+    "display_override": ["window-controls-overlay"],
     "background_color": "#000000",
     "theme_color": "#000000",
     "orientation": "portrait-primary",
@@ -30,10 +28,7 @@
             "purpose": "maskable"
         }
     ],
-    "categories": [
-        "music",
-        "entertainment"
-    ],
+    "categories": ["music", "entertainment"],
     "shortcuts": [
         {
             "name": "Search",

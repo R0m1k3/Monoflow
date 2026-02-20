@@ -17,11 +17,11 @@ Ce fichier suit la progression globale des tâches pour le projet monochrome (Mu
 - [x] Saluer l'utilisateur (Michael) en Français
 - [x] Afficher le menu de l'agent
 - [x] Exécuter le workflow "Party Mode"
-  - [x] Analyse complète de l'application (Analyst)
-  - [x] Création du PRD (Product Manager)
-    - [x] Préparation du Docker Compose Complexe pour Unraid (Architect)
-      - [x] Service Monochrome (Port configurable != 3000)
-      - [x] Service PocketBase
-      - [x] Service MinIO (S3)
-      - [x] Service Redis
-    - [x] Création du Workflow GitHub pour publier l'image Docker (DevOps)
+    - [x] Analyse complète de l'application (Analyst)
+    - [x] Création du PRD (Product Manager)
+        - [x] Préparation du Docker Compose Complexe pour Unraid (Architect)
+            - [x] Service Monochrome (Port configurable != 3000)
+            - [x] Service PocketBase
+            - [x] Service MinIO (S3)
+            - [x] Service Redis
+        - [x] Création du Workflow GitHub pour publier l'image Docker (DevOps)
