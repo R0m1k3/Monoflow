@@ -1224,7 +1224,6 @@ kbd {
 :root[data-theme='glossy-light'] .now-playing-bar,
 :root[data-theme='glossy-dark'] .now-playing-bar {
     backdrop-filter: blur(25px) saturate(150%);
-    backdrop-filter: blur(25px) saturate(150%);
     border-top: 1px solid rgb(255, 255, 255, 0.1);
 }
 
@@ -2622,11 +2621,11 @@ input[type='search']::-webkit-search-cancel-button {
     margin-bottom: 0;
 }
 
-.sidebar-settings-section .sidebar-settings-section-label+.setting-item {
+.sidebar-settings-section .sidebar-settings-section-label + .setting-item {
     margin-top: var(--spacing-sm);
 }
 
-.sidebar-settings-section .setting-item+.setting-item {
+.sidebar-settings-section .setting-item + .setting-item {
     margin-top: var(--spacing-md);
 }
 
@@ -2982,11 +2981,11 @@ input[type='search']::-webkit-search-cancel-button {
     box-shadow: 0 2px 4px rgb(0, 0, 0, 0.2);
 }
 
-input:checked+.slider {
+input:checked + .slider {
     background-color: var(--primary);
 }
 
-input:checked+.slider::before {
+input:checked + .slider::before {
     transform: translateX(16px);
     background-color: var(--primary-foreground);
     box-shadow: -2px 2px 4px rgb(0, 0, 0, 0.1);
@@ -2998,29 +2997,29 @@ input:checked+.slider::before {
     /* Hover scale effect */
 }
 
-.toggle-switch:hover input:checked+.slider::before {
+.toggle-switch:hover input:checked + .slider::before {
     transform: translateX(16px) scale(1.1);
 }
 
-.toggle-switch input:disabled+.slider {
+.toggle-switch input:disabled + .slider {
     opacity: 0.5;
     cursor: not-allowed;
 }
 
-.toggle-switch input:disabled+.slider::before {
+.toggle-switch input:disabled + .slider::before {
     box-shadow: none;
     transform: translateX(0);
 }
 
-.toggle-switch input:disabled:checked+.slider::before {
+.toggle-switch input:disabled:checked + .slider::before {
     transform: translateX(16px);
 }
 
-.toggle-switch:hover input:disabled+.slider::before {
+.toggle-switch:hover input:disabled + .slider::before {
     transform: translateX(0);
 }
 
-.toggle-switch:hover input:disabled:checked+.slider::before {
+.toggle-switch:hover input:disabled:checked + .slider::before {
     transform: translateX(16px);
 }
 
