@@ -466,10 +466,10 @@ export async function renderTrackerArtistPage(sheetId, container) {
 
         if (matches.length === 0) {
             resultsContainer.innerHTML =
-                '<p style="text-align: center; padding: 2rem; color: var(--muted-foreground);">No songs found.</p>';
+                '<p style="text-align: center; padding: 2rem; color: var(--muted-foreground);">Aucun titre trouvé.</p>';
         } else {
             resultsContainer.innerHTML = `
-                <h3 style="padding: 0 1rem; margin-bottom: 1rem;">Search Results (${matches.length} songs)</h3>
+                <h3 style="padding: 0 1rem; margin-bottom: 1rem;">Résultats de la recherche (${matches.length} titres)</h3>
                 <div class="track-list" id="unreleased-search-tracklist"></div>
             `;
 
