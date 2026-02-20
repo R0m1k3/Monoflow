@@ -394,7 +394,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Load settings module and initialize
     const { initializeSettings } = await loadSettingsModule();
-    initializeSettings(scrobbler, player, api, ui);
+    initializeSettings(player, api, ui);
 
     // Track sidebar navigation clicks
     document.querySelectorAll('.sidebar-nav a').forEach((link) => {
