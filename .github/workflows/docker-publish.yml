@@ -22,7 +22,7 @@ env:
   # But usually IMAGE_NAME based on repo is safer. 
   # If repo is 'monochrome', image will be 'monochrome'.
   # User asked for 'Monoflow'. We can force it in the tags step.
-  START_WE: monoflow
+  START_WE: musicflow
 
 
 jobs:
@@ -70,7 +70,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5.0.0
         with:
-          images: ${{ env.REGISTRY }}/${{ github.repository_owner }}/monoflow
+          images: ${{ env.REGISTRY }}/${{ github.repository_owner }}/musicflow
           tags: |
             type=raw,value=latest,enable={{is_default_branch}}
             type=ref,event=branch

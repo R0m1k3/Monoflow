@@ -17,14 +17,14 @@ jobs:
         include:
           - os: windows-latest
             platform: windows
-            binary_source: Monochrome-win_x64.exe
-            binary_dest: Monochrome.exe
-            archive_name: monochrome-windows.zip
+            binary_source: MusicFlow-win_x64.exe
+            binary_dest: MusicFlow.exe
+            archive_name: musicflow-windows.zip
           - os: ubuntu-latest
             platform: linux
-            binary_source: Monochrome-linux_x64
-            binary_dest: Monochrome
-            archive_name: monochrome-linux.zip
+            binary_source: MusicFlow-linux_x64
+            binary_dest: MusicFlow
+            archive_name: musicflow-linux.zip
 
     steps:
       - name: Checkout code
@@ -49,10 +49,10 @@ jobs:
       - name: Prepare Release Folder
         run: |
           mkdir release
-          cp dist/Monochrome/resources.neu release/
+          cp dist/MusicFlow/resources.neu release/
           cp neutralino.config.json release/
-          cp -r dist/Monochrome/extensions release/
-          cp dist/Monochrome/${{ matrix.binary_source }} release/${{ matrix.binary_dest }}
+          cp -r dist/MusicFlow/extensions release/
+          cp dist/MusicFlow/${{ matrix.binary_source }} release/${{ matrix.binary_dest }}
         shell: bash
 
       - name: Set Permissions (Linux/macOS)
@@ -76,6 +76,6 @@ jobs:
       - name: Upload Artifact (GH Internal)
         uses: actions/upload-artifact@v4
         with:
-          name: Monochrome-${{ matrix.platform }}
+          name: MusicFlow-${{ matrix.platform }}
           path: release/
           retention-days: 30

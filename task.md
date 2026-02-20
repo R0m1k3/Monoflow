@@ -9,6 +9,7 @@ Ce fichier suit la progression globale des tâches pour le projet monochrome (Mu
 - [x] Configurer `URL_BASE_PUBLIC` dans le `docker-compose.yml`
 - [x] Faire en sorte que le logo en haut à gauche utilise le `URL_BASE_PUBLIC` quand on clique dessus
 - [x] Créer le plan d'implémentation
+- [x] Commit et Push des changements
 
 ## Historique des Objectifs
 
