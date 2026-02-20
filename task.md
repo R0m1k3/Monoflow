@@ -19,7 +19,8 @@ Ce fichier suit la progression globale des tâches pour le projet monochrome (Mu
 - [x] Examiner les fichiers JS pour les chaînes de caractères codées en dur (notifications toast, texte dynamique) et les traduire si applicable.
 - [x] Corriger les traductions manquantes (Recently played, Visualizer, No playlists...).
 - [x] Retirer la section "Configuration Personnalisée" et le texte sur la confidentialité des données de la page Compte (pour instance locale).
-- [ ] Commit et Push des changements.
+- [x] Commit et Push des changements.
+- [ ] Fix GitHub Actions `lint.yml` invalid inputs and any remaining HTML linting issues.
 
 ## Historique des Objectifs : Activation de l'Agent bmad-master
 
