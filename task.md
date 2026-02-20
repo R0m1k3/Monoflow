@@ -1,4 +1,4 @@
-# Tâches Globales du Projet
+﻿# Tâches Globales du Projet
 
 Ce fichier suit la progression globale des tâches pour le projet monochrome (MusicFlow).
 
@@ -55,9 +55,12 @@ L'objectif est d'ajouter deux nouveaux thèmes "Glossy" (façon Apple TV avec Gl
 ## Objectifs Actuels : Refonte du Mode Plein Écran & Traductions
 
 - [x] Inspecter le layout du mode plein écran (`#fullscreen-cover-overlay`).
-- [x] Corriger la visibilité des boutons de contrôle en bas de l'écran (ajout d'une barre Glassmorphism).
-- [x] Identifier et traduire les textes restants en anglais dans la vue plein écran (tooltips et UI).
-- [x] Harmoniser le design avec les thèmes Glossy (flous, ombres).
+- [x] Corriger la visibilité des boutons de contrôle en bas de l'écran (Glassmorphism).
+- [x] Traduire les tooltips et éléments UI en français.
+- [x] Accentuer l'esthétique "Glossy" (Dégradés vibrants et verre marqué).
+- [x] Fixer l'invisibilité de l'icône de lecture (ajout de `--background-solid`).
+- [x] Centrer parfaitement l'icône triangle (compensation d'asymétrie).
+- [x] Commit et Push des changements.
 
 ## Historique des Objectifs : Activation de l'Agent bmad-master
 
@@ -89,3 +92,4 @@ L'objectif est d'ajouter deux nouveaux thèmes "Glossy" (façon Apple TV avec Gl
             - [x] Service MinIO (S3)
             - [x] Service Redis
         - [x] Création du Workflow GitHub pour publier l'image Docker (DevOps)
+

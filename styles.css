@@ -3613,9 +3613,9 @@ input:checked+.slider::before {
     position: absolute;
     top: 1rem;
     right: 1rem;
-    background-color: var(--background);
+    background: var(--foreground);
     border: none;
-    color: var(--foreground);
+    color: var(--background-solid, var(--background));
     font-size: 2rem;
     width: 48px;
     height: 48px;
@@ -3626,13 +3626,15 @@ input:checked+.slider::before {
     justify-content: center;
     transition:
         opacity 0.2s,
-        right 0.3s ease;
+        transform 0.2s ease;
     z-index: 10;
-    opacity: 0.5;
+    opacity: 0.8;
+    box-shadow: 0 4px 12px rgb(0, 0, 0, 0.3);
 }
 
 #close-fullscreen-cover-btn:hover {
-    opacity: 0.8;
+    opacity: 1;
+    transform: scale(1.1);
 }
 
 #fullscreen-cover-image {
@@ -3833,8 +3835,8 @@ input:checked+.slider::before {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding-left: 4px;
-    /* Compensate for the triangle shape asymmetry */
+    padding-left: 2px;
+    /* Visual compensation for triangle asymmetry */
 }
 
 .fullscreen-buttons #fs-play-pause-btn svg {
