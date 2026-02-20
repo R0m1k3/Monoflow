@@ -1206,6 +1206,19 @@ kbd {
     width: calc(96% - 190px) !important;
     left: calc(190px + 2%);
     bottom: 15px !important;
+    border-radius: var(--radius);
+
+    /* Standardized radius */
+    position: fixed !important;
+    background-color: color-mix(in srgb, var(--card) 85%, transparent);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-2xl);
+
+    /* Standardized shadow */
+    transition: all var(--transition-normal) var(--ease-out-back);
+    height: var(--player-bar-height-desktop);
+    animation: slide-up var(--transition-slow) var(--ease-out-back);
 }
 
 :root[data-theme='glossy-light'] .now-playing-bar,
@@ -1214,20 +1227,6 @@ kbd {
     backdrop-filter: blur(25px) saturate(150%);
     border-top: 1px solid rgb(255, 255, 255, 0.1);
 }
-
-border-radius: var(--radius);
-
-/* Standardized radius */
-position: fixed !important;
-background-color: color-mix(in srgb, var(--card) 85%, transparent);
-backdrop-filter: blur(20px);
-border: 1px solid var(--border);
-box-shadow: var(--shadow-2xl);
-
-/* Standardized shadow */
-transition: all var(--transition-normal) var(--ease-out-back);
-height: var(--player-bar-height-desktop);
-animation: slide-up var(--transition-slow) var(--ease-out-back);
 
 :root[data-theme='white'] .now-playing-bar {
     background-color: color-mix(in srgb, var(--card) 80%, transparent);
@@ -7325,5 +7324,4 @@ textarea:focus {
 
 #custom-tooltip.visible {
     opacity: 1;
-}
 }
