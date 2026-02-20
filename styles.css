@@ -1230,7 +1230,6 @@ kbd {
 :root[data-theme='glossy-light'] .card,
 :root[data-theme='glossy-dark'] .card {
     backdrop-filter: blur(16px);
-    backdrop-filter: blur(16px);
     border: 1px solid var(--border);
 }
 
