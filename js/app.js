@@ -142,7 +142,9 @@ function initializeCasting(audioPlayer, castBtn) {
     } else if (window.innerWidth > 768) {
         castBtn.style.display = 'flex';
         castBtn.addEventListener('click', () => {
-            alert("Le cast n'est pas supporté sur ce navigateur. Essayez Chrome pour Chromecast ou Safari pour AirPlay.");
+            alert(
+                "Le cast n'est pas supporté sur ce navigateur. Essayez Chrome pour Chromecast ou Safari pour AirPlay."
+            );
         });
     }
 }

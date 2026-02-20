@@ -2136,10 +2136,10 @@ export class UIRenderer {
                     dateDisplay =
                         window.innerWidth > 768
                             ? releaseDate.toLocaleDateString('en-US', {
-                                year: 'numeric',
-                                month: 'long',
-                                day: 'numeric',
-                            })
+                                  year: 'numeric',
+                                  month: 'long',
+                                  day: 'numeric',
+                              })
                             : year;
                 }
             }
@@ -2383,7 +2383,7 @@ export class UIRenderer {
                                     }
                                 } catch (error) {
                                     console.error('Failed to add track to playlist:', error);
-                                    showNotification('Échec de l\'ajout du titre à la playlist');
+                                    showNotification("Échec de l'ajout du titre à la playlist");
                                 }
                             }
                         };
@@ -2961,9 +2961,9 @@ export class UIRenderer {
                 <span>${artist.popularity}% popularity</span>
                 <div class="artist-tags">
                     ${(artist.artistRoles || [])
-                    .filter((role) => role.category)
-                    .map((role) => `<span class="artist-tag">${role.category}</span>`)
-                    .join('')}
+                        .filter((role) => role.category)
+                        .map((role) => `<span class="artist-tag">${role.category}</span>`)
+                        .join('')}
                 </div>
             `;
 
@@ -3189,7 +3189,7 @@ export class UIRenderer {
                             clearBtn.style.display = 'none';
                         } catch (err) {
                             console.error('Failed to clear history:', err);
-                            alert('Échec de la suppression de l\'historique');
+                            alert("Échec de la suppression de l'historique");
                         }
                     }
                 };

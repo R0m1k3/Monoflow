@@ -346,7 +346,9 @@ export async function renderTrackerArtistPage(sheetId, container) {
     // Set up download button
     if (downloadBtn) {
         downloadBtn.onclick = () => {
-            alert('Le téléchargement en masse arrive bientôt ! Vous pouvez télécharger des titres individuels depuis la page des projets.');
+            alert(
+                'Le téléchargement en masse arrive bientôt ! Vous pouvez télécharger des titres individuels depuis la page des projets.'
+            );
         };
     }
 

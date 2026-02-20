@@ -2343,7 +2343,7 @@ function initializeFontSettings() {
             fontUploadInput.value = '';
         } catch (err) {
             console.error('Failed to upload font:', err);
-            alert("Échec du téléchargement de la police");
+            alert('Échec du téléchargement de la police');
         }
     });
 
