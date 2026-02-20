@@ -132,7 +132,6 @@ export function initializeSettings(player, api, ui) {
         });
     }
 
-
     // Theme picker
     const themePicker = document.getElementById('theme-picker');
     const currentTheme = themeManager.getTheme();
