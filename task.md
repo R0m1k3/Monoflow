@@ -52,6 +52,13 @@ L'objectif est d'ajouter deux nouveaux thèmes "Glossy" (façon Apple TV avec Gl
 - [x] Améliorer la lisibilité et l'opacité des cartes d'albums (`.card`) sur `glossy-light` (augmentation de l'opacité, ajout d'ombrage et de flou de fond).
 - [x] Correction de la visibilité du fond dégradé (changement de `background-color` à `background`).
 
+## Objectifs Actuels : Refonte du Mode Plein Écran & Traductions
+
+- [x] Inspecter le layout du mode plein écran (`#fullscreen-cover-overlay`).
+- [x] Corriger la visibilité des boutons de contrôle en bas de l'écran (ajout d'une barre Glassmorphism).
+- [x] Identifier et traduire les textes restants en anglais dans la vue plein écran (tooltips et UI).
+- [x] Harmoniser le design avec les thèmes Glossy (flous, ombres).
+
 ## Historique des Objectifs : Activation de l'Agent bmad-master
 
 - [x] Analyser la requête (charge de l'agent)
@@ -74,11 +81,11 @@ L'objectif est d'ajouter deux nouveaux thèmes "Glossy" (façon Apple TV avec Gl
 - [x] Saluer l'utilisateur (Michael) en Français
 - [x] Afficher le menu de l'agent
 - [x] Exécuter le workflow "Party Mode"
-    - [x] Analyse complète de l'application (Analyst)
-    - [x] Création du PRD (Product Manager)
-        - [x] Préparation du Docker Compose Complexe pour Unraid (Architect)
-            - [x] Service Monochrome (Port configurable != 3000)
-            - [x] Service PocketBase
-            - [x] Service MinIO (S3)
-            - [x] Service Redis
-        - [x] Création du Workflow GitHub pour publier l'image Docker (DevOps)
+  - [x] Analyse complète de l'application (Analyst)
+  - [x] Création du PRD (Product Manager)
+    - [x] Préparation du Docker Compose Complexe pour Unraid (Architect)
+      - [x] Service Monochrome (Port configurable != 3000)
+      - [x] Service PocketBase
+      - [x] Service MinIO (S3)
+      - [x] Service Redis
+    - [x] Création du Workflow GitHub pour publier l'image Docker (DevOps)

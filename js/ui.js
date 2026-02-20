@@ -1050,9 +1050,11 @@ export class UIRenderer {
             if (isPaused) {
                 playBtn.innerHTML =
                     '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>';
+                playBtn.title = 'Lire';
             } else {
                 playBtn.innerHTML =
                     '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>';
+                playBtn.title = 'Pause';
             }
         };
 
@@ -1068,7 +1070,9 @@ export class UIRenderer {
 
         shuffleBtn.onclick = () => {
             this.player.toggleShuffle();
-            shuffleBtn.classList.toggle('active', this.player.shuffleActive);
+            const isActive = this.player.shuffleActive;
+            shuffleBtn.classList.toggle('active', isActive);
+            shuffleBtn.title = isActive ? 'Désactiver l\'aléatoire' : 'Aléatoire';
         };
 
         repeatBtn.onclick = () => {
@@ -1077,9 +1081,11 @@ export class UIRenderer {
             if (mode === 2) {
                 repeatBtn.innerHTML =
                     '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m17 2 4 4-4 4"/><path d="M3 11v-1a4 4 0 0 1 4-4h14"/><path d="m7 22-4-4 4-4"/><path d="M21 13v1a4 4 0 0 1-4 4H3"/><path d="M11 10h1v4"/></svg>';
+                repeatBtn.title = 'Répéter un seul';
             } else {
                 repeatBtn.innerHTML =
                     '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m17 2 4 4-4 4"/><path d="M3 11v-1a4 4 0 0 1 4-4h14"/><path d="m7 22-4-4 4-4"/><path d="M21 13v1a4 4 0 0 1-4 4H3"/></svg>';
+                repeatBtn.title = mode === 1 ? 'Répéter tout' : 'Répéter';
             }
         };
 
@@ -1205,6 +1211,7 @@ export class UIRenderer {
                 const volume = this.player.userVolume;
                 fsVolumeBtn.innerHTML = muted || volume === 0 ? SVG_MUTE : SVG_VOLUME;
                 fsVolumeBtn.classList.toggle('muted', muted || volume === 0);
+                fsVolumeBtn.title = muted || volume === 0 ? 'Réactiver le son' : 'Sourdine';
                 const effectiveVolume = muted ? 0 : volume * 100;
                 fsVolumeFill.style.setProperty('--fs-volume-level', `${effectiveVolume}%`);
                 fsVolumeFill.style.width = `${effectiveVolume}%`;
@@ -2156,10 +2163,10 @@ export class UIRenderer {
                     dateDisplay =
                         window.innerWidth > 768
                             ? releaseDate.toLocaleDateString('en-US', {
-                                  year: 'numeric',
-                                  month: 'long',
-                                  day: 'numeric',
-                              })
+                                year: 'numeric',
+                                month: 'long',
+                                day: 'numeric',
+                            })
                             : year;
                 }
             }
@@ -2981,9 +2988,9 @@ export class UIRenderer {
                 <span>${artist.popularity}% popularity</span>
                 <div class="artist-tags">
                     ${(artist.artistRoles || [])
-                        .filter((role) => role.category)
-                        .map((role) => `<span class="artist-tag">${role.category}</span>`)
-                        .join('')}
+                    .filter((role) => role.category)
+                    .map((role) => `<span class="artist-tag">${role.category}</span>`)
+                    .join('')}
                 </div>
             `;
 
