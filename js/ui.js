@@ -759,7 +759,22 @@ export class UIRenderer {
     }
 
     setPageBackground(imageUrl) {
+        const root = document.documentElement;
+        const theme = root.getAttribute('data-theme');
         const bgElement = document.getElementById('page-background');
+
+        // Disable album artwork background for glossy themes (they use a gradient instead)
+        if (theme === 'glossy-light' || theme === 'glossy-dark') {
+            bgElement.classList.remove('active');
+            document.body.classList.remove('has-page-background');
+            setTimeout(() => {
+                if (!bgElement.classList.contains('active')) {
+                    bgElement.style.backgroundImage = '';
+                }
+            }, 500);
+            return;
+        }
+
         if (backgroundSettings.isEnabled() && imageUrl) {
             bgElement.style.backgroundImage = `url('${imageUrl}')`;
             bgElement.classList.add('active');
@@ -777,11 +792,16 @@ export class UIRenderer {
     }
 
     setVibrantColor(color) {
-        if (!color) return;
-
         const root = document.documentElement;
         const theme = root.getAttribute('data-theme');
-        const isLightMode = theme === 'white';
+        const isLightMode = theme === 'white' || theme === 'glossy-light';
+
+        // Force gold color for glossy themes, overriding the dynamic track color
+        if (theme === 'glossy-light' || theme === 'glossy-dark') {
+            color = '#d4af37';
+        }
+
+        if (!color) return;
 
         let hex = color.replace('#', '');
         // Handle shorthand hex
@@ -799,7 +819,7 @@ export class UIRenderer {
         // Calculate perceived brightness
         let brightness = (r * 299 + g * 587 + b * 114) / 1000;
 
-        if (isLightMode) {
+        if (isLightMode && theme !== 'glossy-light') {
             // In light mode, the background is white.
             // We need the color (used for text/highlights) to be dark enough.
             // If brightness is too high (> 150), darken it.
@@ -809,7 +829,7 @@ export class UIRenderer {
                 b = Math.floor(b * 0.9);
                 brightness = (r * 299 + g * 587 + b * 114) / 1000;
             }
-        } else {
+        } else if (!isLightMode && theme !== 'glossy-dark') {
             // In dark mode, the background is dark.
             // We need the color to be light enough.
             // If brightness is too low (< 80), lighten it.
@@ -2136,10 +2156,10 @@ export class UIRenderer {
                     dateDisplay =
                         window.innerWidth > 768
                             ? releaseDate.toLocaleDateString('en-US', {
-                                  year: 'numeric',
-                                  month: 'long',
-                                  day: 'numeric',
-                              })
+                                year: 'numeric',
+                                month: 'long',
+                                day: 'numeric',
+                            })
                             : year;
                 }
             }
@@ -2961,9 +2981,9 @@ export class UIRenderer {
                 <span>${artist.popularity}% popularity</span>
                 <div class="artist-tags">
                     ${(artist.artistRoles || [])
-                        .filter((role) => role.category)
-                        .map((role) => `<span class="artist-tag">${role.category}</span>`)
-                        .join('')}
+                    .filter((role) => role.category)
+                    .map((role) => `<span class="artist-tag">${role.category}</span>`)
+                    .join('')}
                 </div>
             `;
 

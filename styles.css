@@ -468,21 +468,21 @@
 :root[data-theme='glossy-light'] {
     color-scheme: light;
 
-    --background: rgb(245, 245, 245, 0.4);
+    --background: radial-gradient(circle at top right, #fef2cc, #f5f5f5 70%);
     --foreground: #1a1a1a;
-    --card: rgb(255, 255, 255, 0.5);
+    --card: rgb(255, 255, 255, 0.75);
     --card-foreground: #1a1a1a;
-    --primary: #1a1a1a;
-    --primary-foreground: #f5f5f5;
+    --primary: #d4af37;
+    --primary-foreground: #1a1a1a;
     --secondary: rgb(0, 0, 0, 0.05);
     --secondary-foreground: #2a2a2a;
     --muted: rgb(0, 0, 0, 0.08);
     --muted-foreground: #555;
-    --border: rgb(0, 0, 0, 0.1);
-    --input: rgb(255, 255, 255, 0.6);
-    --ring: rgb(0, 0, 0, 0.2);
-    --highlight: #1a1a1a;
-    --highlight-rgb: 26, 26, 26;
+    --border: rgb(0, 0, 0, 0.15);
+    --input: rgb(255, 255, 255, 0.8);
+    --ring: rgb(212, 175, 55, 0.4);
+    --highlight: #d4af37;
+    --highlight-rgb: 212, 175, 55;
     --active-highlight: var(--highlight);
     --explicit-badge: #1a1a1a;
     --cover-filter: blur(50px) brightness(1.6) opacity(0.35);
@@ -491,21 +491,21 @@
 :root[data-theme='glossy-dark'] {
     color-scheme: dark;
 
-    --background: rgb(10, 10, 10, 0.4);
+    --background: radial-gradient(circle at top right, #242017, #0a0a0a 70%);
     --foreground: #f5f5f5;
-    --card: rgb(30, 30, 30, 0.5);
+    --card: rgb(30, 30, 30, 0.6);
     --card-foreground: #f5f5f5;
-    --primary: #f5f5f5;
-    --primary-foreground: #0a0a0a;
+    --primary: #d4af37;
+    --primary-foreground: #1a1a1a;
     --secondary: rgb(255, 255, 255, 0.05);
     --secondary-foreground: #e0e0e0;
     --muted: rgb(255, 255, 255, 0.08);
     --muted-foreground: #a0a0a0;
-    --border: rgb(255, 255, 255, 0.1);
+    --border: rgb(255, 255, 255, 0.15);
     --input: rgb(0, 0, 0, 0.6);
-    --ring: rgb(255, 255, 255, 0.2);
-    --highlight: #f5f5f5;
-    --highlight-rgb: 245, 245, 245;
+    --ring: rgb(212, 175, 55, 0.4);
+    --highlight: #d4af37;
+    --highlight-rgb: 212, 175, 55;
     --active-highlight: var(--highlight);
     --explicit-badge: #f5f5f5;
     --cover-filter: blur(50px) brightness(0.6) opacity(0.4);
@@ -1225,6 +1225,23 @@ kbd {
 :root[data-theme='glossy-dark'] .now-playing-bar {
     backdrop-filter: blur(25px) saturate(150%);
     border-top: 1px solid rgb(255, 255, 255, 0.1);
+}
+
+:root[data-theme='glossy-light'] .card,
+:root[data-theme='glossy-dark'] .card {
+    backdrop-filter: blur(16px);
+    backdrop-filter: blur(16px);
+    border: 1px solid var(--border);
+}
+
+:root[data-theme='glossy-light'] .card {
+    box-shadow: 0 4px 14px rgb(0, 0, 0, 0.08);
+
+    /* Better contrast against light gradient */
+}
+
+:root[data-theme='glossy-dark'] .card {
+    box-shadow: 0 4px 14px rgb(0, 0, 0, 0.4);
 }
 
 :root[data-theme='white'] .now-playing-bar {

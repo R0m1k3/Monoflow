@@ -36,6 +36,21 @@ L'objectif est d'ajouter deux nouveaux thèmes "Glossy" (façon Apple TV avec Gl
 - [x] Mettre à jour `<select id="theme-select">` dans `index.html` ou `settings.js`.
 - [x] Tester et valider visuellement les deux thèmes.
 
+## Objectifs Actuels : Résolution d'erreur Build CI
+
+- [x] Analyser l'erreur de build sur GitHub Actions (`npx vite build` exit code 1).
+- [x] Reproduire l'erreur de linting/build CSS localement.
+- [x] Corriger l'erreur de syntaxe globale dans `styles.css` (accolade en trop et propriétés hors sélecteur).
+- [x] Valider le succès de la commande de build localement (`npx vite build`).
+- [x] Pousser la correction pour débloquer la CI.
+
+## Objectifs Actuels : Ajustements Thèmes Glossy (Retours User)
+
+- [x] Désactiver l'extraction de palette (couleurs dynamiques) pour les thèmes glossy (`ui.js`).
+- [x] Forcer un accent/teinte "or" (`#d4af37`) global sur les deux variantes glossy.
+- [x] Remplacer le fond d'écran (pochette floue) par un dégradé radial façon "Apple TV" pour `glossy-light` et `glossy-dark`.
+- [x] Améliorer la lisibilité et l'opacité des cartes d'albums (`.card`) sur `glossy-light` (augmentation de l'opacité, ajout d'ombrage et de flou de fond).
+
 ## Historique des Objectifs : Activation de l'Agent bmad-master
 
 - [x] Analyser la requête (charge de l'agent)
@@ -58,11 +73,11 @@ L'objectif est d'ajouter deux nouveaux thèmes "Glossy" (façon Apple TV avec Gl
 - [x] Saluer l'utilisateur (Michael) en Français
 - [x] Afficher le menu de l'agent
 - [x] Exécuter le workflow "Party Mode"
-    - [x] Analyse complète de l'application (Analyst)
-    - [x] Création du PRD (Product Manager)
-        - [x] Préparation du Docker Compose Complexe pour Unraid (Architect)
-            - [x] Service Monochrome (Port configurable != 3000)
-            - [x] Service PocketBase
-            - [x] Service MinIO (S3)
-            - [x] Service Redis
-        - [x] Création du Workflow GitHub pour publier l'image Docker (DevOps)
+  - [x] Analyse complète de l'application (Analyst)
+  - [x] Création du PRD (Product Manager)
+    - [x] Préparation du Docker Compose Complexe pour Unraid (Architect)
+      - [x] Service Monochrome (Port configurable != 3000)
+      - [x] Service PocketBase
+      - [x] Service MinIO (S3)
+      - [x] Service Redis
+    - [x] Création du Workflow GitHub pour publier l'image Docker (DevOps)
