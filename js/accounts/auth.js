@@ -171,7 +171,7 @@ export class AuthManager {
             if (clearDataBtn) clearDataBtn.style.display = 'none';
             if (emailToggleBtn) emailToggleBtn.style.display = 'none';
 
-            if (statusText) statusText.textContent = 'Sync your library across devices';
+            if (statusText) statusText.textContent = 'Synchronisez votre bibliothèque sur tous vos appareils';
         }
     }
 

@@ -17,6 +17,7 @@ Ce fichier suit la progression globale des tâches pour le projet monochrome (Mu
 - [x] Traduire les onglets de la page Paramètres (Apparence, Interface, Audio, Téléchargements, Système)
 - [x] Traduire les pages À propos, Compte et Téléchargement
 - [x] Examiner les fichiers JS pour les chaînes de caractères codées en dur (notifications toast, texte dynamique) et les traduire si applicable.
+- [x] Corriger les traductions manquantes (Recently played, Visualizer, No playlists...).
 - [x] Commit et Push des changements.
 
 ## Historique des Objectifs : Activation de l'Agent bmad-master
@@ -41,11 +42,11 @@ Ce fichier suit la progression globale des tâches pour le projet monochrome (Mu
 - [x] Saluer l'utilisateur (Michael) en Français
 - [x] Afficher le menu de l'agent
 - [x] Exécuter le workflow "Party Mode"
-    - [x] Analyse complète de l'application (Analyst)
-    - [x] Création du PRD (Product Manager)
-        - [x] Préparation du Docker Compose Complexe pour Unraid (Architect)
-            - [x] Service Monochrome (Port configurable != 3000)
-            - [x] Service PocketBase
-            - [x] Service MinIO (S3)
-            - [x] Service Redis
-        - [x] Création du Workflow GitHub pour publier l'image Docker (DevOps)
+  - [x] Analyse complète de l'application (Analyst)
+  - [x] Création du PRD (Product Manager)
+    - [x] Préparation du Docker Compose Complexe pour Unraid (Architect)
+      - [x] Service Monochrome (Port configurable != 3000)
+      - [x] Service PocketBase
+      - [x] Service MinIO (S3)
+      - [x] Service Redis
+    - [x] Création du Workflow GitHub pour publier l'image Docker (DevOps)

@@ -1325,7 +1325,7 @@ export class UIRenderer {
         } else {
             if (shuffleBtn) shuffleBtn.style.display = 'none';
             if (downloadBtn) downloadBtn.style.display = 'none';
-            tracksContainer.innerHTML = createPlaceholder('No liked tracks yet.');
+            tracksContainer.innerHTML = createPlaceholder('Aucun titre aimé pour le moment.');
         }
 
         const likedAlbums = await db.getFavorites('album');
@@ -1420,7 +1420,7 @@ export class UIRenderer {
             });
         } else {
             if (folders.length === 0) {
-                myPlaylistsContainer.innerHTML = createPlaceholder('No playlists yet. Create your first playlist!');
+                myPlaylistsContainer.innerHTML = createPlaceholder('Aucune playlist. Créez votre première playlist !');
             } else {
                 myPlaylistsContainer.innerHTML = '';
             }
@@ -1964,7 +1964,7 @@ export class UIRenderer {
 
     async renderSearchPage(query) {
         this.showPage('search');
-        document.getElementById('search-results-title').textContent = `Search Results for "${query}"`;
+        document.getElementById('search-results-title').textContent = `Résultats de recherche pour "${query}"`;
 
         const tracksContainer = document.getElementById('search-tracks-container');
         const artistsContainer = document.getElementById('search-artists-container');
@@ -2136,10 +2136,10 @@ export class UIRenderer {
                     dateDisplay =
                         window.innerWidth > 768
                             ? releaseDate.toLocaleDateString('en-US', {
-                                  year: 'numeric',
-                                  month: 'long',
-                                  day: 'numeric',
-                              })
+                                year: 'numeric',
+                                month: 'long',
+                                day: 'numeric',
+                            })
                             : year;
                 }
             }
@@ -2961,9 +2961,9 @@ export class UIRenderer {
                 <span>${artist.popularity}% popularity</span>
                 <div class="artist-tags">
                     ${(artist.artistRoles || [])
-                        .filter((role) => role.category)
-                        .map((role) => `<span class="artist-tag">${role.category}</span>`)
-                        .join('')}
+                    .filter((role) => role.category)
+                    .map((role) => `<span class="artist-tag">${role.category}</span>`)
+                    .join('')}
                 </div>
             `;
 
@@ -3127,7 +3127,7 @@ export class UIRenderer {
             }
 
             if (history.length === 0) {
-                container.innerHTML = createPlaceholder("You haven't played any tracks yet.");
+                container.innerHTML = createPlaceholder("Vous n'avez encore lu aucun titre.");
                 return;
             }
 
@@ -3185,7 +3185,7 @@ export class UIRenderer {
                     if (confirm('Clear all recently played tracks? This cannot be undone.')) {
                         try {
                             await db.clearHistory();
-                            container.innerHTML = createPlaceholder("You haven't played any tracks yet.");
+                            container.innerHTML = createPlaceholder("Vous n'avez encore lu aucun titre.");
                             clearBtn.style.display = 'none';
                         } catch (err) {
                             console.error('Failed to clear history:', err);
