@@ -17,6 +17,7 @@ Ce fichier suit la progression globale des tâches pour le projet monochrome (Mu
 - [x] Traduire les onglets de la page Paramètres (Apparence, Interface, Audio, Téléchargements, Système)
 - [x] Traduire les pages À propos, Compte et Téléchargement
 - [x] Examiner les fichiers JS pour les chaînes de caractères codées en dur (notifications toast, texte dynamique) et les traduire si applicable.
+- [x] Commit et Push des changements.
 
 ## Historique des Objectifs : Activation de l'Agent bmad-master
 
