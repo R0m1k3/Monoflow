@@ -468,7 +468,8 @@
 :root[data-theme='glossy-light'] {
     color-scheme: light;
 
-    --background: radial-gradient(circle at top right, #fef2cc, #f5f5f5 70%);
+    --background: radial-gradient(circle at top right, #fff4d1, #f5f5f5 75%);
+    --background-solid: #f5f5f5;
     --foreground: #1a1a1a;
     --card: rgb(255, 255, 255, 0.75);
     --card-foreground: #1a1a1a;
@@ -491,7 +492,8 @@
 :root[data-theme='glossy-dark'] {
     color-scheme: dark;
 
-    --background: radial-gradient(circle at top right, #242017, #0a0a0a 70%);
+    --background: radial-gradient(circle at top right, #3a3224, #0a0a0a 75%);
+    --background-solid: #0a0a0a;
     --foreground: #f5f5f5;
     --card: rgb(30, 30, 30, 0.6);
     --card-foreground: #f5f5f5;
@@ -1703,6 +1705,7 @@ input[type='search']::-webkit-search-cancel-button {
 }
 
 @keyframes pulse {
+
     0%,
     100% {
         opacity: 1;
@@ -2119,6 +2122,7 @@ input[type='search']::-webkit-search-cancel-button {
 }
 
 @media (max-width: 1100px) {
+
     #home-recommended-songs,
     #artist-detail-tracks,
     #playlist-detail-recommended {
@@ -2639,11 +2643,11 @@ input[type='search']::-webkit-search-cancel-button {
     margin-bottom: 0;
 }
 
-.sidebar-settings-section .sidebar-settings-section-label + .setting-item {
+.sidebar-settings-section .sidebar-settings-section-label+.setting-item {
     margin-top: var(--spacing-sm);
 }
 
-.sidebar-settings-section .setting-item + .setting-item {
+.sidebar-settings-section .setting-item+.setting-item {
     margin-top: var(--spacing-md);
 }
 
@@ -2999,11 +3003,11 @@ input[type='search']::-webkit-search-cancel-button {
     box-shadow: 0 2px 4px rgb(0, 0, 0, 0.2);
 }
 
-input:checked + .slider {
+input:checked+.slider {
     background-color: var(--primary);
 }
 
-input:checked + .slider::before {
+input:checked+.slider::before {
     transform: translateX(16px);
     background-color: var(--primary-foreground);
     box-shadow: -2px 2px 4px rgb(0, 0, 0, 0.1);
@@ -3015,29 +3019,29 @@ input:checked + .slider::before {
     /* Hover scale effect */
 }
 
-.toggle-switch:hover input:checked + .slider::before {
+.toggle-switch:hover input:checked+.slider::before {
     transform: translateX(16px) scale(1.1);
 }
 
-.toggle-switch input:disabled + .slider {
+.toggle-switch input:disabled+.slider {
     opacity: 0.5;
     cursor: not-allowed;
 }
 
-.toggle-switch input:disabled + .slider::before {
+.toggle-switch input:disabled+.slider::before {
     box-shadow: none;
     transform: translateX(0);
 }
 
-.toggle-switch input:disabled:checked + .slider::before {
+.toggle-switch input:disabled:checked+.slider::before {
     transform: translateX(16px);
 }
 
-.toggle-switch:hover input:disabled + .slider::before {
+.toggle-switch:hover input:disabled+.slider::before {
     transform: translateX(0);
 }
 
-.toggle-switch:hover input:disabled:checked + .slider::before {
+.toggle-switch:hover input:disabled:checked+.slider::before {
     transform: translateX(16px);
 }
 
@@ -3650,12 +3654,12 @@ input:checked + .slider::before {
     text-align: center;
     z-index: 1;
     max-width: 90%;
-    background-color: color-mix(in srgb, var(--card) 40%, transparent);
-    backdrop-filter: blur(20px);
-    padding: 0.75rem 1.5rem;
-    border-radius: var(--radius);
+    background-color: color-mix(in srgb, var(--card) 55%, transparent);
+    backdrop-filter: blur(35px) saturate(150%);
+    padding: 1rem 2rem;
+    border-radius: var(--radius-xl);
     border: 1px solid var(--border);
-    box-shadow: 0 8px 32px rgb(0, 0, 0, 0.4);
+    box-shadow: 0 12px 48px rgb(0, 0, 0, 0.4);
 }
 
 #fullscreen-track-title {
@@ -3719,12 +3723,12 @@ input:checked + .slider::before {
     flex-direction: column;
     gap: 1.25rem;
     z-index: 10;
-    background: rgb(255, 255, 255, 0.05);
-    backdrop-filter: blur(25px) saturate(160%);
+    background: rgb(255, 255, 255, 0.1);
+    backdrop-filter: blur(40px) saturate(180%);
     padding: 1.5rem 2rem;
     border-radius: var(--radius-2xl);
-    border: 1px solid rgb(255, 255, 255, 0.1);
-    box-shadow: 0 8px 32px rgb(0, 0, 0, 0.3);
+    border: 1px solid rgb(255, 255, 255, 0.2);
+    box-shadow: 0 12px 48px rgb(0, 0, 0, 0.4);
 }
 
 :root[data-theme='white'] .fullscreen-controls,
@@ -3823,8 +3827,18 @@ input:checked + .slider::before {
     width: 64px;
     height: 64px;
     background: var(--foreground);
-    color: var(--background);
+    color: var(--background-solid, var(--background));
     border-radius: var(--radius-full);
+    box-shadow: 0 4px 15px rgb(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-left: 4px;
+    /* Compensate for the triangle shape asymmetry */
+}
+
+.fullscreen-buttons #fs-play-pause-btn svg {
+    filter: drop-shadow(0 2px 4px rgb(0, 0, 0, 0.2));
 }
 
 .fullscreen-buttons #fs-play-pause-btn:hover {
