@@ -93,4 +93,3 @@ L'objectif est d'ajouter deux nouveaux thèmes "Glossy" (façon Apple TV avec Gl
             - [x] Service MinIO (S3)
             - [x] Service Redis
         - [x] Création du Workflow GitHub pour publier l'image Docker (DevOps)
-
